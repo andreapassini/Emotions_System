@@ -50,6 +50,11 @@ DT
 
 Uno per ogni stato della FSM - Emotions
 
+### Rage
+
+![DTRage](https://user-images.githubusercontent.com/71270277/147860208-3a22f81c-1b0a-4faf-9176-a7a048dd8c12.png)
+
+### Brave
 ![DTBrave](https://user-images.githubusercontent.com/71270277/147860153-ec6322ac-6f4b-4bb3-b2cb-e3e71447bec1.png)
 
 
