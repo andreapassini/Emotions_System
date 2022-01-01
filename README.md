@@ -58,10 +58,10 @@ Uno per ogni stato della FSM - Emotions
 BT
 
 
-Collaborazione e Cordinamento:
+## Collaborazione e Cordinamento:
 
 
-A livello 1 (emozioni):
+### A livello 1 (emozioni):
 
 Nel momento in cui un agente provasse un'emozione estrema (fear e rage), 
 influenzerebbe anche gli alleati attorno a lui incrementando o decrementando il valore della emotionsValue.
@@ -70,7 +70,7 @@ Potrei anche introdurre un cambiamento della emotionsValue a seconda del numero 
 
 
 
-A livello 2:
+### A livello 2:
 
 
 Coordinamento su un target: 
