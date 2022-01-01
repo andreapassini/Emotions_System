@@ -19,7 +19,7 @@ Comportamento agenti su Livelli:
 Pathfindong: NavMesh
 
 
-Livello 1 - Emozioni:
+## Livello 1 - Emozioni:
 
 FSM
 
@@ -44,11 +44,16 @@ Transitions:
   Membership degree, ricavata dal valore della variabile emotionsValue
 
 
-Livello 2 - Comportamento delle singole emozioni:
+## Livello 2 - Comportamento delle singole emozioni:
 
 DT
 
-Livello 3 - Descrizione delle Azioni:
+Uno per ogni stato della FSM - Emotions
+
+![DTBrave](https://user-images.githubusercontent.com/71270277/147860153-ec6322ac-6f4b-4bb3-b2cb-e3e71447bec1.png)
+
+
+## Livello 3 - Descrizione delle Azioni:
 
 BT
 
