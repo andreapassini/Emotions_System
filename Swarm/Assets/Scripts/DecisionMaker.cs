@@ -67,7 +67,9 @@ public class DecisionMaker : MonoBehaviour
 
 		#endregion
 
-		
+
+		#region DT
+
 		// Actions
 		DTAction a_chase = new DTAction(Chase);
         DTAction a_search = new DTAction(Search);
@@ -132,10 +134,39 @@ public class DecisionMaker : MonoBehaviour
         dt_Shy = new DecisionTree(dshy_1);
         #endregion
 
-        //Init BT
+        #region DT Rage
+        DTDecision drage_1 = new DTDecision(IsTargetAquired);
+        DTDecision drage_2 = new DTDecision(IsTargetNear);
+        DTDecision drage_3 = new DTDecision(IsTargetInLineOfSight);
 
-        // Start monitoring FSM
-        StartCoroutine(Patrol());
+        drage_1.AddLink(false, a_search);
+        drage_1.AddLink(true, drage_2);
+
+        drage_2.AddLink(false, a_chase);
+        drage_2.AddLink(true, drage_3);
+
+        drage_3.AddLink(false, a_chase);
+        drage_3.AddLink(true, a_attack);
+
+        dt_InRage = new DecisionTree(drage_1);
+        #endregion
+
+        #region DT Scared
+        dt_Shy = new DecisionTree(a_runAway);
+
+		#endregion
+
+		#endregion
+
+
+		#region BT
+
+
+
+		#endregion
+
+		// Start monitoring FSM
+		StartCoroutine(Patrol());
     }
 
     void Update()
@@ -147,27 +178,28 @@ public class DecisionMaker : MonoBehaviour
     public void WalkDTNormal()
 	{
         // Start patroling
-        //StartCoroutine(PatrolDTNormal());
+        StartCoroutine(PatrolDTNormal());
     }
 
     public void WalkDTBrave()
 	{
-
-	}
+        // Start patroling
+        StartCoroutine(PatrolDTBrave());
+    }
 
     public void WalkDTInRage()
     {
-
+        StartCoroutine(PatrolDTInRage());
     }
 
     public void WalkDTShy()
     {
-
+        StartCoroutine(PatrolDTShy());
     }
 
     public void WalkDTScared()
     {
-
+        StartCoroutine(PatrolDTScared());
     }
 
     // FSM Transitions
@@ -205,7 +237,47 @@ public class DecisionMaker : MonoBehaviour
         }
     }
 
-    // DTNormal Actions
+    public IEnumerator PatrolDTNormal()
+    {
+        while (true) {
+            dt_Normal.walk();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolDTBrave()
+    {
+        while (true) {
+            dt_Brave.walk();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolDTShy()
+    {
+        while (true) {
+            dt_Shy.walk();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolDTInRage()
+    {
+        while (true) {
+            dt_InRage.walk();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolDTScared()
+    {
+        while (true) {
+            dt_Scared.walk();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    // DT Actions
     public object Chase(object o)
     {
         return null;
