@@ -1113,7 +1113,7 @@
 												"$ref": "AAAAAAF+JGOWSeIB7RY="
 											},
 											"edgePosition": 1,
-											"text": "IsShy?"
+											"text": "IsShy"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1208,7 +1208,7 @@
 												"$ref": "AAAAAAF+JGO3k+IVYH4="
 											},
 											"edgePosition": 1,
-											"text": "IsNormal?"
+											"text": "IsNormal"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1303,7 +1303,7 @@
 												"$ref": "AAAAAAF+JGQcNeItL/c="
 											},
 											"edgePosition": 1,
-											"text": "IsScaraed?"
+											"text": "IsScaraed"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1398,7 +1398,7 @@
 												"$ref": "AAAAAAF+JGep9uJN1eQ="
 											},
 											"edgePosition": 1,
-											"text": "IsShy?"
+											"text": "IsShy"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1493,7 +1493,7 @@
 												"$ref": "AAAAAAF+JGg0cOJloG0="
 											},
 											"edgePosition": 1,
-											"text": "IsBrave?"
+											"text": "IsBrave"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1588,7 +1588,7 @@
 												"$ref": "AAAAAAF+JGhjpOJ6frs="
 											},
 											"edgePosition": 1,
-											"text": "IsNormal?"
+											"text": "IsNormal"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1683,7 +1683,7 @@
 												"$ref": "AAAAAAF+JGs+b+KQuO0="
 											},
 											"edgePosition": 1,
-											"text": "IsInRage?"
+											"text": "IsInRage"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1778,7 +1778,7 @@
 												"$ref": "AAAAAAF+JGuVqeKp5ss="
 											},
 											"edgePosition": 1,
-											"text": "IsBrave?"
+											"text": "IsBrave"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -2009,7 +2009,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGOWSeIAEO4="
 											},
-											"name": "IsShy?"
+											"name": "IsShy"
 										}
 									]
 								},
@@ -2032,7 +2032,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGO3jOIUMmQ="
 											},
-											"name": "IsNormal?"
+											"name": "IsNormal"
 										}
 									]
 								},
@@ -2055,7 +2055,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGQcKOIs/K4="
 											},
-											"name": "IsScaraed?"
+											"name": "IsScaraed"
 										}
 									]
 								},
@@ -2078,7 +2078,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGep9uJMZ+8="
 											},
-											"name": "IsShy?"
+											"name": "IsShy"
 										}
 									]
 								},
@@ -2101,7 +2101,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGg0cOJkEF4="
 											},
-											"name": "IsBrave?"
+											"name": "IsBrave"
 										}
 									]
 								},
@@ -2124,7 +2124,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGhjpOJ5A3k="
 											},
-											"name": "IsNormal?"
+											"name": "IsNormal"
 										}
 									]
 								},
@@ -2147,7 +2147,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGs+b+KP3Qo="
 											},
-											"name": "IsInRage?"
+											"name": "IsInRage"
 										}
 									]
 								},
@@ -2170,7 +2170,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+JGuVqeKopuM="
 											},
-											"name": "IsBrave?"
+											"name": "IsBrave"
 										}
 									]
 								}
