@@ -251,7 +251,7 @@
 											"top": 242,
 											"width": 76,
 											"height": 13,
-											"text": "Search",
+											"text": "Regroup",
 											"wordWrap": true
 										}
 									],
@@ -992,7 +992,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+IRXraQfzVD0="
 							},
-							"name": "Search"
+							"name": "Regroup"
 						},
 						{
 							"_type": "FCDecision",

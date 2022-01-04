@@ -7,14 +7,22 @@ public class DecisionMaker : MonoBehaviour
     #region Variables
     public float reactionTime = 3f; // AI FRAME
     private FSM fsm;
+
+    private DecisionTree dt_Normal;
+    private DecisionTree dt_Shy;
+    private DecisionTree dt_Brave;
+    private DecisionTree dt_InRage;
+    private DecisionTree dt_Scared;
+
     #endregion
 
     #region Unity Methods
 
     void Start()
     {
-        //Init FSM
-        FSMState normal = new FSMState();
+		#region FSM
+		//Init FSM 
+		FSMState normal = new FSMState();
         normal.stayActions.Add(WalkDTNormal);
 
         FSMState brave = new FSMState();
@@ -57,11 +65,77 @@ public class DecisionMaker : MonoBehaviour
         // Setup a FSA at initial state
         fsm = new FSM(normal);
 
-        //Init DT
+		#endregion
+
+		
+		// Actions
+		DTAction a_chase = new DTAction(Chase);
+        DTAction a_search = new DTAction(Search);
+        DTAction a_runAway = new DTAction(RunAway);
+        DTAction a_heal = new DTAction(Heal);
+        DTAction a_regroup = new DTAction(Regroup);
+        DTAction a_attack = new DTAction(Attack);
+
+        #region DT Brave
+
+        // DT Brave
+        DTDecision dbrave_1 = new DTDecision(IsHealthLow);
+        DTDecision dbrave_2 = new DTDecision(IsTargetAquired);
+        DTDecision dbrave_3 = new DTDecision(IsTargetAquired);
+        DTDecision dbrave_4 = new DTDecision(IsTargetNear);
+        DTDecision dbrave_5 = new DTDecision(IsTargetNear);
+        DTDecision dbrave_6 = new DTDecision(IsTargetInLineOfSight);
+
+        dbrave_1.AddLink(false, dbrave_2);
+        dbrave_1.AddLink(true, dbrave_3);
+
+        dbrave_2.AddLink(false, a_search);
+        dbrave_2.AddLink(true, dbrave_4);
+
+        dbrave_3.AddLink(false, a_heal);
+        dbrave_3.AddLink(true, dbrave_5);
+
+        dbrave_4.AddLink(false, a_chase);
+        dbrave_4.AddLink(true, dbrave_6);
+
+        dbrave_5.AddLink(false, a_runAway);
+        dbrave_5.AddLink(true, a_heal);
+
+        dbrave_6.AddLink(false, a_chase);
+        dbrave_6.AddLink(true, a_attack);
+
+        dt_Brave = new DecisionTree(dbrave_1);
+        #endregion
+
+        #region DT Shy
+        DTDecision dshy_1 = new DTDecision(IsHealthHigh);
+        DTDecision dshy_2 = new DTDecision(IsTargetAquired);
+        DTDecision dshy_3 = new DTDecision(IsTargetAquired);
+        DTDecision dshy_4 = new DTDecision(IsTargetNear);
+        DTDecision dshy_5 = new DTDecision(IsTargetNear);
+
+        dshy_1.AddLink(false, dshy_2);
+        dshy_1.AddLink(true, dshy_3);
+
+        dshy_2.AddLink(false, a_heal);
+        dshy_2.AddLink(true, dshy_4);
+
+        dshy_3.AddLink(false, a_regroup);
+        dshy_3.AddLink(true, dshy_5);
+
+        dshy_4.AddLink(false, a_heal);
+        dshy_4.AddLink(true, a_runAway);
+
+        dshy_5.AddLink(false, a_regroup);
+        dshy_5.AddLink(true, a_runAway);
+
+        dt_Shy = new DecisionTree(dshy_1);
+        #endregion
 
         //Init BT
 
-
+        // Start monitoring FSM
+        StartCoroutine(Patrol());
     }
 
     void Update()
@@ -72,8 +146,9 @@ public class DecisionMaker : MonoBehaviour
     // FSM Activity
     public void WalkDTNormal()
 	{
-
-	}
+        // Start patroling
+        //StartCoroutine(PatrolDTNormal());
+    }
 
     public void WalkDTBrave()
 	{
@@ -120,5 +195,70 @@ public class DecisionMaker : MonoBehaviour
     {
         return false;
     }
+
+    // Periodic update, run forever
+    public IEnumerator Patrol()
+    {
+        while (true) {
+            fsm.Update();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    // DTNormal Actions
+    public object Chase(object o)
+    {
+        return null;
+    }
+
+    public object Search(object o)
+    {
+        return null;
+    }
+
+    public object RunAway(object o)
+    {
+        return null;
+    }
+
+    public object Heal(object o)
+    {
+        return null;
+    }
+
+    public object Regroup(object o)
+    {
+        return null;
+    }
+
+    public object Attack(object o)
+	{
+        return null;
+	}
+
+    public object IsHealthLow(object o)
+    {
+        return false;
+    }
+
+    public object IsTargetAquired(object o)
+	{
+        return false;
+	}
+
+    public object IsTargetNear(object o)
+    {
+        return false;
+    }
+
+    public object IsTargetInLineOfSight(object o)
+    {
+        return false;
+    }
+
+    public object IsHealthHigh(object o)
+	{
+        return false;
+	}
     #endregion
 }
