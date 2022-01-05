@@ -53,18 +53,18 @@
 												"$ref": "AAAAAAF+CpEzS75xW6Q="
 											},
 											"font": "Arial;13;0",
-											"left": 454,
-											"top": 108,
-											"width": 60,
+											"left": 313.140380859375,
+											"top": 36,
+											"width": 98.28076171875,
 											"height": 40,
-											"text": "Is Player Near?",
+											"text": "IsTargetAquired",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 424,
-									"top": 88,
-									"width": 120,
+									"left": 264,
+									"top": 16,
+									"width": 196.5615234375,
 									"height": 80,
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpEzS75y7H0="
@@ -87,8 +87,8 @@
 												"$ref": "AAAAAAF+CpIne757oiI="
 											},
 											"font": "Arial;13;0",
-											"left": 312,
-											"top": 242,
+											"left": 144,
+											"top": 170,
 											"width": 64,
 											"height": 36,
 											"text": "Is Health Low?",
@@ -96,8 +96,8 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 280,
-									"top": 224,
+									"left": 112,
+									"top": 152,
 									"width": 128,
 									"height": 72,
 									"nameLabel": {
@@ -121,18 +121,18 @@
 												"$ref": "AAAAAAF+CpQb7L6E8E0="
 											},
 											"font": "Arial;13;0",
-											"left": 596,
-											"top": 240,
-											"width": 72,
+											"left": 509.213134765625,
+											"top": 168,
+											"width": 74.42626953125,
 											"height": 32,
-											"text": "Is Health High?",
+											"text": "IsHealthHigh",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 560,
-									"top": 224,
-									"width": 144,
+									"left": 472,
+									"top": 152,
+									"width": 148.8525390625,
 									"height": 64,
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpQb7L6FwCg="
@@ -158,8 +158,8 @@
 												"$ref": "AAAAAAF+CpRtl76Nt8E="
 											},
 											"font": "Arial;13;0",
-											"left": 384,
-											"top": 191,
+											"left": 224,
+											"top": 119,
 											"width": 31.7890625,
 											"height": 13,
 											"alpha": -0.5543076027589464,
@@ -179,55 +179,9 @@
 										"$ref": "AAAAAAF+CpEzS75xW6Q="
 									},
 									"lineStyle": 2,
-									"points": "441:167;441:224;407:224",
+									"points": "281:95;281:152;239:152",
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpRtl76QgDM="
-									}
-								},
-								{
-									"_type": "FCFlowView",
-									"_id": "AAAAAAF+CpSebb6Z/rg=",
-									"_parent": {
-										"$ref": "AAAAAAF+CpEBpb5r6qw="
-									},
-									"model": {
-										"$ref": "AAAAAAF+CpSebb6XkZA="
-									},
-									"subViews": [
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAF+CpSebb6aBcw=",
-											"_parent": {
-												"$ref": "AAAAAAF+CpSebb6Z/rg="
-											},
-											"model": {
-												"$ref": "AAAAAAF+CpSebb6XkZA="
-											},
-											"font": "Arial;13;0",
-											"left": 551,
-											"top": 192,
-											"width": 26.24755859375,
-											"height": 13,
-											"alpha": 0.6389138482337913,
-											"distance": 43.60045871318328,
-											"hostEdge": {
-												"$ref": "AAAAAAF+CpSebb6Z/rg="
-											},
-											"edgePosition": 1,
-											"text": "True"
-										}
-									],
-									"font": "Arial;13;0",
-									"head": {
-										"$ref": "AAAAAAF+CpQb7L6E8E0="
-									},
-									"tail": {
-										"$ref": "AAAAAAF+CpEzS75xW6Q="
-									},
-									"lineStyle": 2,
-									"points": "529:167;529:224;560:224",
-									"nameLabel": {
-										"$ref": "AAAAAAF+CpSebb6aBcw="
 									}
 								},
 								{
@@ -247,19 +201,19 @@
 												"$ref": "AAAAAAF+CpZkVr6l0RQ="
 											},
 											"font": "Arial;13;0",
-											"left": 712,
-											"top": 356,
-											"width": 64,
-											"height": 40,
-											"text": "Is Player Visible?",
+											"left": 658.12353515625,
+											"top": 284.25,
+											"width": 132.2470703125,
+											"height": 40.5,
+											"text": "IsTargetInLineOfSight?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 680,
-									"top": 336,
-									"width": 128,
-									"height": 80,
+									"left": 592,
+									"top": 264,
+									"width": 264.494140625,
+									"height": 81,
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpZkVr6mUdY="
 									}
@@ -284,8 +238,8 @@
 												"$ref": "AAAAAAF+CpbOxb6uXZU="
 											},
 											"font": "Arial;13;0",
-											"left": 679,
-											"top": 304,
+											"left": 591,
+											"top": 232,
 											"width": 26.24755859375,
 											"height": 13,
 											"alpha": 0.7709062815348251,
@@ -305,7 +259,7 @@
 										"$ref": "AAAAAAF+CpQb7L6E8E0="
 									},
 									"lineStyle": 2,
-									"points": "657:287;657:344;680:344",
+									"points": "569:215;569:272;592:272",
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpbOxr6xy60="
 									}
@@ -327,8 +281,8 @@
 												"$ref": "AAAAAAF+CpfPfr7JAac="
 											},
 											"font": "Arial;13;0",
-											"left": 586,
-											"top": 466,
+											"left": 562,
+											"top": 394,
 											"width": 92,
 											"height": 13,
 											"text": "Chase",
@@ -336,8 +290,8 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 576,
-									"top": 456,
+									"left": 552,
+									"top": 384,
 									"width": 112,
 									"height": 49,
 									"nameLabel": {
@@ -361,8 +315,8 @@
 												"$ref": "AAAAAAF+Cpgvb77U9Es="
 											},
 											"font": "Arial;13;0",
-											"left": 810,
-											"top": 466,
+											"left": 802,
+											"top": 394,
 											"width": 84,
 											"height": 13,
 											"text": "Attack",
@@ -370,8 +324,8 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 800,
-									"top": 456,
+									"left": 792,
+									"top": 384,
 									"width": 104,
 									"height": 49,
 									"nameLabel": {
@@ -398,8 +352,8 @@
 												"$ref": "AAAAAAF+CpiZDL7eBbk="
 											},
 											"font": "Arial;13;0",
-											"left": 806,
-											"top": 432,
+											"left": 798,
+											"top": 360,
 											"width": 26.24755859375,
 											"height": 13,
 											"alpha": 0.8353564281967133,
@@ -419,7 +373,7 @@
 										"$ref": "AAAAAAF+CpZkVr6l0RQ="
 									},
 									"lineStyle": 2,
-									"points": "781:415;781:480;800:480",
+									"points": "773:344;773:408;792:408",
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpiZEL7hvrw="
 									}
@@ -444,8 +398,8 @@
 												"$ref": "AAAAAAF+CpjVib72Zaw="
 											},
 											"font": "Arial;13;0",
-											"left": 648,
-											"top": 431,
+											"left": 624,
+											"top": 359,
 											"width": 31.7890625,
 											"height": 13,
 											"alpha": -0.8097836974215493,
@@ -465,7 +419,7 @@
 										"$ref": "AAAAAAF+CpZkVr6l0RQ="
 									},
 									"lineStyle": 2,
-									"points": "703:415;703:480;687:480",
+									"points": "679:344;679:408;663:408",
 									"nameLabel": {
 										"$ref": "AAAAAAF+CpjVib75m6A="
 									}
@@ -487,19 +441,19 @@
 												"$ref": "AAAAAAF+Cpn7F78KyhI="
 											},
 											"font": "Arial;13;0",
-											"left": 202,
-											"top": 346,
-											"width": 76,
+											"left": 18,
+											"top": 274,
+											"width": 101.16259765625,
 											"height": 13,
-											"text": "Chase",
+											"text": "GoToEnemyBase",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 192,
-									"top": 336,
-									"width": 96,
-									"height": 64,
+									"left": 8,
+									"top": 264,
+									"width": 121.16259765625,
+									"height": 57,
 									"nameLabel": {
 										"$ref": "AAAAAAF+Cpn7F78LJDk="
 									}
@@ -524,12 +478,12 @@
 												"$ref": "AAAAAAF+Cpym1r8SZVE="
 											},
 											"font": "Arial;13;0",
-											"left": 256,
-											"top": 303,
+											"left": 104,
+											"top": 223,
 											"width": 31.7890625,
 											"height": 13,
-											"alpha": -1.0201209032854273,
-											"distance": 66.88796603276258,
+											"alpha": -1.1351135954693161,
+											"distance": 63.97655820689325,
 											"hostEdge": {
 												"$ref": "AAAAAAF+Cpym1r8U6O8="
 											},
@@ -545,7 +499,7 @@
 										"$ref": "AAAAAAF+CpIne757oiI="
 									},
 									"lineStyle": 2,
-									"points": "306:295;306:367;287:367",
+									"points": "146:223;146:288;128:288",
 									"nameLabel": {
 										"$ref": "AAAAAAF+Cpym1r8V/gI="
 									}
@@ -567,8 +521,8 @@
 												"$ref": "AAAAAAF+Cp0bsb8hEMY="
 											},
 											"font": "Arial;13;0",
-											"left": 402,
-											"top": 346,
+											"left": 242,
+											"top": 274,
 											"width": 76,
 											"height": 13,
 											"text": "Heal",
@@ -576,10 +530,10 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 392,
-									"top": 336,
+									"left": 232,
+									"top": 264,
 									"width": 96,
-									"height": 64,
+									"height": 57,
 									"nameLabel": {
 										"$ref": "AAAAAAF+Cp0bsb8iV+8="
 									}
@@ -604,8 +558,8 @@
 												"$ref": "AAAAAAF+Cp1OSL8o5Uo="
 											},
 											"font": "Arial;13;0",
-											"left": 383,
-											"top": 296,
+											"left": 213,
+											"top": 224,
 											"width": 26.24755859375,
 											"height": 13,
 											"alpha": 1.149376976342745,
@@ -625,7 +579,7 @@
 										"$ref": "AAAAAAF+CpIne757oiI="
 									},
 									"lineStyle": 2,
-									"points": "370:295;370:360;392:360",
+									"points": "200:223;200:288;232:288",
 									"nameLabel": {
 										"$ref": "AAAAAAF+Cp1OSL8rh+A="
 									}
@@ -647,17 +601,17 @@
 												"$ref": "AAAAAAF+Cp6VZL88Tdk="
 											},
 											"font": "Arial;13;0",
-											"left": 522,
-											"top": 346,
+											"left": 434,
+											"top": 274,
 											"width": 68,
 											"height": 13,
-											"text": "Run Away",
+											"text": "Regroup",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 512,
-									"top": 336,
+									"left": 424,
+									"top": 264,
 									"width": 88,
 									"height": 56,
 									"nameLabel": {
@@ -684,8 +638,8 @@
 												"$ref": "AAAAAAF+Cp6zSr9D91M="
 											},
 											"font": "Arial;13;0",
-											"left": 568,
-											"top": 303,
+											"left": 480,
+											"top": 231,
 											"width": 31.7890625,
 											"height": 13,
 											"alpha": -0.7709065671291135,
@@ -705,9 +659,55 @@
 										"$ref": "AAAAAAF+CpQb7L6E8E0="
 									},
 									"lineStyle": 2,
-									"points": "618:287;618:344;599:344",
+									"points": "530:215;530:272;511:272",
 									"nameLabel": {
 										"$ref": "AAAAAAF+Cp6zSr9Gyg0="
+									}
+								},
+								{
+									"_type": "FCFlowView",
+									"_id": "AAAAAAF+Kcnl26uGa+c=",
+									"_parent": {
+										"$ref": "AAAAAAF+CpEBpb5r6qw="
+									},
+									"model": {
+										"$ref": "AAAAAAF+Kcnl2quEUMQ="
+									},
+									"subViews": [
+										{
+											"_type": "EdgeLabelView",
+											"_id": "AAAAAAF+Kcnl26uHLj0=",
+											"_parent": {
+												"$ref": "AAAAAAF+Kcnl26uGa+c="
+											},
+											"model": {
+												"$ref": "AAAAAAF+Kcnl2quEUMQ="
+											},
+											"font": "Arial;13;0",
+											"left": 447,
+											"top": 120,
+											"width": 26.24755859375,
+											"height": 13,
+											"alpha": 0.5651493296970627,
+											"distance": 48.54894437575342,
+											"hostEdge": {
+												"$ref": "AAAAAAF+Kcnl26uGa+c="
+											},
+											"edgePosition": 1,
+											"text": "True"
+										}
+									],
+									"font": "Arial;13;0",
+									"head": {
+										"$ref": "AAAAAAF+CpQb7L6E8E0="
+									},
+									"tail": {
+										"$ref": "AAAAAAF+CpEzS75xW6Q="
+									},
+									"lineStyle": 2,
+									"points": "419:95;419:152;472:152",
+									"nameLabel": {
+										"$ref": "AAAAAAF+Kcnl26uHLj0="
 									}
 								}
 							]
@@ -718,7 +718,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+CpEBpb5qjlE="
 							},
-							"name": "Is Player Near?",
+							"name": "IsTargetAquired",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
@@ -736,7 +736,7 @@
 								},
 								{
 									"_type": "FCFlow",
-									"_id": "AAAAAAF+CpSebb6XkZA=",
+									"_id": "AAAAAAF+Kcnl2quEUMQ=",
 									"_parent": {
 										"$ref": "AAAAAAF+CpEzR75vkUQ="
 									},
@@ -794,7 +794,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+CpEBpb5qjlE="
 							},
-							"name": "Is Health High?",
+							"name": "IsHealthHigh",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
@@ -832,7 +832,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+CpEBpb5qjlE="
 							},
-							"name": "Is Player Visible?",
+							"name": "IsTargetInLineOfSight?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
@@ -886,7 +886,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+CpEBpb5qjlE="
 							},
-							"name": "Chase"
+							"name": "GoToEnemyBase"
 						},
 						{
 							"_type": "FCProcess",
@@ -902,7 +902,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+CpEBpb5qjlE="
 							},
-							"name": "Run Away"
+							"name": "Regroup"
 						}
 					]
 				}

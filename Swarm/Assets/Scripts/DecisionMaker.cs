@@ -77,6 +77,7 @@ public class DecisionMaker : MonoBehaviour
         DTAction a_heal = new DTAction(Heal);
         DTAction a_regroup = new DTAction(Regroup);
         DTAction a_attack = new DTAction(Attack);
+        DTAction a_goToEnemyBase = new DTAction(GoToEnemyBase);
 
         #region DT Brave
 
@@ -154,6 +155,9 @@ public class DecisionMaker : MonoBehaviour
         #region DT Scared
         dt_Shy = new DecisionTree(a_runAway);
 
+		#endregion
+
+		#region DT Normal
 		#endregion
 
 		#endregion
@@ -304,6 +308,11 @@ public class DecisionMaker : MonoBehaviour
     }
 
     public object Attack(object o)
+	{
+        return null;
+	}
+
+    public object GoToEnemyBase(object o)
 	{
         return null;
 	}
