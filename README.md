@@ -21,7 +21,7 @@ Pathfindong: NavMesh
 
 ## Livello 1 - Emotions:
 
-The emotion is represented by a single value: emotionsValue.
+The emotion is represented by a single value: `emotionsValue`.
 Its different value will determined the emotion that the agent is feeling.
 
 FSM
