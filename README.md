@@ -1,56 +1,57 @@
 # AI4Vid_Project
 
-Esplorare il capitolo 5.5 e 5.6 del libro, su Fuzzy Logic e Markov System.
+Esploration of chapters 5.5 e 5.6 of Millingotn's book, on Fuzzy Logic e Markov System.
 
 
-In un ambiente 3D, degli agenti hanno il compito di individuare e distruggere un target. 
-Nella mappa sono situate delle basi in cui gli agenti possono curarsi.
+In a 3D environment, 2 groups of agents have to fioght each other.
+Each with a base where they can get healed.
 
 
-Comportamento agenti su Livelli:
+Agent's Beahviour on Multiple Levels:
 
-1 - Emozioni ( FSM )
+1 - Emotions ( FSM )
 
-2 - Comportamento in quell'emozione ( DT )
+2 - Behaviour while feelin that emotion ( DT )
 
-3 - Descrizione azione ( BT )
+3 - Action descriprion ( BT )
 
 	
 Pathfindong: NavMesh
 
 
-## Livello 1 - Emozioni:
+## Livello 1 - Emotions:
+
+The emotion is represented by a single value: emotionsValue.
+Its different value will determined the emotion that the agent is feeling.
 
 FSM
 
 States:
 
-  Rage
+  InRage
   Brave
   Normal
-  Suspicious
-  Fear
+  Shy
+  Scared
   
-Transitions:
+Increment EmotionValue:
 
   Markov System
-  
-  Condizione:
 
-  Le emozioni sono descritte da una singola variabile (emotionsValue) incrementata o decrementata a seconda degli eventi, con un DT.
+Emotion Evaluation:
 
   Fuzzy Logic:
 
-  Membership degree, ricavata dal valore della variabile emotionsValue
+  emotionsValue is used as a membership degree and feed to a probabilistic evaluator.
 
 
-## Livello 2 - Comportamento delle singole emozioni:
+## Lv2 2 - Behaviour while feelin that emotion :
 
 DT
 
-Uno per ogni stato della FSM - Emotions
+One for each FSM States - Emotions
 
-### Rage
+### InRage
 
 ![DTRage](https://user-images.githubusercontent.com/71270277/147860208-3a22f81c-1b0a-4faf-9176-a7a048dd8c12.png)
 
@@ -58,24 +59,25 @@ Uno per ogni stato della FSM - Emotions
 ![DTBrave](https://user-images.githubusercontent.com/71270277/147860153-ec6322ac-6f4b-4bb3-b2cb-e3e71447bec1.png)
 
 
-## Livello 3 - Descrizione delle Azioni:
+## Livello 3 - Action description:
 
 BT
 
 
-## Collaborazione e Cordinamento:
+## Collaboration and Coordination:
 
 
-### A livello 1 (emozioni):
+### At Lvl 1 (emotions):
 
-Nel momento in cui un agente provasse un'emozione estrema (fear e rage), 
-influenzerebbe anche gli alleati attorno a lui incrementando o decrementando il valore della emotionsValue.
+Whem the agent is feeling an extreme emotion (InRage or Scared),
+it will affects also nearby agents, increasing o decresing their emotion value.
+
 
 Potrei anche introdurre un cambiamento della emotionsValue a seconda del numero e dello stato di salute degli alleati circostanti.
 
 
 
-### A livello 2:
+### At Lvl 2:
 
 
 Coordinamento su un target: 
