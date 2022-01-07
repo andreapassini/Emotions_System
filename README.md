@@ -53,10 +53,23 @@ One for each FSM States - Emotions
 
 ### InRage
 
-![DTRage](https://user-images.githubusercontent.com/71270277/147860208-3a22f81c-1b0a-4faf-9176-a7a048dd8c12.png)
+![DTRage](https://user-images.githubusercontent.com/71270277/148541143-b0350a10-6dee-4d47-be7f-866b81bceab2.jpg)
 
 ### Brave
-![DTBrave](https://user-images.githubusercontent.com/71270277/147860153-ec6322ac-6f4b-4bb3-b2cb-e3e71447bec1.png)
+
+![DTBrave](https://user-images.githubusercontent.com/71270277/148541185-a8b107e1-5147-42d7-82e0-8e51c21d5ffb.jpg)
+
+### Normal
+
+![DTNormal](https://user-images.githubusercontent.com/71270277/148541042-d6dd1375-70ea-403a-80a9-5cd46fe96c0a.jpg)
+
+### Shy
+
+![DTShy](https://user-images.githubusercontent.com/71270277/148541223-1bddd4d4-bee7-4d2b-9091-a6563992a839.jpg)
+
+### Scared
+
+![DTScared](https://user-images.githubusercontent.com/71270277/148541267-de24ac51-ab99-4772-8d29-bad781eb49ef.jpg)
 
 
 ## Livello 3 - Action description:
