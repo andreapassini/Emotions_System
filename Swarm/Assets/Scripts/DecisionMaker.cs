@@ -14,6 +14,14 @@ public class DecisionMaker : MonoBehaviour
     private DecisionTree dt_InRage;
     private DecisionTree dt_Scared;
 
+    private Transform target;
+
+    public int healthHigh = 70;
+    public int healthLow = 30;
+    public int targetNear_range;
+    public int targetHealthLow;
+
+    public Transform enemyBase;
     #endregion
 
     #region Unity Methods
@@ -357,31 +365,57 @@ public class DecisionMaker : MonoBehaviour
 
     public object IsHealthLow(object o)
     {
+        if(transform.GetComponent<Health>().GetHealth() <= healthLow) {
+            return true;
+		}
         return false;
     }
 
     public object IsTargetAquired(object o)
 	{
+        if(target != enemyBase && target != null) {
+            return true;
+		}
         return false;
 	}
 
     public object IsTargetNear(object o)
     {
+        if(target != enemyBase && target != null) {
+            if(Vector3.Distance(transform.position, target.position) < targetNear_range) {
+                return true;
+            }
+		} 
         return false;
     }
 
     public object IsTargetInLineOfSight(object o)
     {
+        Vector3 ray = target.position - transform.position;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, ray, out hit)) {
+            if (hit.transform == target) {
+                return true;
+            }
+        }
         return false;
     }
 
     public object IsHealthHigh(object o)
 	{
+        if (transform.GetComponent<Health>().GetHealth() <= healthHigh) {
+            return true;
+		}
         return false;
 	}
 
     public object IsTargetHealthLow(object o)
 	{
+        if(target != enemyBase && target != null) {
+            if(target.GetComponent<Health>().GetHealth() <= targetHealthLow) {
+                return true;
+			}
+		}
         return null;
 	}
 
