@@ -53,19 +53,19 @@ One for each FSM States - Emotions
 
 ### InRage
 
-![DTRage](https://user-images.githubusercontent.com/71270277/148541143-b0350a10-6dee-4d47-be7f-866b81bceab2.jpg)
+![DTInRage](https://user-images.githubusercontent.com/71270277/148593728-540068e6-7c67-4c60-864c-e0f27b5df66d.png)
 
 ### Brave
 
-![DTBrave](https://user-images.githubusercontent.com/71270277/148541185-a8b107e1-5147-42d7-82e0-8e51c21d5ffb.jpg)
+![DTBrave](https://user-images.githubusercontent.com/71270277/148593722-ec86960a-1e75-42ff-ace9-e7cedb908197.png)
 
 ### Normal
 
-![DTNormal](https://user-images.githubusercontent.com/71270277/148541042-d6dd1375-70ea-403a-80a9-5cd46fe96c0a.jpg)
+![DTNormal](https://user-images.githubusercontent.com/71270277/148593720-b5a03cfb-8ea5-410a-99af-c272ac2f2d39.png)
 
 ### Shy
 
-![DTShy](https://user-images.githubusercontent.com/71270277/148541223-1bddd4d4-bee7-4d2b-9091-a6563992a839.jpg)
+![DTShy](https://user-images.githubusercontent.com/71270277/148593719-56b91b90-023b-40a4-a919-6bd377730303.png)
 
 ### Scared
 
