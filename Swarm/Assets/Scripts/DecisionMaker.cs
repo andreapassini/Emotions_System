@@ -73,7 +73,7 @@ public class DecisionMaker : MonoBehaviour
 		// Actions
 		DTAction a_chase = new DTAction(Chase);
         DTAction a_search = new DTAction(Search);
-        DTAction a_runAway = new DTAction(RunAway);
+        DTAction a_runaway = new DTAction(Runaway);
         DTAction a_heal = new DTAction(Heal);
         DTAction a_regroup = new DTAction(Regroup);
         DTAction a_attack = new DTAction(Attack);
@@ -101,7 +101,7 @@ public class DecisionMaker : MonoBehaviour
         dbrave_4.AddLink(false, a_chase);
         dbrave_4.AddLink(true, dbrave_6);
 
-        dbrave_5.AddLink(false, a_runAway);
+        dbrave_5.AddLink(false, a_runaway);
         dbrave_5.AddLink(true, a_heal);
 
         dbrave_6.AddLink(false, a_chase);
@@ -127,10 +127,10 @@ public class DecisionMaker : MonoBehaviour
         dshy_3.AddLink(true, dshy_5);
 
         dshy_4.AddLink(false, a_heal);
-        dshy_4.AddLink(true, a_runAway);
+        dshy_4.AddLink(true, a_runaway);
 
         dshy_5.AddLink(false, a_regroup);
-        dshy_5.AddLink(true, a_runAway);
+        dshy_5.AddLink(true, a_runaway);
 
         dt_Shy = new DecisionTree(dshy_1);
         #endregion
@@ -153,11 +153,49 @@ public class DecisionMaker : MonoBehaviour
         #endregion
 
         #region DT Scared
-        dt_Shy = new DecisionTree(a_runAway);
+        dt_Shy = new DecisionTree(a_runaway);
 
-		#endregion
+        #endregion
 
-		#region DT Normal
+        #region DT Normal
+
+        DTDecision dnormal_1 = new DTDecision(IsTargetAquired);
+        DTDecision dnormal_2 = new DTDecision(IsHealthHigh);
+        DTDecision dnormal_3 = new DTDecision(IsHealthLow);
+        DTDecision dnormal_4 = new DTDecision(IsTargetNear);
+        DTDecision dnormal_5 = new DTDecision(IsHealthLow);
+        DTDecision dnormal_6 = new DTDecision(IsHealthHigh);
+        DTDecision dnormal_7 = new DTDecision(IsHealthHigh);
+        DTDecision dnormal_8 = new DTDecision(IsHealthLow);
+        DTDecision dnormal_9 = new DTDecision(IsTargetInLineOfSight);
+        DTDecision dnormal_10 = new DTDecision(IsTargetHealthLow);
+        DTDecision dnormal_11 = new DTDecision(IsTargetInLineOfSight);
+
+        dnormal_1.AddLink(false, dnormal_2);
+        dnormal_2.AddLink(false, dnormal_3);
+        dnormal_2.AddLink(true, a_goToEnemyBase);
+        dnormal_3.AddLink(false, a_regroup);
+        dnormal_3.AddLink(true, a_heal);
+
+        dnormal_1.AddLink(true, dnormal_4);
+        dnormal_4.AddLink(false, dnormal_5);
+        dnormal_4.AddLink(true, dnormal_6);
+        dnormal_5.AddLink(false, dnormal_7);
+        dnormal_5.AddLink(true, a_heal);
+        dnormal_6.AddLink(false, dnormal_8);
+        dnormal_6.AddLink(true, dnormal_9);
+        dnormal_7.AddLink(false, a_regroup);
+        dnormal_7.AddLink(true, a_chase);
+        dnormal_8.AddLink(false, dnormal_10);
+        dnormal_8.AddLink(true, a_runaway);
+        dnormal_9.AddLink(false, a_chase);
+        dnormal_9.AddLink(true, a_attack);
+        dnormal_10.AddLink(false, a_regroup);
+        dnormal_10.AddLink(true, dnormal_11);
+        dnormal_11.AddLink(false, a_chase);
+        dnormal_11.AddLink(true, a_attack);
+
+        dt_Normal = new DecisionTree(dnormal_1);
 		#endregion
 
 		#endregion
@@ -292,7 +330,7 @@ public class DecisionMaker : MonoBehaviour
         return null;
     }
 
-    public object RunAway(object o)
+    public object Runaway(object o)
     {
         return null;
     }
@@ -341,5 +379,11 @@ public class DecisionMaker : MonoBehaviour
 	{
         return false;
 	}
+
+    public object IsTargetHealthLow(object o)
+	{
+        return null;
+	}
+
     #endregion
 }
