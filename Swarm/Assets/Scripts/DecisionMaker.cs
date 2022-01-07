@@ -5,6 +5,8 @@ using UnityEngine;
 public class DecisionMaker : MonoBehaviour
 {
     #region Variables
+    public string enemyTag;
+
     public float reactionTime = 3f; // AI FRAME
     private FSM fsm;
 
@@ -14,14 +16,21 @@ public class DecisionMaker : MonoBehaviour
     private DecisionTree dt_InRage;
     private DecisionTree dt_Scared;
 
-    private Transform target;
-
+    
+    // Internal knowledge
     public int healthHigh = 70;
     public int healthLow = 30;
-    public int targetNear_range;
+
+    //External knowledge
+    private Transform target;
+    public float targetNear_range = 3.5f;
     public int targetHealthLow;
 
+    
     public Transform enemyBase;
+    public float sightRange = 50f;
+    public float sightAngle = 45f;
+
     #endregion
 
     #region Unity Methods
@@ -375,6 +384,10 @@ public class DecisionMaker : MonoBehaviour
 	{
         if(target != enemyBase && target != null) {
             return true;
+		} else {
+			if (AquireTarget()) {
+                return true;
+			}
 		}
         return false;
 	}
@@ -419,5 +432,57 @@ public class DecisionMaker : MonoBehaviour
         return null;
 	}
 
-    #endregion
+    public bool AquireTarget()
+	{
+		//RaycastHit hit;
+		//bool leftHit = Physics.BoxCast(transform.position,
+		//								GetComponent<Collider>().bounds.extents,
+		//								Quaternion.Euler(0f, -sightAngle, 0f) * transform.forward,
+		//								out hit,
+		//								transform.rotation,
+		//								sightRange);
+
+		//bool centerHit = Physics.BoxCast(transform.position,
+		//								  GetComponent<Collider>().bounds.extents,
+		//								  transform.forward,
+		//								  out hit,
+		//								  transform.rotation,
+		//								  sightRange);
+
+		//bool rightHit = Physics.BoxCast(transform.position,
+  //                                       GetComponent<Collider>().bounds.extents,
+  //                                       Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
+  //                                       out hit,
+  //                                       transform.rotation,
+  //                                       sightRange);
+
+
+
+        // Otherwise i can calculate Angle with every target /in range
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+
+        foreach(GameObject enemy in enemies) {
+            //Check distance
+            if(Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
+
+                //Check the angle
+                if(Vector3.Angle(transform.position, enemy.transform.position) < sightAngle) {
+
+                    //Check if in line of sight
+                    Vector3 ray = target.position - transform.position;
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, ray, out hit)) {
+                        if (hit.transform.GetComponent<GameObject>().tag == enemyTag) {
+                            target = enemy.transform;
+                            return true;
+                        }
+                    }
+                }
+            }
+		}
+
+        return false;
+	}
+
+	#endregion
 }

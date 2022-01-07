@@ -939,18 +939,18 @@
 												"$ref": "AAAAAAF+HJBu0aQmpH0="
 											},
 											"font": "Arial;13;0",
-											"left": 313.140380859375,
+											"left": 316.390380859375,
 											"top": 84.25,
-											"width": 98.28076171875,
+											"width": 104.78076171875,
 											"height": 40.5,
-											"text": "IsTargetAquired?",
+											"text": "IsTargetAcquired?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 264,
 									"top": 64,
-									"width": 196.5615234375,
+									"width": 209.5615234375,
 									"height": 81,
 									"nameLabel": {
 										"$ref": "AAAAAAF+HJBu3qQncS4="
@@ -1444,7 +1444,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+HI6oX6QPxsM="
 							},
-							"name": "IsTargetAquired?",
+							"name": "IsTargetAcquired?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",

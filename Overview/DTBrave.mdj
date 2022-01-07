@@ -87,18 +87,18 @@
 												"$ref": "AAAAAAF+HJBu0aQmpH0="
 											},
 											"font": "Arial;13;0",
-											"left": 113.140380859375,
+											"left": 116.390380859375,
 											"top": 164.25,
-											"width": 98.28076171875,
+											"width": 104.78076171875,
 											"height": 40.5,
-											"text": "IsTargetAquired?",
+											"text": "IsTargetAcquired?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 64,
 									"top": 144,
-									"width": 196.5615234375,
+									"width": 209.5615234375,
 									"height": 81,
 									"nameLabel": {
 										"$ref": "AAAAAAF+HJBu3qQncS4="
@@ -349,7 +349,7 @@
 										"$ref": "AAAAAAF+HI9w+qQW11I="
 									},
 									"lineStyle": 2,
-									"points": "464:128;464:144;260:144",
+									"points": "464:128;464:144;273:144",
 									"nameLabel": {
 										"$ref": "AAAAAAF+HJaVuKSclIY="
 									}
@@ -647,18 +647,18 @@
 												"$ref": "AAAAAAF+HJ3nd6UImcg="
 											},
 											"font": "Arial;13;0",
-											"left": 697.140380859375,
+											"left": 700.390380859375,
 											"top": 164,
-											"width": 98.28076171875,
+											"width": 104.78076171875,
 											"height": 40,
-											"text": "IsTargetAquired?",
+											"text": "IsTargetAcquired?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 648,
 									"top": 144,
-									"width": 196.5615234375,
+									"width": 209.5615234375,
 									"height": 80,
 									"nameLabel": {
 										"$ref": "AAAAAAF+HJ3nd6UJA4Y="
@@ -1076,7 +1076,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+HI6oX6QPxsM="
 							},
-							"name": "IsTargetAquired?",
+							"name": "IsTargetAcquired?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
@@ -1222,7 +1222,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+HI6oX6QPxsM="
 							},
-							"name": "IsTargetAquired?",
+							"name": "IsTargetAcquired?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",

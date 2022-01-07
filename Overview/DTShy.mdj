@@ -87,18 +87,18 @@
 												"$ref": "AAAAAAF+IR3DoAgJhWE="
 											},
 											"font": "Arial;13;0",
-											"left": 201.140380859375,
+											"left": 204.390380859375,
 											"top": 148,
-											"width": 98.28076171875,
+											"width": 104.78076171875,
 											"height": 40,
-											"text": "IsTargetAquired?",
+											"text": "IsTargetAcquired?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 152,
 									"top": 128,
-									"width": 196.5615234375,
+									"width": 209.5615234375,
 									"height": 80,
 									"nameLabel": {
 										"$ref": "AAAAAAF+IR3DoAgKp6k="
@@ -121,18 +121,18 @@
 												"$ref": "AAAAAAF+IX+J0QgShEI="
 											},
 											"font": "Arial;13;0",
-											"left": 665.140380859375,
-											"top": 148.25,
-											"width": 98.28076171875,
+											"left": 668.390380859375,
+											"top": 140.25,
+											"width": 104.78076171875,
 											"height": 40.5,
-											"text": "IsTargetAquired?",
+											"text": "IsTargetAcquired?",
 											"wordWrap": true
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 616,
-									"top": 128,
-									"width": 196.5615234375,
+									"top": 120,
+									"width": 209.5615234375,
 									"height": 81,
 									"nameLabel": {
 										"$ref": "AAAAAAF+IX+J0QgTFK0="
@@ -225,7 +225,7 @@
 										"$ref": "AAAAAAF+IRhPKAf6DtY="
 									},
 									"lineStyle": 2,
-									"points": "471:96;471:128;348:128",
+									"points": "471:96;471:128;361:128",
 									"nameLabel": {
 										"$ref": "AAAAAAF+IYCqSQgzuco="
 									}
@@ -727,7 +727,7 @@
 										"$ref": "AAAAAAF+IX+J0QgShEI="
 									},
 									"lineStyle": 2,
-									"points": "688:208;688:248;639:248",
+									"points": "688:200;688:248;639:248",
 									"nameLabel": {
 										"$ref": "AAAAAAF+IYaD6AjEs2s="
 									}
@@ -773,7 +773,7 @@
 										"$ref": "AAAAAAF+IX+J0QgShEI="
 									},
 									"lineStyle": 2,
-									"points": "736:208;736:248;768:248",
+									"points": "736:200;736:248;768:248",
 									"nameLabel": {
 										"$ref": "AAAAAAF+IYacwQjPgcc="
 									}
@@ -916,7 +916,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+IRXraQfzVD0="
 							},
-							"name": "IsTargetAquired?",
+							"name": "IsTargetAcquired?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
@@ -954,7 +954,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF+IRXraQfzVD0="
 							},
-							"name": "IsTargetAquired?",
+							"name": "IsTargetAcquired?",
 							"ownedElements": [
 								{
 									"_type": "FCFlow",
