@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
+[RequireComponent(typeof(NavMeshAgent))]
 
 public class DecisionMaker : MonoBehaviour
 {
     #region Variables
-    public string enemyTag;
+    // AI FRAME
+    // i could even use different reaction time for each 
+    // structure involved
+    public float reactionTime = 3f; 
 
-    public float reactionTime = 3f; // AI FRAME
     private FSM fsm;
 
     private DecisionTree dt_Normal;
@@ -16,20 +21,23 @@ public class DecisionMaker : MonoBehaviour
     private DecisionTree dt_InRage;
     private DecisionTree dt_Scared;
 
-    
     // Internal knowledge
+    [Header("Internal knowledge")]
+    [Space]
     public int healthHigh = 70;
     public int healthLow = 30;
+    public float sightRange = 50f;
+    public float sightAngle = 45f;
+    private int emotionsValue = 150;
 
-    //External knowledge
+    // External knowledge
+    [Header("External knowledge")]
+    [Space]
     private Transform target;
     public float targetNear_range = 3.5f;
     public int targetHealthLow;
-
-    
+    public string enemyTag = "B";
     public Transform enemyBase;
-    public float sightRange = 50f;
-    public float sightAngle = 45f;
 
     #endregion
 
@@ -230,10 +238,18 @@ public class DecisionMaker : MonoBehaviour
 
     void Update()
     {
-        
+        Debug.Log(GetEmotionsValue());
+        emotionsValue += 500;
     }
 
-    // FSM Activity
+	#region EmotionValue Controller
+    public int GetEmotionsValue()
+	{
+        return emotionsValue = Mathf.Clamp(emotionsValue, 0, 300);
+    }
+    #endregion
+
+    #region FSM Activity
     public void WalkDTNormal()
 	{
         // Start patroling
@@ -261,8 +277,10 @@ public class DecisionMaker : MonoBehaviour
         StartCoroutine(PatrolDTScared());
     }
 
-    // FSM Transitions
-    public bool IsBrave()
+	#endregion
+
+	#region FSM Conditions
+	public bool IsBrave()
     {
         return false;
     }
@@ -287,8 +305,10 @@ public class DecisionMaker : MonoBehaviour
         return false;
     }
 
-    // Periodic update, run forever
-    public IEnumerator Patrol()
+	#endregion
+
+	#region Patrol
+	public IEnumerator Patrol()
     {
         while (true) {
             fsm.Update();
@@ -336,8 +356,10 @@ public class DecisionMaker : MonoBehaviour
         }
     }
 
-    // DT Actions
-    public object Chase(object o)
+	#endregion
+
+	#region DT Actions
+	public object Chase(object o)
     {
         return null;
     }
@@ -372,7 +394,10 @@ public class DecisionMaker : MonoBehaviour
         return null;
 	}
 
-    public object IsHealthLow(object o)
+	#endregion
+
+	#region DT conditions
+	public object IsHealthLow(object o)
     {
         if(transform.GetComponent<Health>().GetHealth() <= healthLow) {
             return true;
@@ -450,16 +475,16 @@ public class DecisionMaker : MonoBehaviour
 		//								  sightRange);
 
 		//bool rightHit = Physics.BoxCast(transform.position,
-  //                                       GetComponent<Collider>().bounds.extents,
-  //                                       Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
-  //                                       out hit,
-  //                                       transform.rotation,
-  //                                       sightRange);
+		//								 GetComponent<Collider>().bounds.extents,
+		//								 Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
+		//								 out hit,
+		//								 transform.rotation,
+		//								 sightRange);
 
 
 
-        // Otherwise i can calculate Angle with every target /in range
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+		// Otherwise i can calculate Angle with every target /in range
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach(GameObject enemy in enemies) {
             //Check distance
@@ -483,6 +508,8 @@ public class DecisionMaker : MonoBehaviour
 
         return false;
 	}
+
+	#endregion
 
 	#endregion
 }
