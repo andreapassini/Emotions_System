@@ -28,7 +28,9 @@ public class DecisionMaker : MonoBehaviour
     public int healthLow = 30;
     public float sightRange = 50f;
     public float sightAngle = 45f;
+
     private int emotionsValue = 150;
+    public int emotionsValue_increment = 15;
 
     // External knowledge
     [Header("External knowledge")]
@@ -238,14 +240,14 @@ public class DecisionMaker : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(GetEmotionsValue());
-        emotionsValue += 500;
+        
     }
 
 	#region EmotionValue Controller
-    public int GetEmotionsValue()
+    public void IncrementEmotionsValue(int increment)
 	{
-        return emotionsValue = Mathf.Clamp(emotionsValue, 0, 300);
+        emotionsValue += increment;
+        Mathf.Clamp(emotionsValue, 0, 300);
     }
     #endregion
 
