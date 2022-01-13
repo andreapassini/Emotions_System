@@ -20,6 +20,7 @@ public class GoToClick : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+
 			//GetComponent<NavMeshAgent>().destination = - (transform.position - target.position).normalized;
 			GetComponent<NavMeshAgent>().velocity.Set(GetComponent<NavMeshAgent>().velocity.x, GetComponent<NavMeshAgent>().velocity.y, GetComponent<NavMeshAgent>().velocity.z * 10f);
 
