@@ -16,6 +16,10 @@ public class DecisionMaker : MonoBehaviour
     // structure involved
     public float reactionTime = 3f;
     public GameObject bulletPrfab;
+    public float attackMeleeRange = 1f;
+    public int meleeDmg = 25;
+    public float dashForce = 20f;
+
     private Transform firePoint;
 
     private FSM fsm;
@@ -247,21 +251,45 @@ public class DecisionMaker : MonoBehaviour
 
 
         #region BT
-        //Runaway
+
+        #region BT Runaway
         BTAction bt_runaway_a1 = new BTAction(TurnAraound);
-        //BTAction bt_runaway_a2 = new BTAction();
+        BTAction bt_runaway_a2 = new BTAction(Run);
 
-        BTSequence bt_runaway_s1 = new BTSequence(new IBTTask[] {
-            bt_runaway_a1
-            });
+        BTSequence bt_runaway_s1 = new BTSequence(new IBTTask[] 
+        {
+            bt_runaway_a1,
+            bt_runaway_a2
+        });
+        #endregion
 
-        //Attack
+        #region BT Attack
         BTAction bt_attack_a1 = new BTAction(Shoot);
 
         BTSequence bt_attack_s1 = new BTSequence(new IBTTask[]
         {
-            bt_attack_a1, bt_attack_a1, bt_attack_a1
+            bt_attack_a1, 
+            bt_attack_a1, 
+            bt_attack_a1
         });
+
+        BTAction bt_attack_a2 = new BTAction(CreateWeapon);
+        BTAction bt_attack_a3 = new BTAction(Dash);
+        BTAction bt_attack_a4 = new BTAction(DestroyWeapon);
+
+        BTSequence bt_attack_s2 = new BTSequence(new IBTTask[]
+        {
+            bt_attack_a2,
+            bt_attack_a3,
+            bt_attack_a4
+        });
+
+        BTSelector bt_attack_s3 = new BTSelector(new IBTTask[]
+        {
+            bt_attack_s1,
+            bt_attack_s2
+        });
+        #endregion
 
         #endregion
 
@@ -269,13 +297,11 @@ public class DecisionMaker : MonoBehaviour
         StartCoroutine(Patrol());
     }
 
-    
-
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Shoot();
+            Run();
         }
     }
 
@@ -626,11 +652,25 @@ public class DecisionMaker : MonoBehaviour
 
     #endregion
 
+    #region BT Conditions
+
+
+    #endregion
+
     #region BT Actions
     public bool TurnAraound()
     {
         // Turn Away from the target
-        GetComponent<NavMeshAgent>().destination = - (transform.position - target.position);
+        transform.RotateAroundLocal(transform.up, Vector3.Angle(transform.position, target.position) + 180f);
+
+        return true;
+    }
+
+    public bool Run()
+    {
+        // Opposite direction of the vector from position to target position
+        GetComponent<NavMeshAgent>().destination = -(transform.position - target.position).normalized;
+
         return true;
     }
 
@@ -644,7 +684,42 @@ public class DecisionMaker : MonoBehaviour
         return true;
 	}
 
-	#endregion
+    public bool CreateWeapon()
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(firePoint.position, attackMeleeRange);
 
-	#endregion
+        foreach(Collider enemy in hitEnemies)
+        {
+            if(enemy.transform.tag != tag)
+            {
+                enemy.transform.GetComponent<Health>().TakeDmg(meleeDmg);
+            }
+        }
+
+        return true;
+    }
+
+    public bool DestroyWeapon()
+    {
+        return true;
+    }
+
+    public bool Dash()
+    {
+
+        return true;
+    }
+
+    #endregion
+
+    private void OnDrawGizmos()
+    {
+        if (firePoint == null)
+            return;
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(firePoint.position, attackMeleeRange);
+    }
+
+    #endregion
 }
