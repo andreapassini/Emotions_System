@@ -255,6 +255,14 @@ public class DecisionMaker : MonoBehaviour
             bt_runaway_a1
             });
 
+        //Attack
+        BTAction bt_attack_a1 = new BTAction(Shoot);
+
+        BTSequence bt_attack_s1 = new BTSequence(new IBTTask[]
+        {
+            bt_attack_a1, bt_attack_a1, bt_attack_a1
+        });
+
         #endregion
 
         // Start monitoring FSM
@@ -265,7 +273,10 @@ public class DecisionMaker : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(1))
+        {
+            Shoot();
+        }
     }
 
     #region EmotionValue Controller
@@ -628,7 +639,7 @@ public class DecisionMaker : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
-        rb.AddForce(firePoint.forward * 20f, ForceMode.Impulse);
+        rb.AddForce(firePoint.forward * 100f, ForceMode.Impulse);
 
         return true;
 	}
