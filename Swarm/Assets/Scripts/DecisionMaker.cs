@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+using CRBT;
+using System;
+
 [RequireComponent(typeof(NavMeshAgent))]
 
 public class DecisionMaker : MonoBehaviour
@@ -11,7 +14,10 @@ public class DecisionMaker : MonoBehaviour
     // AI FRAME
     // i could even use different reaction time for each 
     // structure involved
-    public float reactionTime = 3f; 
+    public float reactionTime = 3f;
+    public GameObject bulletPrfab;
+    public float bulletForce = 20f;
+    private Transform firePoint;
 
     private FSM fsm;
 
@@ -20,6 +26,14 @@ public class DecisionMaker : MonoBehaviour
     private DecisionTree dt_Brave;
     private DecisionTree dt_InRage;
     private DecisionTree dt_Scared;
+
+    private BehaviorTree bt_Search;
+    private BehaviorTree bt_Heal;
+    private BehaviorTree bt_Regroup;
+    private BehaviorTree bt_Attack;
+    private BehaviorTree bt_Chase;
+    private BehaviorTree bt_Runaway;
+
 
     // Internal knowledge
     [Header("Internal knowledge")]
@@ -47,9 +61,12 @@ public class DecisionMaker : MonoBehaviour
 
     void Start()
     {
-		#region FSM
-		//Init FSM 
-		FSMState normal = new FSMState();
+        // Get the Child
+        firePoint = transform.GetChild(0);
+
+        #region FSM
+        //Init FSM 
+        FSMState normal = new FSMState();
         normal.stayActions.Add(WalkDTNormal);
 
         FSMState brave = new FSMState();
@@ -57,12 +74,14 @@ public class DecisionMaker : MonoBehaviour
 
         FSMState inRage = new FSMState();
         inRage.stayActions.Add(WalkDTInRage);
+        inRage.stayActions.Add(SpreadInRage);
 
         FSMState shy = new FSMState();
         shy.stayActions.Add(WalkDTShy);
 
         FSMState scared = new FSMState();
         scared.stayActions.Add(WalkDTScared);
+        scared.stayActions.Add(SpreadScared);
 
         // FSM Transitions
         FSMTransition t1 = new FSMTransition(IsBrave); // Normal to Brave
@@ -81,7 +100,7 @@ public class DecisionMaker : MonoBehaviour
 
         brave.AddTransition(t3, normal);
         brave.AddTransition(t5, inRage);
-        
+
         shy.AddTransition(t4, normal);
         shy.AddTransition(t6, scared);
 
@@ -92,13 +111,13 @@ public class DecisionMaker : MonoBehaviour
         // Setup a FSA at initial state
         fsm = new FSM(normal);
 
-		#endregion
+        #endregion
 
 
-		#region DT
+        #region DT
 
-		// Actions
-		DTAction a_chase = new DTAction(Chase);
+        // Actions
+        DTAction a_chase = new DTAction(Chase);
         DTAction a_search = new DTAction(Search);
         DTAction a_runaway = new DTAction(Runaway);
         DTAction a_heal = new DTAction(Heal);
@@ -223,29 +242,36 @@ public class DecisionMaker : MonoBehaviour
         dnormal_11.AddLink(true, a_attack);
 
         dt_Normal = new DecisionTree(dnormal_1);
-		#endregion
+        #endregion
 
-		#endregion
-
-
-		#region BT
+        #endregion
 
 
+        #region BT
+        //Runaway
+        BTAction bt_runaway_a1 = new BTAction(TurnAraound);
+        //BTAction bt_runaway_a2 = new BTAction();
 
-		#endregion
+        BTSequence bt_runaway_s1 = new BTSequence(new IBTTask[] {
+            bt_runaway_a1
+            });
 
-		// Start monitoring FSM
-		StartCoroutine(Patrol());
+        #endregion
+
+        // Start monitoring FSM
+        StartCoroutine(Patrol());
     }
+
+    
 
     void Update()
     {
-        
+
     }
 
-	#region EmotionValue Controller
-    public void IncrementEmotionsValue(int increment)
-	{
+    #region EmotionValue Controller
+    public void IncreaseEmotionsValue(int increment)
+    {
         emotionsValue += increment;
         Mathf.Clamp(emotionsValue, 0, 300);
     }
@@ -253,13 +279,13 @@ public class DecisionMaker : MonoBehaviour
 
     #region FSM Activity
     public void WalkDTNormal()
-	{
+    {
         // Start patroling
         StartCoroutine(PatrolDTNormal());
     }
 
     public void WalkDTBrave()
-	{
+    {
         // Start patroling
         StartCoroutine(PatrolDTBrave());
     }
@@ -279,10 +305,28 @@ public class DecisionMaker : MonoBehaviour
         StartCoroutine(PatrolDTScared());
     }
 
-	#endregion
+    public void SpreadInRage()
+    {
+        foreach (GameObject ally in GameObject.FindGameObjectsWithTag(tag)) {
+            if (Vector3.Distance(transform.position, ally.transform.position) < sightRange) {
+                ally.GetComponent<DecisionMaker>().IncreaseEmotionsValue(emotionsValue_increment);
+            }
+        }
+    }
 
-	#region FSM Conditions
-	public bool IsBrave()
+    public void SpreadScared()
+    {
+        foreach (GameObject ally in GameObject.FindGameObjectsWithTag(tag)) {
+            if (Vector3.Distance(transform.position, ally.transform.position) < sightRange) {
+                ally.GetComponent<DecisionMaker>().IncreaseEmotionsValue(-emotionsValue_increment);
+            }
+        }
+    }
+
+    #endregion
+
+    #region FSM Conditions
+    public bool IsBrave()
     {
         return false;
     }
@@ -307,10 +351,10 @@ public class DecisionMaker : MonoBehaviour
         return false;
     }
 
-	#endregion
+    #endregion
 
-	#region Patrol
-	public IEnumerator Patrol()
+    #region Patrol
+    public IEnumerator Patrol()
     {
         while (true) {
             fsm.Update();
@@ -318,6 +362,7 @@ public class DecisionMaker : MonoBehaviour
         }
     }
 
+    // DT
     public IEnumerator PatrolDTNormal()
     {
         while (true) {
@@ -358,74 +403,132 @@ public class DecisionMaker : MonoBehaviour
         }
     }
 
-	#endregion
-
-	#region DT Actions
-	public object Chase(object o)
+    // BT
+    public IEnumerator PatrolBTSearch()
     {
+        while (bt_Search.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolBTHeal()
+    {
+        while (bt_Heal.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolBTRegroup()
+    {
+        while (bt_Regroup.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolBTAttack()
+    {
+        while (bt_Attack.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PatrolBTChase()
+    {
+        while (bt_Chase.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    public IEnumerator PartolBTRunaway()
+    {
+        while (bt_Runaway.Step()) {
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    #endregion
+
+    #region DT Actions
+    public object Chase(object o)
+    {
+        // Start patroling
+        StartCoroutine(PatrolBTChase());
         return null;
     }
 
+    // BT
     public object Search(object o)
     {
+        // Start patroling
+        StartCoroutine(PatrolBTSearch());
         return null;
     }
 
     public object Runaway(object o)
     {
+        // Start patroling
+        StartCoroutine(PartolBTRunaway());
         return null;
     }
 
+    // BT
     public object Heal(object o)
     {
+        // Start patroling
+        StartCoroutine(PatrolBTHeal());
         return null;
     }
 
+    // BT
     public object Regroup(object o)
     {
+        // Start patroling
+        StartCoroutine(PatrolBTRegroup());
         return null;
     }
 
+    //BT
     public object Attack(object o)
-	{
+    {
+        // Start patroling
+        StartCoroutine(PatrolBTAttack());
         return null;
-	}
+    }
 
     public object GoToEnemyBase(object o)
-	{
-        return null;
-	}
-
-	#endregion
-
-	#region DT conditions
-	public object IsHealthLow(object o)
     {
-        if(transform.GetComponent<Health>().GetHealth() <= healthLow) {
+        return null;
+    }
+
+    #endregion
+
+    #region DT Conditions
+    public object IsHealthLow(object o)
+    {
+        if (transform.GetComponent<Health>().GetHealth() <= healthLow) {
             return true;
-		}
+        }
         return false;
     }
 
     public object IsTargetAquired(object o)
-	{
-        if(target != enemyBase && target != null) {
+    {
+        if (target != enemyBase && target != null && Vector3.Distance(transform.position, target.position) <= sightRange * 2) {
             return true;
-		} else {
-			if (AquireTarget()) {
-                return true;
-			}
-		}
+        } else if (AquireTarget()) {
+            return true;
+        }
+        target = enemyBase;
         return false;
-	}
+    }
 
     public object IsTargetNear(object o)
     {
-        if(target != enemyBase && target != null) {
-            if(Vector3.Distance(transform.position, target.position) < targetNear_range) {
+        if (target != enemyBase && target != null) {
+            if (Vector3.Distance(transform.position, target.position) < targetNear_range) {
                 return true;
             }
-		} 
+        }
         return false;
     }
 
@@ -442,58 +545,58 @@ public class DecisionMaker : MonoBehaviour
     }
 
     public object IsHealthHigh(object o)
-	{
+    {
         if (transform.GetComponent<Health>().GetHealth() <= healthHigh) {
             return true;
-		}
+        }
         return false;
-	}
+    }
 
     public object IsTargetHealthLow(object o)
-	{
-        if(target != enemyBase && target != null) {
-            if(target.GetComponent<Health>().GetHealth() <= targetHealthLow) {
+    {
+        if (target != enemyBase && target != null) {
+            if (target.GetComponent<Health>().GetHealth() <= targetHealthLow) {
                 return true;
-			}
-		}
+            }
+        }
         return null;
-	}
+    }
 
     public bool AquireTarget()
-	{
-		//RaycastHit hit;
-		//bool leftHit = Physics.BoxCast(transform.position,
-		//								GetComponent<Collider>().bounds.extents,
-		//								Quaternion.Euler(0f, -sightAngle, 0f) * transform.forward,
-		//								out hit,
-		//								transform.rotation,
-		//								sightRange);
+    {
+        //RaycastHit hit;
+        //bool leftHit = Physics.BoxCast(transform.position,
+        //								GetComponent<Collider>().bounds.extents,
+        //								Quaternion.Euler(0f, -sightAngle, 0f) * transform.forward,
+        //								out hit,
+        //								transform.rotation,
+        //								sightRange);
 
-		//bool centerHit = Physics.BoxCast(transform.position,
-		//								  GetComponent<Collider>().bounds.extents,
-		//								  transform.forward,
-		//								  out hit,
-		//								  transform.rotation,
-		//								  sightRange);
+        //bool centerHit = Physics.BoxCast(transform.position,
+        //								  GetComponent<Collider>().bounds.extents,
+        //								  transform.forward,
+        //								  out hit,
+        //								  transform.rotation,
+        //								  sightRange);
 
-		//bool rightHit = Physics.BoxCast(transform.position,
-		//								 GetComponent<Collider>().bounds.extents,
-		//								 Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
-		//								 out hit,
-		//								 transform.rotation,
-		//								 sightRange);
+        //bool rightHit = Physics.BoxCast(transform.position,
+        //								 GetComponent<Collider>().bounds.extents,
+        //								 Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
+        //								 out hit,
+        //								 transform.rotation,
+        //								 sightRange);
 
 
 
-		// Otherwise i can calculate Angle with every target /in range
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        // Otherwise i can calculate Angle with every target /in range
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
-        foreach(GameObject enemy in enemies) {
+        foreach (GameObject enemy in enemies) {
             //Check distance
-            if(Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
+            if (Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
 
                 //Check the angle
-                if(Vector3.Angle(transform.position, enemy.transform.position) < sightAngle) {
+                if (Vector3.Angle(transform.position, enemy.transform.position) < sightAngle) {
 
                     //Check if in line of sight
                     Vector3 ray = target.position - transform.position;
@@ -506,9 +609,29 @@ public class DecisionMaker : MonoBehaviour
                     }
                 }
             }
-		}
+        }
 
         return false;
+    }
+
+    #endregion
+
+    #region BT Actions
+    public bool TurnAraound()
+    {
+        // Turn Away from the target
+        GetComponent<NavMeshAgent>().destination = -(transform.position - target.position);
+        return true;
+    }
+
+    public bool Shoot()
+	{
+        GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+        rb.AddForce(firePoint.up * bulletForce, ForceMode.Impulse);
+
+        return true;
 	}
 
 	#endregion
