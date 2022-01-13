@@ -16,7 +16,6 @@ public class DecisionMaker : MonoBehaviour
     // structure involved
     public float reactionTime = 3f;
     public GameObject bulletPrfab;
-    public float bulletForce = 20f;
     private Transform firePoint;
 
     private FSM fsm;
@@ -620,7 +619,7 @@ public class DecisionMaker : MonoBehaviour
     public bool TurnAraound()
     {
         // Turn Away from the target
-        GetComponent<NavMeshAgent>().destination = -(transform.position - target.position);
+        GetComponent<NavMeshAgent>().destination = - (transform.position - target.position);
         return true;
     }
 
@@ -629,7 +628,7 @@ public class DecisionMaker : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
-        rb.AddForce(firePoint.up * bulletForce, ForceMode.Impulse);
+        rb.AddForce(firePoint.forward * 20f, ForceMode.Impulse);
 
         return true;
 	}
