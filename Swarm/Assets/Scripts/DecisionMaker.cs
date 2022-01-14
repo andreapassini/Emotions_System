@@ -58,6 +58,12 @@ public class DecisionMaker : MonoBehaviour
     public string enemyTag = "B";
     public Transform enemyBase;
 
+    private bool isDashing;
+    private float speed;
+    private float acceleration;
+    public float dashTime = 100f;
+    public float dashSpeed = 1.1f;
+
     #endregion
 
     #region Unity Methods
@@ -482,6 +488,20 @@ public class DecisionMaker : MonoBehaviour
         }
     }
 
+    public IEnumerator PatrolDash()
+    {
+        if (!isDashing)
+            StopCoroutine(PatrolDash());
+
+        yield return new WaitForSeconds(dashTime * 2.5f);
+
+        GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+        GetComponent<NavMeshAgent>().ResetPath();
+        GetComponent<NavMeshAgent>().speed = speed;
+        GetComponent<NavMeshAgent>().acceleration = acceleration;
+        isDashing = false;
+    }
+
     #endregion
 
     #region DT Actions
@@ -704,10 +724,17 @@ public class DecisionMaker : MonoBehaviour
         return true;
     }
 
-    public bool Dash()
+    public void Dash()
     {
-
-        return true;
+        speed = GetComponent<NavMeshAgent>().speed;
+        acceleration = GetComponent<NavMeshAgent>().acceleration;
+        if (!isDashing)
+        {
+            isDashing = true;
+            GetComponent<NavMeshAgent>().speed += 200f;
+            GetComponent<NavMeshAgent>().acceleration += 200f;
+        }
+        StartCoroutine(PatrolDash());
     }
 
     #endregion
