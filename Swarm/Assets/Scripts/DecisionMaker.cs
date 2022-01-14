@@ -724,7 +724,7 @@ public class DecisionMaker : MonoBehaviour
         return true;
     }
 
-    public void Dash()
+    public bool Dash()
     {
         speed = GetComponent<NavMeshAgent>().speed;
         acceleration = GetComponent<NavMeshAgent>().acceleration;
@@ -735,6 +735,8 @@ public class DecisionMaker : MonoBehaviour
             GetComponent<NavMeshAgent>().acceleration += 200f;
         }
         StartCoroutine(PatrolDash());
+
+        return true;
     }
 
     #endregion
