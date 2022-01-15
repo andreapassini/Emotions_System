@@ -12,18 +12,13 @@ public class GoToClick : MonoBehaviour
 	public float dashTime = 100f;
 	public float dashSpeed = 1.1f;
 
-	private bool isDashing;
-
-    private float speed;
-    private float acceleration;
+	private Transform firePoint;
 
     private void Start()
     {
-		this.isDashing = false;
-        speed = GetComponent<NavMeshAgent>().speed;
-        acceleration = GetComponent<NavMeshAgent>().acceleration;
-
-    }
+		// Get the Child
+		firePoint = transform.GetChild(0);
+	}
 
     void Update()
 	{
@@ -33,6 +28,13 @@ public class GoToClick : MonoBehaviour
 			if (Physics.Raycast(ray, out hit)) {
 				GetComponent<NavMeshAgent>().destination = hit.point;
 			}
+		}
+
+		if (Input.GetMouseButton(1)) {
+			GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
+			Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+			rb.AddForce(firePoint.forward * 100f, ForceMode.Impulse);
 		}
     }
 }

@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 5873032337763360388}
   - component: {fileID: 5873032337763360389}
   - component: {fileID: 5873032337763360390}
+  - component: {fileID: 1402759169}
+  - component: {fileID: 1402759170}
+  - component: {fileID: 1402759171}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -28,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5873032337763360391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.6, y: 2.6, z: 2.6}
   m_Children:
   - {fileID: 3790185349828853164}
   m_Father: {fileID: 0}
@@ -54,8 +57,8 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -96,6 +99,72 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1402759169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b32c6907d26d64eb081a98d77d618e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
+  dashTime: 100
+  dashSpeed: 1.1
+--- !u!195 &1402759170
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1402759171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4046f5b1ff510724ba5c9799c376f4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionTime: 3
+  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
+  attackMeleeRange: 1.5
+  meleeDmg: 25
+  dashForce: 20
+  healthHigh: 70
+  healthLow: 30
+  sightRange: 50
+  sightAngle: 45
+  emotionsValue_increment: 15
+  targetNear_range: 0
+  targetHealthLow: 30
+  enemyTag: B
+  enemyBase: {fileID: 0}
+  dashTime: 100
+  dashSpeed: 1.1
 --- !u!1 &7186660184586969268
 GameObject:
   m_ObjectHideFlags: 0

@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: e080c84b32ec4ea4a94f7f5a4cf75741, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a61bbc6cba5a2ee4fad1769960faa95d, type: 2}
 --- !u!1 &26492039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,73 +1926,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1402759168 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5873032337763360391, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-  m_PrefabInstance: {fileID: 5873032336934188679}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1402759169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402759168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b32c6907d26d64eb081a98d77d618e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 26492040}
-  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
---- !u!195 &1402759170
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402759168}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 10
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &1402759171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402759168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4046f5b1ff510724ba5c9799c376f4c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactionTime: 3
-  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
-  attackMeleeRange: 1.5
-  meleeDmg: 25
-  dashForce: 20
-  healthHigh: 70
-  healthLow: 30
-  sightRange: 50
-  sightAngle: 45
-  emotionsValue_increment: 15
-  targetNear_range: 0
-  targetHealthLow: 30
-  enemyTag: B
-  enemyBase: {fileID: 0}
 --- !u!1 &1951427683
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,6 +2374,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1402759169, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 26492040}
     - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2483,30 +2420,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360389, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360389, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873032337763360389, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
-      propertyPath: m_ReflectionProbeUsage
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5873032337763360391, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
