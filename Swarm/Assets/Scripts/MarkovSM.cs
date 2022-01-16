@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // Defer function to trigger activation condition
 // Returns true when transition can fire
@@ -20,7 +21,7 @@ public class MarkovSMTransition
     // A list of actions to perform when this transition fires
     public List<MarkovSMAction> myActions = new List<MarkovSMAction>();
 
-    public MarkovSMTransition(MarkovSMCondition condition, float[][] matrix, MarkovSMAction[] actions)
+    public MarkovSMTransition(MarkovSMCondition condition, float[][] matrix, MarkovSMAction[] actions = null)
     {
 		myMatrix = matrix;
         myCondition = condition;
@@ -34,14 +35,14 @@ public class MarkovSMTransition
     }
 }
 
-public class MarkovState
+public class MarkovSMState
 {
     // A dictionary of transitions and the states they are leading to
     private List<MarkovSMTransition> links;
 
 	public float[] myStateVector;
 
-	public MarkovState(float[] stateVector)
+	public MarkovSMState(float[] stateVector)
 	{
 		links = new List<MarkovSMTransition>();
 		myStateVector = new float[5];
@@ -65,9 +66,9 @@ public class MarkovState
 public class MarkovSM
 {
 	// Current state
-	public MarkovState current;
+	public MarkovSMState current;
 
-	public MarkovSM(MarkovState state)
+	public MarkovSM(MarkovSMState state)
 	{
 		current = state;
 	}

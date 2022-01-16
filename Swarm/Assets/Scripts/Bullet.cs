@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     public float destroyBulletAfterTime = 3f;
 
+    public int damage = 20;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +20,9 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnTriggerEnter()
-    {
+	private void OnCollisionEnter(Collision collision)
+	{
+        collision.transform.GetComponent<Health>().TakeDmg(damage);
         Destroy(gameObject);
     }
 }

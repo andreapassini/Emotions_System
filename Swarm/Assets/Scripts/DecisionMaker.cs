@@ -41,8 +41,6 @@ public class DecisionMaker : MonoBehaviour
     // Internal knowledge
     [Header("Internal knowledge")]
     [Space]
-    public int healthHigh = 70;
-    public int healthLow = 30;
     public float sightRange = 50f;
     public float sightAngle = 45f;
 
@@ -620,31 +618,7 @@ public class DecisionMaker : MonoBehaviour
 
     public bool AquireTarget()
     {
-        //RaycastHit hit;
-        //bool leftHit = Physics.BoxCast(transform.position,
-        //								GetComponent<Collider>().bounds.extents,
-        //								Quaternion.Euler(0f, -sightAngle, 0f) * transform.forward,
-        //								out hit,
-        //								transform.rotation,
-        //								sightRange);
-
-        //bool centerHit = Physics.BoxCast(transform.position,
-        //								  GetComponent<Collider>().bounds.extents,
-        //								  transform.forward,
-        //								  out hit,
-        //								  transform.rotation,
-        //								  sightRange);
-
-        //bool rightHit = Physics.BoxCast(transform.position,
-        //								 GetComponent<Collider>().bounds.extents,
-        //								 Quaternion.Euler(0f, sightAngle, 0f) * transform.forward,
-        //								 out hit,
-        //								 transform.rotation,
-        //								 sightRange);
-
-
-
-        // Otherwise i can calculate Angle with every target /in range
+        // I can calculate Angle with every target /in range
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject enemy in enemies) {
