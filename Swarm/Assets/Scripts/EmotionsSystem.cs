@@ -46,20 +46,6 @@ public class EmotionsSystem : MonoBehaviour
     {
     }
 
-    public void Multiply(float[][] _matrix)
-	{
-        float[] vector = new float[5];
-
-        for (int i=0; i < 5; i++) {
-            for(int j=0; j<5; j++) {
-                vector[i] += _matrix[i][j] * stateVector[j];
-			}
-            Debug.Log(i + " - " + vector[i]);
-        }
-
-        stateVector = vector;
-	}
-
     public void TransitionMatrixRageInit()
 	{
         rageMatrix = new float[5][];
