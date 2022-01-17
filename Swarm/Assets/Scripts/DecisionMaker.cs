@@ -368,27 +368,27 @@ public class DecisionMaker : MonoBehaviour
     #region FSM Conditions
     public bool IsBrave()
     {
-        return false;
+        return GetComponent<EmotionsSystem>().Brave();
     }
 
     public bool IsNormal()
     {
-        return false;
+        return GetComponent<EmotionsSystem>().Normal();
     }
 
     public bool IsShy()
     {
-        return false;
+        return GetComponent<EmotionsSystem>().Shy();
     }
 
     public bool IsInRage()
     {
-        return false;
+        return GetComponent<EmotionsSystem>().InRage();
     }
 
     public bool IsScared()
     {
-        return false;
+        return GetComponent<EmotionsSystem>().Scared();
     }
 
     #endregion
@@ -559,7 +559,7 @@ public class DecisionMaker : MonoBehaviour
     #region DT Conditions
     public object IsHealthLow(object o)
     {
-        if (transform.GetComponent<Health>().GetHealth() <= healthLow) {
+        if (transform.GetComponent<Health>().IsHealthLow()) {
             return true;
         }
         return false;
@@ -600,9 +600,8 @@ public class DecisionMaker : MonoBehaviour
 
     public object IsHealthHigh(object o)
     {
-        if (transform.GetComponent<Health>().GetHealth() <= healthHigh) {
+        if (transform.GetComponent<Health>().IsHealthHig())
             return true;
-        }
         return false;
     }
 

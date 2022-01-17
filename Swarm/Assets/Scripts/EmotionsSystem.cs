@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class EmotionsSystem : MonoBehaviour
 
     public bool scared = false;
     public bool inRage = false;
+
+    public float reactionTime = 3f;
     #endregion
 
     #region Unity Methods
@@ -78,24 +81,34 @@ public class EmotionsSystem : MonoBehaviour
         markovSMState.AddTransition(m_t4);
 
         MarkovSM markovSM = new MarkovSM(markovSMState);
+
+        StartCoroutine(Patrol());
     }
 
-    void Update()
+	void Update()
     {
 
     }
 
-	#region Matrix
-	public void TransitionMatrixDefaultInit()
+    public IEnumerator Patrol()
+    {
+        while (true) {
+            markovSM.Update();
+            yield return new WaitForSeconds(reactionTime);
+        }
+    }
+
+    #region Matrix
+    public void TransitionMatrixDefaultInit()
     {
         // Declare a jagged array.
         defaultMatrix = new float[5][];
 
-        defaultMatrix[0] = new float[5] { 1.0f, 0.1f, 0.1f, 0.1f, 0.1f };
-        defaultMatrix[1] = new float[5] { 0.1f, 1.0f, 0.1f, 0.1f, 0.1f };
-        defaultMatrix[2] = new float[5] { 0.1f, 0.1f, 1.0f, 0.1f, 0.1f };
-        defaultMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 1.0f, 0.1f };
-        defaultMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 1.0f };
+        defaultMatrix[0] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+        defaultMatrix[1] = new float[5] { 0.1f, 0.1f, 0.2f, 0.1f, 0.1f };
+        defaultMatrix[2] = new float[5] { 0.1f, 0.5f, 1.0f, 0.5f, 0.1f };
+        defaultMatrix[3] = new float[5] { 0.1f, 0.1f, 0.2f, 0.1f, 0.1f };
+        defaultMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
     }
 
     public void TransitionMatrixRageInit()
@@ -116,8 +129,30 @@ public class EmotionsSystem : MonoBehaviour
         scaredMatrix[0] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
         scaredMatrix[1] = new float[5] { 0.1f, 0.7f, 0.7f, 0.0f, 0.0f };
         scaredMatrix[2] = new float[5] { 0.1f, 0.1f, 0.0f, 0.1f, 0.1f };
-        scaredMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.0f, 0.1f };
-        scaredMatrix[4] = new float[5] { 0.8f, 0.8f, 0.8f, 0.8f, 0.8f };
+        scaredMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.0f, 0.5f };
+        scaredMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.3f, 1.0f };
+    }
+
+    public void TransitionMatrixBraveInit()
+    {
+        braveMatrix = new float[5][];
+
+        braveMatrix[0] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
+        braveMatrix[1] = new float[5] { 0.3f, 1.0f, 0.1f, 0.1f, 0.1f };
+        braveMatrix[2] = new float[5] { 0.3f, 0.1f, 0.1f, 0.1f, 0.1f };
+        braveMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+        braveMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+    }
+
+    public void TransitionMatrixShyInit()
+    {
+        shyMatrix = new float[5][];
+
+        shyMatrix[0] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
+        shyMatrix[1] = new float[5] { 0.3f, 1.0f, 0.1f, 0.1f, 0.1f };
+        shyMatrix[2] = new float[5] { 0.3f, 0.1f, 0.1f, 0.1f, 0.1f };
+        shyMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 1.0f, 0.3f };
+        shyMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.5f };
     }
     #endregion
 
@@ -186,6 +221,7 @@ public class EmotionsSystem : MonoBehaviour
             return true;
         return false;
 	}
+
 	#endregion
 
 
@@ -206,5 +242,58 @@ public class EmotionsSystem : MonoBehaviour
 	}
 	#endregion
 
-	#endregion
+	#region Emotions Evaluation
+    public bool InRage()
+	{
+        if (ToPercentage(Total(), stateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
+            return true;
+        return false;
+	}
+
+
+    public bool Brave()
+	{
+        if (ToPercentage(Total(), stateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
+            return true;
+        return false;
+    }
+
+    public bool Normal()
+    {
+        if (ToPercentage(Total(), stateVector[2]) >= UnityEngine.Random.Range(0f, 100f))
+            return true;
+        return false;
+    }
+
+    public bool Shy()
+    {
+        if (ToPercentage(Total(), stateVector[3]) >= UnityEngine.Random.Range(0f, 100f))
+            return true;
+        return false;
+    }
+
+    public bool Scared()
+    {
+        if (ToPercentage(Total(), stateVector[4]) >= UnityEngine.Random.Range(0f, 100f))
+            return true;
+        return false;
+    }
+    #endregion
+
+    public float ToPercentage(float tot, float a)
+	{
+        float x = (100 * a)/tot;
+        return x;
+	}
+
+    public float Total()
+	{
+        float total = 0f;
+        foreach (float a in stateVector) {
+            total += a;
+        }
+
+        return total;
+    }
+    #endregion
 }

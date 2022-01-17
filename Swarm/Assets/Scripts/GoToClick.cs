@@ -61,8 +61,8 @@ public class GoToClick : MonoBehaviour
 	{
 		mat = new float[5][];
 
-		mat[0] = new float[5] { 1.0f, 0.1f, 0.1f, 0.1f, 0.1f };
-		mat[1] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
+		mat[0] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
+		mat[1] = new float[5] { 0.3f, 1.0f, 0.1f, 0.1f, 0.1f };
 		mat[2] = new float[5] { 0.3f, 0.1f, 0.1f, 0.1f, 0.1f };
 		mat[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
 		mat[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
