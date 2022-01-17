@@ -54,6 +54,7 @@ public class DecisionMaker : MonoBehaviour
     public float targetNear_range = 3.5f;
     public int targetHealthLow;
     public string enemyTag = "B";
+    public Transform alliesBase;
     public Transform enemyBase;
 
     private bool isDashing;
@@ -61,6 +62,9 @@ public class DecisionMaker : MonoBehaviour
     private float acceleration;
     public float dashTime = 100f;
     public float dashSpeed = 1.1f;
+
+    private Transform startingDashPoint;
+    private Transform allyPosition;
 
     #endregion
 
@@ -80,15 +84,15 @@ public class DecisionMaker : MonoBehaviour
         brave.stayActions.Add(WalkDTBrave);
 
         FSMState inRage = new FSMState();
-        inRage.stayActions.Add(WalkDTInRage);
         inRage.stayActions.Add(SpreadInRage);
+        inRage.stayActions.Add(WalkDTInRage);
 
         FSMState shy = new FSMState();
         shy.stayActions.Add(WalkDTShy);
 
         FSMState scared = new FSMState();
-        scared.stayActions.Add(WalkDTScared);
         scared.stayActions.Add(SpreadScared);
+        scared.stayActions.Add(WalkDTScared);
 
         // FSM Transitions
         FSMTransition t1 = new FSMTransition(IsBrave); // Normal to Brave
@@ -265,6 +269,8 @@ public class DecisionMaker : MonoBehaviour
             bt_runaway_a1,
             bt_runaway_a2
         });
+
+        bt_Runaway = new BehaviorTree(bt_runaway_s1);
         #endregion
 
         #region BT Attack
@@ -277,9 +283,9 @@ public class DecisionMaker : MonoBehaviour
             bt_attack_a1
         });
 
-        BTAction bt_attack_a2 = new BTAction(CreateWeapon);
-        BTAction bt_attack_a3 = new BTAction(Dash);
-        BTAction bt_attack_a4 = new BTAction(DestroyWeapon);
+        BTAction bt_attack_a2 = new BTAction(Dash);
+        BTAction bt_attack_a3 = new BTAction(CreateWeapon);
+        BTAction bt_attack_a4 = new BTAction(DashBack);
 
         BTSequence bt_attack_s2 = new BTSequence(new IBTTask[]
         {
@@ -293,15 +299,50 @@ public class DecisionMaker : MonoBehaviour
             bt_attack_s1,
             bt_attack_s2
         });
+
+        bt_Attack = new BehaviorTree(bt_attack_s3);
         #endregion
 
+        #region BT Regroup
+        BTAction bt_regroup_a1 = new BTAction(FindAlly);
+        BTAction bt_regroup_a2 = new BTAction(GoToAlly);
+
+        BTSequence bt_regroup_s1 = new BTSequence(new IBTTask[]
+        {
+            bt_regroup_a1,
+            bt_regroup_a2
+        });
+
+        bt_Regroup = new BehaviorTree(bt_regroup_s1);
         #endregion
 
-        // Start monitoring FSM
-        StartCoroutine(Patrol());
+        #region BT Heal
+        BTAction bt_heal_a1 = new BTAction(GoBackToBase);
+        BTCondition bt_heal_c1 = new BTCondition(IsHealthNotHigh);
+
+        BTSequence bt_heal_s1 = new BTSequence(new IBTTask[]
+        {
+            bt_heal_a1,
+            bt_heal_c1
+        });
+
+        BTDecoratorUntilFail bt_heal_dec1 = new BTDecoratorUntilFail(bt_heal_s1);
+
+        bt_Heal = new BehaviorTree(bt_heal_dec1);
+        #endregion
+
+        #region BT Search
+        // Search in random position
+		#endregion
+
+		#endregion
+
+		// Start monitoring FSM
+		StartCoroutine(Patrol());
     }
 
-    void Update()
+
+	void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -349,7 +390,7 @@ public class DecisionMaker : MonoBehaviour
     {
         foreach (GameObject ally in GameObject.FindGameObjectsWithTag(tag)) {
             if (Vector3.Distance(transform.position, ally.transform.position) < sightRange) {
-                ally.GetComponent<DecisionMaker>().IncreaseEmotionsValue(emotionsValue_increment);
+                ally.GetComponent<EmotionsSystem>().inRage = true;
             }
         }
     }
@@ -358,7 +399,7 @@ public class DecisionMaker : MonoBehaviour
     {
         foreach (GameObject ally in GameObject.FindGameObjectsWithTag(tag)) {
             if (Vector3.Distance(transform.position, ally.transform.position) < sightRange) {
-                ally.GetComponent<DecisionMaker>().IncreaseEmotionsValue(-emotionsValue_increment);
+                ally.GetComponent<EmotionsSystem>().scared = true;
             }
         }
     }
@@ -505,8 +546,7 @@ public class DecisionMaker : MonoBehaviour
     #region DT Actions
     public object Chase(object o)
     {
-        // Start patroling
-        StartCoroutine(PatrolBTChase());
+        transform.GetComponent<NavMeshAgent>().destination = target.position;
         return null;
     }
 
@@ -646,8 +686,10 @@ public class DecisionMaker : MonoBehaviour
     #endregion
 
     #region BT Conditions
-
-
+    public bool IsHealthNotHigh()
+	{
+        return !transform.GetComponent<Health>().IsHealthHig();
+	}
     #endregion
 
     #region BT Actions
@@ -692,13 +734,10 @@ public class DecisionMaker : MonoBehaviour
         return true;
     }
 
-    public bool DestroyWeapon()
-    {
-        return true;
-    }
-
     public bool Dash()
     {
+        startingDashPoint = transform;
+
         speed = GetComponent<NavMeshAgent>().speed;
         acceleration = GetComponent<NavMeshAgent>().acceleration;
         if (!isDashing)
@@ -711,6 +750,52 @@ public class DecisionMaker : MonoBehaviour
 
         return true;
     }
+
+    public bool DashBack()
+	{
+        GetComponent<NavMeshAgent>().destination = startingDashPoint.position;
+
+        speed = GetComponent<NavMeshAgent>().speed;
+        acceleration = GetComponent<NavMeshAgent>().acceleration;
+        if (!isDashing) {
+            isDashing = true;
+            GetComponent<NavMeshAgent>().speed += 200f;
+            GetComponent<NavMeshAgent>().acceleration += 200f;
+        }
+        StartCoroutine(PatrolDash());
+
+        GetComponent<NavMeshAgent>().destination = target.position;
+
+        return true;
+    }
+
+    public bool FindAlly()
+    {
+        GameObject[] allies = GameObject.FindGameObjectsWithTag(transform.tag);
+
+        float minDistance = -1f;
+        foreach(GameObject ally in allies) {
+            float distance = Vector3.Distance(transform.position, ally.transform.position;
+            if (distance < minDistance
+                || minDistance == -1f) {
+                minDistance = distance;
+                allyPosition = ally.transform;
+			}
+		}
+        return true;
+    }
+
+    public bool GoToAlly()
+	{
+        GetComponent<NavMeshAgent>().destination = allyPosition.position;
+        return true;
+	}
+
+    public bool GoBackToBase()
+	{
+        GetComponent<NavMeshAgent>().destination = alliesBase.position;
+        return true;
+	}
 
     #endregion
 

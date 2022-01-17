@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb913c31b9c1d464d8ca15708149d842, type: 2}
+  - {fileID: 2100000, guid: 3f11633f6c5c5894499e24f9032f1633, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
   dashTime: 100
   dashSpeed: 1.1
+  vec: []
 --- !u!195 &1402759170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,8 +156,6 @@ MonoBehaviour:
   attackMeleeRange: 1.5
   meleeDmg: 25
   dashForce: 20
-  healthHigh: 70
-  healthLow: 30
   sightRange: 50
   sightAngle: 45
   emotionsValue_increment: 15
@@ -179,6 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 5
+  scared: 0
+  inRage: 0
+  reactionTime: 3
 --- !u!1 &7186660184586969268
 GameObject:
   m_ObjectHideFlags: 0
