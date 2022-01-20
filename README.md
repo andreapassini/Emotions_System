@@ -1,100 +1,29 @@
-# AI4Vid_Project
+#AI4Vid_Project
 
-Esploration of chapters 5.5 e 5.6 of Millingotn's book, on Fuzzy Logic e Markov System.
-
-
-In a 3D environment, 2 groups of agents have to fioght each other.
-Each with a base where they can get healed.
+Decision Making with Markov State Machines.
 
 
-Agent's Beahviour on Multiple Levels:
+##Summary of the game’s rules:
 
-1 - Emotions ( FSM )
-
-2 - Behaviour while feelin that emotion ( DT )
-
-3 - Action descriprion ( BT )
-
-	
-Pathfindong: NavMesh
+In a 3D environment, 2 groups of agents, controlled by AI, have to fight each other. 
+Each group has a base where agents can get healed up.
+To win, a group needs to kill agents from the other group.
 
 
-## Livello 1 - Emotions:
+##Summary of the AI:
 
-The emotion is represented by a single value: `emotionsValue`.
-Its different value will determined the emotion that the agent is feeling.
+###The agents will be able to move to a certain destination and avoid objects.
+This will be achieved using Navigation Meshes.
 
-FSM
+###The agents will be able to take decisions on which actions will be executed next.
+This will be achieved using different decision making techniques:
+####Finite State Machines
+####Decision Tree
+####Behavior Tree
 
-States:
-
-  InRage
-  Brave
-  Normal
-  Shy
-  Scared
-  
-Increment EmotionValue:
-
-  Markov System
-
-Emotion Evaluation:
-
-  Fuzzy Logic:
-
-  emotionsValue is used as a membership degree and feed to a probabilistic evaluator.
-
-
-## Lv2 2 - Behaviour while feelin that emotion :
-
-DT
-
-One for each FSM States - Emotions
-
-### InRage
-
-![DTInRage](https://user-images.githubusercontent.com/71270277/148593728-540068e6-7c67-4c60-864c-e0f27b5df66d.png)
-
-### Brave
-
-![DTBrave](https://user-images.githubusercontent.com/71270277/148593722-ec86960a-1e75-42ff-ace9-e7cedb908197.png)
-
-### Normal
-
-![DTNormal](https://user-images.githubusercontent.com/71270277/148593720-b5a03cfb-8ea5-410a-99af-c272ac2f2d39.png)
-
-### Shy
-
-![DTShy](https://user-images.githubusercontent.com/71270277/148593719-56b91b90-023b-40a4-a919-6bd377730303.png)
-
-### Scared
-
-![DTScared](https://user-images.githubusercontent.com/71270277/148541267-de24ac51-ab99-4772-8d29-bad781eb49ef.jpg)
-
-
-## Livello 3 - Action description:
-
-BT
-
-
-## Collaboration and Coordination:
-
-
-### At Lvl 1 (emotions):
-
-Whem the agent is feeling an extreme emotion (InRage or Scared),
-it will affects also nearby agents, increasing o decresing their emotion value.
-
-
-Potrei anche introdurre un cambiamento della emotionsValue a seconda del numero e dello stato di salute degli alleati circostanti.
-
-
-
-### At Lvl 2:
-
-
-Coordinamento su un target: 
-  Nel momento in cui, un agente senza target, ne individuasse uno, dovrebbe comunicarlo anche agli alleati circostanti, i quali a loro volta ripeterebbero la trasmissione.
-
-Coordinamento nell'uscita dalla base: 
-  Nel momento in cui un agente sia in una delle basi a curarsi, prima di uscire dovrebbe attendere che un certo numero di alleati sia vicino a lui ed in salute.
+###To enrich the behavior, agents will be able to:
+####Collaborate and Coordinate with other agents of the same group
+####Feel Emotions
+This will be achieved with 5 emotions (InRage, Brave, Normal, Shy, Scared). Each emotions will be represented in 2 ways:
+As values, grouped in an array called State Vector in the Markov State Machines. The values in the array will change when a transition of the Markov State Machine is fired.
+As FSM states in order to have a different behavior for each different emotion.
