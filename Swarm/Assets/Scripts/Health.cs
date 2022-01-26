@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     #region Variables
     public int maxHealth;
-    private int health;
+    public int health { get; private set; } = 0;
 
     public int healthHigh = 70;
     public int healthLow = 30;
@@ -19,11 +19,6 @@ public class Health : MonoBehaviour
         health = maxHealth;
     }
 
-    public int GetHealth()
-	{
-        return health;
-	}
-
     public void TakeDmg(int dmg)
     {
         health -= dmg;
@@ -33,6 +28,12 @@ public class Health : MonoBehaviour
             Die();
         }
     }
+
+    public void HealOnTouch(int hlt)
+	{
+        health += hlt;
+        Mathf.Clamp(health, 0, maxHealth);
+	}
 
     public void Die()
     {

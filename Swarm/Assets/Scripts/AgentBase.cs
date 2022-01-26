@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Base : MonoBehaviour
+[RequireComponent(typeof (Collider))]
+
+public class AgentBase : MonoBehaviour
 {
     #region Variables
+    public string allyTag;
+    public int heal = 20;
     #endregion
 
     #region Unity Methods
 
     void Start()
     {
-        
+        allyTag.ToUpper();
     }
 
     void Update()
@@ -19,5 +23,15 @@ public class Base : MonoBehaviour
         
     }
 
-    #endregion
+	private void OnCollisionStay(Collision collision)
+	{
+        if (collision.gameObject.CompareTag(allyTag)) {
+            if(collision.gameObject.TryGetComponent(out Health h)) {
+                int hMax = h.maxHealth;
+                h.HealOnTouch(hMax / 100);
+            }
+        }
+    }
+
+	#endregion
 }

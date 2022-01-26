@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
+
 public class Bullet : MonoBehaviour
 {
     public float destroyBulletAfterTime = 3f;
@@ -22,7 +24,10 @@ public class Bullet : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-        collision.transform.GetComponent<Health>().TakeDmg(damage);
-        Destroy(gameObject);
+        if(collision.gameObject.CompareTag(transform.tag)) {
+            if(collision.gameObject.TryGetComponent(out Health h))
+                h.TakeDmg(damage);
+            Destroy(gameObject);
+        }
     }
 }

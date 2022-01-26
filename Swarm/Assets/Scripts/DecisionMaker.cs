@@ -304,7 +304,7 @@ public class DecisionMaker : MonoBehaviour
         #endregion
 
         #region BT Regroup
-        BTAction bt_regroup_a1 = new BTAction(FindAlly);
+        BTAction bt_regroup_a1 = new BTAction(FindNearAlly);
         BTAction bt_regroup_a2 = new BTAction(GoToAlly);
 
         BTSequence bt_regroup_s1 = new BTSequence(new IBTTask[]
@@ -648,9 +648,10 @@ public class DecisionMaker : MonoBehaviour
     public object IsTargetHealthLow(object o)
     {
         if (target != enemyBase && target != null) {
-            if (target.GetComponent<Health>().GetHealth() <= targetHealthLow) {
-                return true;
-            }
+			if (target.TryGetComponent(out Health h)) {
+                if (h.health <= targetHealthLow)
+                    return true;
+			}
         }
         return null;
     }
@@ -712,6 +713,8 @@ public class DecisionMaker : MonoBehaviour
     public bool Shoot()
 	{
         GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
+        bullet.transform.tag = transform.tag;
+
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         rb.AddForce(firePoint.forward * 100f, ForceMode.Impulse);
@@ -769,13 +772,15 @@ public class DecisionMaker : MonoBehaviour
         return true;
     }
 
-    public bool FindAlly()
+    public bool FindNearAlly()
     {
         GameObject[] allies = GameObject.FindGameObjectsWithTag(transform.tag);
+        if (allies == null)
+            return false;
 
         float minDistance = -1f;
         foreach(GameObject ally in allies) {
-            float distance = Vector3.Distance(transform.position, ally.transform.position;
+            float distance = Vector3.Distance(transform.position, ally.transform.position);
             if (distance < minDistance
                 || minDistance == -1f) {
                 minDistance = distance;
