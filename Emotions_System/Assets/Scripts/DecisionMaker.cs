@@ -59,6 +59,7 @@ public class DecisionMaker : MonoBehaviour
 
     private bool isDashing;
     private float speed;
+    private Vector3 velocity;
     private float acceleration;
     public float dashTime = 100f;
     public float dashSpeed = 1.1f;
@@ -261,8 +262,9 @@ public class DecisionMaker : MonoBehaviour
         #region BT
 
         #region BT Runaway
-        BTAction bt_runaway_a1 = new BTAction(TurnAraound);
-        BTAction bt_runaway_a2 = new BTAction(Run);
+        BTAction bt_runaway_a1 = new BTAction(StopMoving);
+        BTAction bt_runaway_a2 = new BTAction(TurnAraound);
+        BTAction bt_runaway_a3 = new BTAction(Run);
 
         BTSequence bt_runaway_s1 = new BTSequence(new IBTTask[] 
         {
@@ -694,16 +696,29 @@ public class DecisionMaker : MonoBehaviour
     #endregion
 
     #region BT Actions
+    public bool StopMoving()
+	{
+        velocity = GetComponent<NavMeshAgent>().velocity;
+        acceleration = GetComponent<NavMeshAgent>().acceleration;
+
+        GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+        GetComponent<NavMeshAgent>().acceleration = 0;
+        return true;
+	}
+
     public bool TurnAraound()
     {
         // Turn Away from the target
-        transform.RotateAroundLocal(transform.up, Vector3.Angle(transform.position, target.position) + 180f);
+        Vector3 rotation = new Vector3(0, 180, 0);
+        transform.Rotate(rotation, Space.Self);
 
         return true;
     }
 
     public bool Run()
     {
+        GetComponent<NavMeshAgent>().velocity = velocity;
+        GetComponent<NavMeshAgent>().acceleration = acceleration;
         // Opposite direction of the vector from position to target position
         GetComponent<NavMeshAgent>().destination = -(transform.position - target.position).normalized;
 
@@ -713,10 +728,10 @@ public class DecisionMaker : MonoBehaviour
     public bool Shoot()
 	{
         GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
+
         bullet.transform.tag = transform.tag;
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
         rb.AddForce(firePoint.forward * 100f, ForceMode.Impulse);
 
         return true;
@@ -740,9 +755,9 @@ public class DecisionMaker : MonoBehaviour
     public bool Dash()
     {
         startingDashPoint = transform;
-
         speed = GetComponent<NavMeshAgent>().speed;
         acceleration = GetComponent<NavMeshAgent>().acceleration;
+
         if (!isDashing)
         {
             isDashing = true;
@@ -757,9 +772,9 @@ public class DecisionMaker : MonoBehaviour
     public bool DashBack()
 	{
         GetComponent<NavMeshAgent>().destination = startingDashPoint.position;
-
         speed = GetComponent<NavMeshAgent>().speed;
         acceleration = GetComponent<NavMeshAgent>().acceleration;
+
         if (!isDashing) {
             isDashing = true;
             GetComponent<NavMeshAgent>().speed += 200f;
