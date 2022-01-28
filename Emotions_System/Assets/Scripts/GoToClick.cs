@@ -14,6 +14,8 @@ public class GoToClick : MonoBehaviour
 	float acceleration;
 	float angleBetween;
 
+	bool s = true;
+
 	private void Start()
     {
 		// Get the Child
@@ -24,7 +26,8 @@ public class GoToClick : MonoBehaviour
 
     void Update()
 	{
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButtonDown(0)) 
+		{
 			GetComponent<NavMeshAgent>().velocity = velocity;
 			GetComponent<NavMeshAgent>().acceleration = acceleration;
 
@@ -35,20 +38,21 @@ public class GoToClick : MonoBehaviour
 			}
 		}
 
-		if (Input.GetMouseButtonDown(1)) {
+		if (Input.GetMouseButtonDown(1)) 
+		{
 			GetComponent<NavMeshAgent>().velocity = Vector3.zero;
 			GetComponent<NavMeshAgent>().acceleration = 0f;
 
 			Vector3 angleDir = target.position - transform.position;
 			angleBetween = Vector3.Angle(transform.forward, angleDir);
 
-			transform.Rotate(0f, - angleBetween, 0f);
+			transform.Rotate(0f, 180f + angleBetween, 0f);
 
-			//Vector3 dir = transform.forward;
+			Vector3 dir = transform.forward;
 
-			//GetComponent<NavMeshAgent>().destination = - dir;
-			//GetComponent<NavMeshAgent>().velocity = velocity;
-			//GetComponent<NavMeshAgent>().acceleration = acceleration;
+			GetComponent<NavMeshAgent>().destination = dir;
+			GetComponent<NavMeshAgent>().velocity = velocity;
+			GetComponent<NavMeshAgent>().acceleration = acceleration;
 		}
 	}
 }
