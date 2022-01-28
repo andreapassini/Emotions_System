@@ -23,7 +23,7 @@ public class EmotionsSystem : MonoBehaviour
     public bool scared = false;
     public bool inRage = false;
 
-    public float reactionTime = 3f;
+    public float reactionTime = 5f;
     #endregion
 
     #region Unity Methods
