@@ -8,7 +8,7 @@ public class GoToClick : MonoBehaviour
 {
 	public Transform target;
 
-	private Transform firePoint;
+	//private bool firePoint;
 
 	Vector3 velocity;
 	float acceleration;
@@ -16,7 +16,7 @@ public class GoToClick : MonoBehaviour
 	private void Start()
     {
 		// Get the Child
-		firePoint = transform.GetChild(0);
+		//firePoint = transform.GetChild(0);
 		velocity = GetComponent<NavMeshAgent>().velocity;
 		acceleration = GetComponent<NavMeshAgent>().acceleration;
 	}
@@ -40,6 +40,10 @@ public class GoToClick : MonoBehaviour
 
 			Vector3 rotation = new Vector3(0, 180, 0);
 			transform.Rotate(rotation, Space.Self);
+				
+			GetComponent<NavMeshAgent>().destination = (transform.position - target.position).normalized;
+			GetComponent<NavMeshAgent>().velocity = velocity;
+			GetComponent<NavMeshAgent>().acceleration = acceleration;
 		}
-    }
+	}
 }
