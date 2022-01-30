@@ -14,7 +14,7 @@ public class GoToClick : MonoBehaviour
 	float acceleration;
 	float angleBetween;
 
-	bool s = true;
+	bool draw = false;
 
 	private void Start()
     {
@@ -36,6 +36,8 @@ public class GoToClick : MonoBehaviour
 			if (Physics.Raycast(ray, out hit)) {
 				GetComponent<NavMeshAgent>().destination = hit.point;
 			}
+
+			draw = false;
 		}
 
 		if (Input.GetMouseButtonDown(1)) 
@@ -48,11 +50,28 @@ public class GoToClick : MonoBehaviour
 
 			transform.Rotate(0f, 180f + angleBetween, 0f);
 
-			Vector3 dir = transform.forward;
+			//Vector3 dir = transform.forward.normalized * 5f;
 
-			GetComponent<NavMeshAgent>().destination = dir;
-			GetComponent<NavMeshAgent>().velocity = velocity;
-			GetComponent<NavMeshAgent>().acceleration = acceleration;
+			//GetComponent<NavMeshAgent>().destination = dir;
+			//GetComponent<NavMeshAgent>().velocity = velocity;
+			//GetComponent<NavMeshAgent>().acceleration = acceleration;
+
+			draw = true;
 		}
+
+		Debug.Log(transform.forward);
 	}
+
+    private void OnDrawGizmos()
+    {
+		Gizmos.color = Color.blue;
+		Gizmos.DrawLine(target.position, transform.position * 1.5f);
+
+        if (draw)
+        {
+			Gizmos.color = Color.green;
+			Gizmos.DrawLine(transform.position, transform.forward.normalized * 5f);
+		}
+		
+    }
 }
