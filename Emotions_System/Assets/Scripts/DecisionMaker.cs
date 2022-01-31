@@ -822,6 +822,20 @@ public class DecisionMaker : MonoBehaviour
 
     #endregion
 
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+		while (true) {
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+            Vector3 finalPosition = Vector3.zero;
+            if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
+                finalPosition = hit.position;
+                return finalPosition;
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (firePoint == null)

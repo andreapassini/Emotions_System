@@ -14,14 +14,10 @@ public class GoToClick : MonoBehaviour
 	float acceleration;
 	float angleBetween;
 
-	bool draw = false;
-
 	Vector3 verticalAdj;
 
 	private void Start()
     {
-		// Get the Child
-		//firePoint = transform.GetChild(0);
 		velocity = GetComponent<NavMeshAgent>().velocity;
 		acceleration = GetComponent<NavMeshAgent>().acceleration;
 	}
@@ -39,7 +35,6 @@ public class GoToClick : MonoBehaviour
 				GetComponent<NavMeshAgent>().destination = hit.point;
 			}
 
-			draw = false;
 		}
 
 		if (Input.GetMouseButtonDown(1)) 
@@ -53,42 +48,31 @@ public class GoToClick : MonoBehaviour
 
 			transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
-<<<<<<< Updated upstream
-			//Vector3 dir = transform.forward.normalized * 5f;
+			GetComponent<NavMeshAgent>().destination = RandomNavmeshLocation(70f);
 
-			//GetComponent<NavMeshAgent>().destination = dir;
-			//GetComponent<NavMeshAgent>().velocity = velocity;
-			//GetComponent<NavMeshAgent>().acceleration = acceleration;
-
-			draw = true;
-=======
-			//Forse è meglio fare un raycast a 5cm davantia me, traporlo sul piano, ed andare in quella direzione
-
-			GetComponent<NavMeshAgent>().destination = transform.forward.normalized * 5f;
+			//GetComponent<NavMeshAgent>().destination = transform.forward.normalized * 5f;
 			GetComponent<NavMeshAgent>().velocity = velocity;
 			GetComponent<NavMeshAgent>().acceleration = acceleration;
 
 			Debug.Log(angleBetween);
->>>>>>> Stashed changes
 		}
 
-		Debug.Log(transform.forward);
 	}
 
-<<<<<<< Updated upstream
-    private void OnDrawGizmos()
-    {
-		Gizmos.color = Color.blue;
-		Gizmos.DrawLine(target.position, transform.position * 1.5f);
-
-        if (draw)
-        {
-			Gizmos.color = Color.green;
-			Gizmos.DrawLine(transform.position, transform.forward.normalized * 5f);
+	public Vector3 RandomNavmeshLocation(float radius)
+	{
+		while (true) {
+			Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+			randomDirection += transform.position;
+			NavMeshHit hit;
+			Vector3 finalPosition = Vector3.zero;
+			if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
+				finalPosition = hit.position;
+				return finalPosition;
+			}
 		}
-		
-    }
-=======
+	}
+
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.blue;
@@ -96,6 +80,9 @@ public class GoToClick : MonoBehaviour
 
 		Gizmos.color = Color.green;
 		Gizmos.DrawLine(verticalAdj, transform.position);
+
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, 70f);
 	}
->>>>>>> Stashed changes
+
 }
