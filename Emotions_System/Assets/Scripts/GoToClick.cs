@@ -16,6 +16,8 @@ public class GoToClick : MonoBehaviour
 
 	bool draw = false;
 
+	Vector3 verticalAdj;
+
 	private void Start()
     {
 		// Get the Child
@@ -45,10 +47,11 @@ public class GoToClick : MonoBehaviour
 			GetComponent<NavMeshAgent>().velocity = Vector3.zero;
 			GetComponent<NavMeshAgent>().acceleration = 0f;
 
-			Vector3 angleDir = target.position - transform.position;
-			angleBetween = Vector3.Angle(transform.forward, angleDir);
+			verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
+			Vector3 angleDir = verticalAdj - transform.position;
+			angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
 
-			transform.Rotate(0f, 180f + angleBetween, 0f);
+			transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
 			//Vector3 dir = transform.forward.normalized * 5f;
 
@@ -57,6 +60,15 @@ public class GoToClick : MonoBehaviour
 			//GetComponent<NavMeshAgent>().acceleration = acceleration;
 
 			draw = true;
+=======
+			//Forse è meglio fare un raycast a 5cm davantia me, traporlo sul piano, ed andare in quella direzione
+
+			GetComponent<NavMeshAgent>().destination = transform.forward.normalized * 5f;
+			GetComponent<NavMeshAgent>().velocity = velocity;
+			GetComponent<NavMeshAgent>().acceleration = acceleration;
+
+			Debug.Log(angleBetween);
+>>>>>>> Stashed changes
 		}
 
 		Debug.Log(transform.forward);
@@ -74,4 +86,14 @@ public class GoToClick : MonoBehaviour
 		}
 		
     }
+=======
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.blue;
+		Gizmos.DrawRay(transform.position, transform.forward * 10f);
+
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(verticalAdj, transform.position);
+	}
+>>>>>>> Stashed changes
 }

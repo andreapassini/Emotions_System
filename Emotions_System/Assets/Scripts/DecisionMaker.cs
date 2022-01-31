@@ -709,8 +709,11 @@ public class DecisionMaker : MonoBehaviour
     public bool TurnAraound()
     {
         // Turn Away from the target
-        Vector3 rotation = new Vector3(0, 180, 0);
-        transform.Rotate(rotation, Space.Self);
+        Vector3 verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
+        Vector3 angleDir = verticalAdj - transform.position;
+        float angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
+
+        transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
         return true;
     }
