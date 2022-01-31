@@ -53,6 +53,7 @@ public class GoToClick : MonoBehaviour
 
 			transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
+<<<<<<< Updated upstream
 			//Vector3 dir = transform.forward.normalized * 5f;
 
 			//GetComponent<NavMeshAgent>().destination = dir;
@@ -74,6 +75,7 @@ public class GoToClick : MonoBehaviour
 		Debug.Log(transform.forward);
 	}
 
+<<<<<<< Updated upstream
     private void OnDrawGizmos()
     {
 		Gizmos.color = Color.blue;
