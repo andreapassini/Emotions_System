@@ -722,8 +722,11 @@ public class DecisionMaker : MonoBehaviour
     {
         GetComponent<NavMeshAgent>().velocity = velocity;
         GetComponent<NavMeshAgent>().acceleration = acceleration;
-        // Opposite direction of the vector from position to target position
-        GetComponent<NavMeshAgent>().destination = - (transform.position - target.position).normalized;
+
+        Vector3 dir = new Vector3();
+        dir = (transform.position + Vector3.forward.normalized * 50f);
+
+        GetComponent<NavMeshAgent>().destination = dir;
 
         return true;
     }

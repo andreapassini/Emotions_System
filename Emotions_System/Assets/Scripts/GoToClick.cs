@@ -48,25 +48,29 @@ public class GoToClick : MonoBehaviour
 
 			transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
-			GetComponent<NavMeshAgent>().destination = RandomNavmeshLocation(70f);
+			Vector3 dir = new Vector3();
+			dir = (transform.position + Vector3.forward.normalized * 50f);
 
-			//GetComponent<NavMeshAgent>().destination = transform.forward.normalized * 5f;
+			GetComponent<NavMeshAgent>().destination = dir;
 			GetComponent<NavMeshAgent>().velocity = velocity;
 			GetComponent<NavMeshAgent>().acceleration = acceleration;
 
-			Debug.Log(angleBetween);
+			Debug.Log(Vector3.forward.normalized * 5f);
 		}
 
 	}
 
 	public Vector3 RandomNavmeshLocation(float radius)
 	{
-		while (true) {
+		while (true) 
+		{
 			Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
 			randomDirection += transform.position;
 			NavMeshHit hit;
 			Vector3 finalPosition = Vector3.zero;
-			if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
+
+			if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) 
+			{
 				finalPosition = hit.position;
 				return finalPosition;
 			}
