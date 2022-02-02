@@ -16,11 +16,35 @@ public class GoToClick : MonoBehaviour
 
 	Vector3 verticalAdj;
 
+	//For the transitions
+	private float[] stateVector;
+
+	private float[][] defaultMatrix;
+
+	private float[][] inRageMatrix;
+	private float[][] scaredMatrix;
+	private float[][] braveMatrix;
+	private float[][] shyMatrix;
+
 	private void Start()
     {
 		velocity = GetComponent<NavMeshAgent>().velocity;
 		acceleration = GetComponent<NavMeshAgent>().acceleration;
-	}
+
+		//stateVector = new float[]{
+		//	0.0f,
+		//	0.0f,
+		//	1.0f,
+		//	0.0f,
+		//	0.0f
+		//};
+
+  //      TransitionMatrixRageInit();
+  //      TransitionMatrixBraveInit();
+  //      TransitionMatrixDefaultInit();
+  //      TransitionMatrixShyInit();
+  //      TransitionMatrixScaredInit();
+    }
 
     void Update()
 	{
@@ -37,28 +61,38 @@ public class GoToClick : MonoBehaviour
 
 		}
 
-		if (Input.GetMouseButtonDown(1)) 
+		if (Input.GetMouseButtonUp(1)) 
 		{
-			GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-			GetComponent<NavMeshAgent>().acceleration = 0f;
+            #region Runaway
+            //GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+            //GetComponent<NavMeshAgent>().acceleration = 0f;
 
-			verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
-			Vector3 angleDir = verticalAdj - transform.position;
-			angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
+            //verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
+            //Vector3 angleDir = verticalAdj - transform.position;
+            //angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
 
-			transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
+            //transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
 
-			Vector3 dir = new Vector3();
-			dir = (transform.position + Vector3.forward.normalized * 50f);
+            //Vector3 dir = new Vector3();
+            //dir = (transform.position + Vector3.forward.normalized * 50f);
 
-			GetComponent<NavMeshAgent>().destination = dir;
-			GetComponent<NavMeshAgent>().velocity = velocity;
-			GetComponent<NavMeshAgent>().acceleration = acceleration;
+            //GetComponent<NavMeshAgent>().destination = dir;
+            //GetComponent<NavMeshAgent>().velocity = velocity;
+            //GetComponent<NavMeshAgent>().acceleration = acceleration;
 
-			Debug.Log(Vector3.forward.normalized * 5f);
-		}
+            //Debug.Log(Vector3.forward.normalized * 5f);
+            #endregion
 
-	}
+            //#region Transition
+            //stateVector = Multiply(shyMatrix, stateVector);
+            //Debug.Log(stateVector[0] + " " +
+            //        stateVector[1] + " " +
+            //        stateVector[2] + " " +
+            //        stateVector[3] + " " +
+            //        stateVector[4]);
+            //#endregion
+        }
+    }
 
 	public Vector3 RandomNavmeshLocation(float radius)
 	{
@@ -77,16 +111,81 @@ public class GoToClick : MonoBehaviour
 		}
 	}
 
-	private void OnDrawGizmos()
+    //#region Matrix
+    //public void TransitionMatrixDefaultInit()
+    //{
+    //    // Declare a jagged array.
+    //    defaultMatrix = new float[5][];
+
+    //    defaultMatrix[0] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+    //    defaultMatrix[1] = new float[5] { 0.1f, 0.1f, 0.2f, 0.1f, 0.1f };
+    //    defaultMatrix[2] = new float[5] { 0.1f, 0.5f, 1.0f, 0.5f, 0.1f };
+    //    defaultMatrix[3] = new float[5] { 0.1f, 0.1f, 0.2f, 0.1f, 0.1f };
+    //    defaultMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+    //}
+
+    //public void TransitionMatrixRageInit()
+    //{
+    //    inRageMatrix = new float[5][];
+
+    //    inRageMatrix[0] = new float[5] { 1.3f, 0.1f, 0.1f, 0.0f, 0.0f };
+    //    inRageMatrix[1] = new float[5] { 0.0f, 1.1f, 0.1f, 0.0f, 0.0f };
+    //    inRageMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+    //    inRageMatrix[3] = new float[5] { 0.0f, 0.0f, 0.0f, 0.7f, 0.0f };
+    //    inRageMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.6f };
+    //}
+
+    //public void TransitionMatrixBraveInit()
+    //{
+    //    braveMatrix = new float[5][];
+
+    //    braveMatrix[0] = new float[5] { 1.1f, 0.1f, 0.0f, 0.0f, 0.0f };
+    //    braveMatrix[1] = new float[5] { 0.1f, 1.3f, 0.1f, 0.0f, 0.0f };
+    //    braveMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+    //    braveMatrix[3] = new float[5] { 0.0f, 0.0f, 0.0f, 0.7f, 0.0f };
+    //    braveMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.6f };
+    //}
+
+    //public void TransitionMatrixScaredInit()
+    //{
+    //    scaredMatrix = new float[5][];
+
+    //    scaredMatrix[0] = new float[5] { 0.6f, 0.0f, 0.0f, 0.0f, 0.0f };
+    //    scaredMatrix[1] = new float[5] { 0.0f, 0.7f, 0.0f, 0.0f, 0.0f };
+    //    scaredMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+    //    scaredMatrix[3] = new float[5] { 0.0f, 0.0f, 0.1f, 1.3f, 0.1f };
+    //    scaredMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.1f, 1.1f };
+    //}
+
+    //public void TransitionMatrixShyInit()
+    //{
+    //    shyMatrix = new float[5][];
+
+    //    shyMatrix[0] = new float[5] { 0.6f, 0.0f, 0.0f, 0.0f, 0.0f };
+    //    shyMatrix[1] = new float[5] { 0.0f, 0.7f, 0.0f, 0.0f, 0.0f };
+    //    shyMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+    //    shyMatrix[3] = new float[5] { 0.0f, 0.0f, 0.1f, 1.3f, 0.1f };
+    //    shyMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.1f, 1.1f };
+    //}
+    //#endregion
+
+    public float[] Multiply(float[][] matrix, float[] _stateVector)
+    {
+        float[] vector = new float[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                vector[i] += matrix[i][j] * _stateVector[j];
+            }
+        }
+
+        return vector;
+    }
+
+    private void OnDrawGizmos()
 	{
-		Gizmos.color = Color.blue;
-		Gizmos.DrawRay(transform.position, transform.forward * 10f);
-
-		Gizmos.color = Color.green;
-		Gizmos.DrawLine(verticalAdj, transform.position);
-
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, 70f);
+		
 	}
-
 }

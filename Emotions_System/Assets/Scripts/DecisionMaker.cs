@@ -642,9 +642,8 @@ public class DecisionMaker : MonoBehaviour
 
     public object IsHealthHigh(object o)
     {
-        if (transform.GetComponent<Health>().IsHealthHig())
-            return true;
-        return false;
+        return transform.GetComponent<Health>().IsHealthHigh();
+            
     }
 
     public object IsTargetHealthLow(object o)
@@ -691,7 +690,7 @@ public class DecisionMaker : MonoBehaviour
     #region BT Conditions
     public bool IsHealthNotHigh()
 	{
-        return !transform.GetComponent<Health>().IsHealthHig();
+        return !transform.GetComponent<Health>().IsHealthHigh();
 	}
     #endregion
 

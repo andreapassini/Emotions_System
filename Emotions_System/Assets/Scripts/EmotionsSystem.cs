@@ -39,6 +39,10 @@ public class EmotionsSystem : MonoBehaviour
         };
 
         TransitionMatrixRageInit();
+        TransitionMatrixBraveInit();
+        TransitionMatrixDefaultInit();
+        TransitionMatrixShyInit();
+        TransitionMatrixScaredInit();
 
         MarkovSMState markovSMState = new MarkovSMState(stateVector);
 
@@ -76,7 +80,7 @@ public class EmotionsSystem : MonoBehaviour
         m_t3.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t3);
 
-        MarkovSMTransition m_t4 = new MarkovSMTransition(GetComponent<Health>().IsHealthHig, braveMatrix);
+        MarkovSMTransition m_t4 = new MarkovSMTransition(GetComponent<Health>().IsHealthHigh, braveMatrix);
         m_t4.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t4);
 
@@ -87,7 +91,7 @@ public class EmotionsSystem : MonoBehaviour
 
 	void Update()
     {
-
+        //Debug.Log(startTime);
     }
 
     public IEnumerator Patrol()
@@ -112,47 +116,47 @@ public class EmotionsSystem : MonoBehaviour
     }
 
     public void TransitionMatrixRageInit()
-	{
+    {
         inRageMatrix = new float[5][];
 
-        inRageMatrix[0] = new float[5] { 0.8f, 0.8f, 0.8f, 0.8f, 0.8f };
-        inRageMatrix[1] = new float[5] { 0.1f, 0.7f, 0.7f, 0.0f, 0.0f };
-        inRageMatrix[2] = new float[5] { 0.1f, 0.1f, 0.0f, 0.1f, 0.1f };
-        inRageMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.0f, 0.1f };
-        inRageMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.0f };
-    }
-
-    public void TransitionMatrixScaredInit()
-    {
-        scaredMatrix = new float[5][];
-
-        scaredMatrix[0] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
-        scaredMatrix[1] = new float[5] { 0.1f, 0.7f, 0.7f, 0.0f, 0.0f };
-        scaredMatrix[2] = new float[5] { 0.1f, 0.1f, 0.0f, 0.1f, 0.1f };
-        scaredMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.0f, 0.5f };
-        scaredMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.3f, 1.0f };
+        inRageMatrix[0] = new float[5] { 1.3f, 0.1f, 0.1f, 0.0f, 0.0f };
+        inRageMatrix[1] = new float[5] { 0.0f, 1.1f, 0.1f, 0.0f, 0.0f };
+        inRageMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+        inRageMatrix[3] = new float[5] { 0.0f, 0.0f, 0.0f, 0.7f, 0.0f };
+        inRageMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.6f };
     }
 
     public void TransitionMatrixBraveInit()
     {
         braveMatrix = new float[5][];
 
-        braveMatrix[0] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
-        braveMatrix[1] = new float[5] { 0.3f, 1.0f, 0.1f, 0.1f, 0.1f };
-        braveMatrix[2] = new float[5] { 0.3f, 0.1f, 0.1f, 0.1f, 0.1f };
-        braveMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
-        braveMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+        braveMatrix[0] = new float[5] { 1.1f, 0.1f, 0.0f, 0.0f, 0.0f };
+        braveMatrix[1] = new float[5] { 0.1f, 1.3f, 0.1f, 0.0f, 0.0f };
+        braveMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+        braveMatrix[3] = new float[5] { 0.0f, 0.0f, 0.0f, 0.7f, 0.0f };
+        braveMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.6f };
+    }
+
+    public void TransitionMatrixScaredInit()
+    {
+        scaredMatrix = new float[5][];
+
+        scaredMatrix[0] = new float[5] { 0.6f, 0.0f, 0.0f, 0.0f, 0.0f };
+        scaredMatrix[1] = new float[5] { 0.0f, 0.7f, 0.0f, 0.0f, 0.0f };
+        scaredMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+        scaredMatrix[3] = new float[5] { 0.0f, 0.0f, 0.1f, 1.3f, 0.1f };
+        scaredMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.1f, 1.1f };
     }
 
     public void TransitionMatrixShyInit()
     {
         shyMatrix = new float[5][];
 
-        shyMatrix[0] = new float[5] { 0.5f, 0.1f, 0.1f, 0.1f, 0.1f };
-        shyMatrix[1] = new float[5] { 0.3f, 1.0f, 0.1f, 0.1f, 0.1f };
-        shyMatrix[2] = new float[5] { 0.3f, 0.1f, 0.1f, 0.1f, 0.1f };
-        shyMatrix[3] = new float[5] { 0.1f, 0.1f, 0.1f, 1.0f, 0.3f };
-        shyMatrix[4] = new float[5] { 0.1f, 0.1f, 0.1f, 0.1f, 0.5f };
+        shyMatrix[0] = new float[5] { 0.6f, 0.0f, 0.0f, 0.0f, 0.0f };
+        shyMatrix[1] = new float[5] { 0.0f, 0.7f, 0.0f, 0.0f, 0.0f };
+        shyMatrix[2] = new float[5] { 0.0f, 0.0f, 0.8f, 0.0f, 0.0f };
+        shyMatrix[3] = new float[5] { 0.0f, 0.0f, 0.1f, 1.3f, 0.1f };
+        shyMatrix[4] = new float[5] { 0.0f, 0.0f, 0.0f, 0.1f, 1.1f };
     }
     #endregion
 

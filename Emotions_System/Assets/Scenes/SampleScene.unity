@@ -2037,6 +2037,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302791770}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1494078044 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5873032337763360391, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+  m_PrefabInstance: {fileID: 5873032336934188679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1494078045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494078044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a778087d01ef42f4fa398a1b62281fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthHigh: 70
+  healthLow: 30
 --- !u!1 &1550443292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2662,13 +2682,29 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 924406692}
-    - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+    - target: {fileID: 1402759169, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+      propertyPath: enemyBase
+      value: 
+      objectReference: {fileID: 1727123383}
+    - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+      propertyPath: alliesBase
+      value: 
+      objectReference: {fileID: 1550443293}
+    - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
+      propertyPath: targetNear_range
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5422250924608658297, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_LocalPosition.x

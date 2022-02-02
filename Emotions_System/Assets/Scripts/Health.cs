@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
         return false;
 	}
 
-    public bool IsHealthHig()
+    public bool IsHealthHigh()
     {
         if (this.health >= healthHigh)
             return true;

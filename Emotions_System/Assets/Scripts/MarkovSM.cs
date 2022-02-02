@@ -88,13 +88,13 @@ public class MarkovSM
 		}
 	}
 
-	public float[] Multiply(float[][] matrix, float[] stateVector)
+	public float[] Multiply(float[][] matrix, float[] _stateVector)
 	{
 		float[] vector = new float[5];
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				vector[i] += matrix[i][j] * stateVector[j];
+				vector[i] += matrix[i][j] * _stateVector[j];
 			}
 		}
 
