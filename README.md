@@ -1,4 +1,4 @@
-# Emotions
+# Emotions System
 
 5 emotions:
 
