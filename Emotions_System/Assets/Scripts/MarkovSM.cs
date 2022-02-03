@@ -84,7 +84,9 @@ public class MarkovSM
 		if (transition != null) {
 			// 1
 			current.myStateVector = Multiply(transition.myMatrix, current.myStateVector);
-			transition.Fire();  // 2
+
+			// 2
+			transition.Fire(); 
 		}
 	}
 

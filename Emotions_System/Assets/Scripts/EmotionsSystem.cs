@@ -84,7 +84,7 @@ public class EmotionsSystem : MonoBehaviour
         m_t4.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t4);
 
-        MarkovSM markovSM = new MarkovSM(markovSMState);
+        markovSM = new MarkovSM(markovSMState);
 
         StartCoroutine(Patrol());
     }
