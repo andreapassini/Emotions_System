@@ -54,8 +54,9 @@ public class DecisionMaker : MonoBehaviour
     public float targetNear_range = 3.5f;
     public int targetHealthLow;
     public string enemyTag = "B";
-    public Transform alliesBase;
+    public Transform allyBase;
     public Transform enemyBase;
+    public float searchRange = 50f;
 
     private bool isDashing;
     private float speed;
@@ -75,6 +76,8 @@ public class DecisionMaker : MonoBehaviour
     {
         // Get the Child
         firePoint = transform.GetChild(0);
+
+        GetComponent<NavMeshAgent>().destination = enemyBase.position;
 
         #region FSM
         //Init FSM 
@@ -346,10 +349,7 @@ public class DecisionMaker : MonoBehaviour
 
 	void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Run();
-        }
+        
     }
 
     #region EmotionValue Controller
@@ -818,22 +818,29 @@ public class DecisionMaker : MonoBehaviour
 
     public bool GoBackToBase()
 	{
-        GetComponent<NavMeshAgent>().destination = alliesBase.position;
+        GetComponent<NavMeshAgent>().destination = allyBase.position;
         return true;
 	}
+
+    public bool Search()
+    {
+        target.position = RandomNavmeshLocation(searchRange);
+        return true;
+    }
 
     #endregion
 
     public Vector3 RandomNavmeshLocation(float radius)
     {
+        Transform a; 
+
 		while (true) {
             Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
             randomDirection += transform.position;
             NavMeshHit hit;
-            Vector3 finalPosition = Vector3.zero;
+            
             if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
-                finalPosition = hit.position;
-                return finalPosition;
+                return hit.position;
             }
         }
     }
