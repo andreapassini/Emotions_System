@@ -26,24 +26,26 @@ public class GoToClick : MonoBehaviour
 	private float[][] braveMatrix;
 	private float[][] shyMatrix;
 
+    private Add addClass;
+
 	private void Start()
     {
 		velocity = GetComponent<NavMeshAgent>().velocity;
 		acceleration = GetComponent<NavMeshAgent>().acceleration;
 
-		//stateVector = new float[]{
-		//	0.0f,
-		//	0.0f,
-		//	1.0f,
-		//	0.0f,
-		//	0.0f
-		//};
+        stateVector = new float[]{
+            1.0f,
+            1.0f,
+            1.0f,
+            1.0f,
+            1.0f
+        };
 
-  //      TransitionMatrixRageInit();
-  //      TransitionMatrixBraveInit();
-  //      TransitionMatrixDefaultInit();
-  //      TransitionMatrixShyInit();
-  //      TransitionMatrixScaredInit();
+        //      TransitionMatrixRageInit();
+        //      TransitionMatrixBraveInit();
+        //      TransitionMatrixDefaultInit();
+        //      TransitionMatrixShyInit();
+        //      TransitionMatrixScaredInit();
     }
 
     void Update()
@@ -84,13 +86,40 @@ public class GoToClick : MonoBehaviour
             #endregion
 
             //#region Transition
-            //stateVector = Multiply(shyMatrix, stateVector);
+            ////stateVector = Multiply(shyMatrix, stateVector);
             //Debug.Log(stateVector[0] + " " +
             //        stateVector[1] + " " +
             //        stateVector[2] + " " +
             //        stateVector[3] + " " +
             //        stateVector[4]);
             //#endregion
+
+            addClass = new Add(stateVector);
+
+            Debug.Log(Total(stateVector));
+
+            #region Transition
+            //stateVector = Multiply(shyMatrix, stateVector);
+            Debug.Log("FIRST");
+            Debug.Log(stateVector[0] + " " +
+                    stateVector[1] + " " +
+                    stateVector[2] + " " +
+                    stateVector[3] + " " +
+                    stateVector[4]);
+            #endregion
+
+            float[] test = new float[5];
+            test = addClass.myVector;
+
+            #region Transition
+            //stateVector = Multiply(shyMatrix, stateVector);
+            Debug.Log("SECOND");
+            Debug.Log(test[0] + " " +
+                    test[1] + " " +
+                    test[2] + " " +
+                    test[3] + " " +
+                    test[4]);
+            #endregion
         }
     }
 
@@ -184,8 +213,36 @@ public class GoToClick : MonoBehaviour
         return vector;
     }
 
+    public float Total(float[] vec)
+    {
+        float total = 0f;
+
+        //foreach (float item in vec)
+        //{
+        //    total += item;
+        //}
+
+        for(int i=0; i<5; i++)
+        {
+            total += vec[i];
+            vec[i]++;
+        }
+
+        return total;
+    }
+
     private void OnDrawGizmos()
 	{
 		
 	}
+}
+
+public class Add{
+    public float[] myVector;
+
+    public Add(float[] current)
+    {
+        myVector = current;
+    }
+
 }

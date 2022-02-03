@@ -293,7 +293,10 @@ public class EmotionsSystem : MonoBehaviour
     public float Total()
 	{
         float total = 0f;
-        foreach (float a in stateVector) {
+        
+        for(int i = 0; i < 5; i++)
+        {
+            float a = (float)Math.Round(stateVector[i], 2);
             total += a;
         }
 
