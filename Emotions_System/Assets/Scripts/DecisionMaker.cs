@@ -12,7 +12,7 @@ public class DecisionMaker : MonoBehaviour
 {
     #region Variables
     // AI FRAME
-    // i could even use different reaction time for each 
+    // i could use different reaction time for each 
     // structure involved
     public float reactionTime = 3f;
     public GameObject bulletPrfab;
@@ -34,7 +34,6 @@ public class DecisionMaker : MonoBehaviour
     private BehaviorTree bt_Heal;
     private BehaviorTree bt_Regroup;
     private BehaviorTree bt_Attack;
-    private BehaviorTree bt_Chase;
     private BehaviorTree bt_Runaway;
 
 
@@ -44,19 +43,16 @@ public class DecisionMaker : MonoBehaviour
     public float sightRange = 50f;
     public float sightAngle = 45f;
 
-    private int emotionsValue = 150;
-    public int emotionsValue_increment = 15;
-
     // External knowledge
     [Header("External knowledge")]
     [Space]
     private Transform target;
-    public float targetNear_range = 3.5f;
+    public float targetNear_range = 50f;
     public int targetHealthLow;
     public string enemyTag = "B";
     public Transform allyBase;
     public Transform enemyBase;
-    public float searchRange = 50f;
+    public float searchRange = 100f;
 
     private bool isDashing;
     private float speed;
@@ -214,7 +210,10 @@ public class DecisionMaker : MonoBehaviour
         #endregion
 
         #region DT Scared
-        dt_Shy = new DecisionTree(a_runaway);
+        DTDecision dtscared_1 = new DTDecision(True);
+        dtscared_1.AddLink(true, a_runaway);
+
+        dt_Scared = new DecisionTree(dtscared_1);
 
         #endregion
 
@@ -338,7 +337,7 @@ public class DecisionMaker : MonoBehaviour
 
         #region BT Search
         // Search in random position
-		#endregion
+        #endregion
 
 		#endregion
 
@@ -352,13 +351,6 @@ public class DecisionMaker : MonoBehaviour
         
     }
 
-    #region EmotionValue Controller
-    public void IncreaseEmotionsValue(int increment)
-    {
-        emotionsValue += increment;
-        Mathf.Clamp(emotionsValue, 0, 300);
-    }
-    #endregion
 
     #region FSM Activity
     public void WalkDTNormal()
@@ -411,27 +403,37 @@ public class DecisionMaker : MonoBehaviour
     #region FSM Conditions
     public bool IsBrave()
     {
-        return GetComponent<EmotionsSystem>().Brave();
+        if (GetComponent<EmotionsSystem>().Brave())
+            return true;
+        return false;
     }
 
     public bool IsNormal()
     {
-        return GetComponent<EmotionsSystem>().Normal();
+        if (GetComponent<EmotionsSystem>().Normal())
+            return true;
+        return false;
     }
 
     public bool IsShy()
     {
-        return GetComponent<EmotionsSystem>().Shy();
+        if (GetComponent<EmotionsSystem>().Shy())
+            return true;
+        return false;
     }
 
     public bool IsInRage()
     {
-        return GetComponent<EmotionsSystem>().InRage();
+        if (GetComponent<EmotionsSystem>().InRage())
+            return true;
+        return false;
     }
 
     public bool IsScared()
     {
-        return GetComponent<EmotionsSystem>().Scared();
+        if (GetComponent<EmotionsSystem>().Scared())
+            return true;
+        return false;
     }
 
     #endregion
@@ -599,6 +601,12 @@ public class DecisionMaker : MonoBehaviour
     #endregion
 
     #region DT Conditions
+
+    public object True(object o)
+	{
+        return true;
+	}
+
     public object IsHealthLow(object o)
     {
         if (transform.GetComponent<Health>().IsHealthLow()) {
@@ -663,20 +671,26 @@ public class DecisionMaker : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject enemy in enemies) {
+
+            //Debug.Log("Dist: " + Vector3.Distance(transform.position, enemy.transform.position));
             //Check distance
             if (Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
 
+                //Debug.Log("Ang: " + Vector3.Angle(transform.position, enemy.transform.position));
                 //Check the angle
-                if (Vector3.Angle(transform.position, enemy.transform.position) < sightAngle) {
-
+                if (Vector3.SignedAngle(transform.position, enemy.transform.position, Vector3.up) < sightAngle) {
+                    
                     //Check if in line of sight
                     Vector3 ray = target.position - transform.position;
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, ray, out hit)) {
-                        if (hit.transform.GetComponent<GameObject>().tag == enemyTag) {
-                            target = enemy.transform;
-                            return true;
-                        }
+                        if (hit.transform.TryGetComponent(out GameObject tar)) {
+                            if (tar.transform.tag == enemyTag) {
+                                target = enemy.transform;
+                                GetComponent<NavMeshAgent>().destination = target.position;
+                                return true;
+                            }
+                        }                      
                     }
                 }
             }

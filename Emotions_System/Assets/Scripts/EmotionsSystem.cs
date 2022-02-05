@@ -249,7 +249,7 @@ public class EmotionsSystem : MonoBehaviour
 	#region Emotions Evaluation
     public bool InRage()
 	{
-        if (ToPercentage(Total(), stateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(stateVector), stateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
 	}
@@ -257,28 +257,28 @@ public class EmotionsSystem : MonoBehaviour
 
     public bool Brave()
 	{
-        if (ToPercentage(Total(), stateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(stateVector), stateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
 
     public bool Normal()
     {
-        if (ToPercentage(Total(), stateVector[2]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(stateVector), stateVector[2]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
 
     public bool Shy()
     {
-        if (ToPercentage(Total(), stateVector[3]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(stateVector), stateVector[3]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
 
     public bool Scared()
     {
-        if (ToPercentage(Total(), stateVector[4]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(stateVector), stateVector[4]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
@@ -290,13 +290,14 @@ public class EmotionsSystem : MonoBehaviour
         return x;
 	}
 
-    public float Total()
+    public float Total(float[] vec)
 	{
         float total = 0f;
         
         for(int i = 0; i < 5; i++)
         {
-            float a = (float)Math.Round(stateVector[i], 2);
+            //float a = (float)Math.Round(vec[i], 2);
+            float a = vec[i];
             total += a;
         }
 
