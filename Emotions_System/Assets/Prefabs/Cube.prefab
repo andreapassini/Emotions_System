@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 5873032337763360389}
   - component: {fileID: 5873032337763360390}
   - component: {fileID: 1402759169}
-  - component: {fileID: 1402759170}
-  - component: {fileID: 1402759171}
-  - component: {fileID: 5422250924608658297}
   - component: {fileID: 1494078045}
+  - component: {fileID: 5422250924608658297}
+  - component: {fileID: 1402759171}
+  - component: {fileID: 1402759170}
   m_Layer: 0
   m_Name: Cube
   m_TagString: A
@@ -108,12 +108,71 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5873032337763360391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15b32c6907d26d64eb081a98d77d618e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &1494078045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a778087d01ef42f4fa398a1b62281fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthHigh: 70
+  healthLow: 30
+--- !u!114 &5422250924608658297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de75d8233722b174394aaca53a799481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 5
+  scared: 0
+  inRage: 0
+  reactionTime: 5
+--- !u!114 &1402759171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873032337763360391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4046f5b1ff510724ba5c9799c376f4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emotionSystem: {fileID: 5422250924608658297}
+  reactionTime: 0.3
+  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
+  attackMeleeRange: 1.5
+  meleeDmg: 25
+  dashForce: 20
+  sightRange: 200
+  sightAngle: 90
+  targetNear_range: 5
+  targetHealthLow: 30
+  enemyTag: B
+  allyBase: {fileID: 0}
+  enemyBase: {fileID: 0}
+  searchRange: 50
+  dashTime: 100
+  dashSpeed: 1.1
 --- !u!195 &1402759170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -136,64 +195,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1402759171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5873032337763360391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4046f5b1ff510724ba5c9799c376f4c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactionTime: 0.3
-  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
-  attackMeleeRange: 1.5
-  meleeDmg: 25
-  dashForce: 20
-  sightRange: 200
-  sightAngle: 90
-  targetNear_range: 5
-  targetHealthLow: 30
-  enemyTag: B
-  allyBase: {fileID: 0}
-  enemyBase: {fileID: 0}
-  searchRange: 50
-  dashTime: 100
-  dashSpeed: 1.1
---- !u!114 &5422250924608658297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5873032337763360391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de75d8233722b174394aaca53a799481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 5
-  scared: 0
-  inRage: 0
-  reactionTime: 5
---- !u!114 &1494078045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5873032337763360391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a778087d01ef42f4fa398a1b62281fbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  healthHigh: 70
-  healthLow: 30
 --- !u!1 &7186660184586969268
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ using System;
 public class DecisionMaker : MonoBehaviour
 {
     #region Variables
+    [SerializeField]private EmotionsSystem _emotionSystem;
+
     // AI FRAME
     // i could use different reaction time for each 
     // structure involved
@@ -30,7 +32,6 @@ public class DecisionMaker : MonoBehaviour
     private DecisionTree dt_InRage;
     private DecisionTree dt_Scared;
 
-    private BehaviorTree bt_Search;
     private BehaviorTree bt_Heal;
     private BehaviorTree bt_Regroup;
     private BehaviorTree bt_Attack;
@@ -38,13 +39,11 @@ public class DecisionMaker : MonoBehaviour
 
 
     // Internal knowledge
-    [Header("Internal knowledge")]
     [Space]
     public float sightRange = 50f;
     public float sightAngle = 45f;
 
     // External knowledge
-    [Header("External knowledge")]
     [Space]
     private Transform target;
     public float targetNear_range = 50f;
@@ -335,10 +334,6 @@ public class DecisionMaker : MonoBehaviour
         bt_Heal = new BehaviorTree(bt_heal_dec1);
         #endregion
 
-        #region BT Search
-        // Search in random position
-        #endregion
-
 		#endregion
 
 		// Start monitoring FSM
@@ -401,37 +396,38 @@ public class DecisionMaker : MonoBehaviour
     #endregion
 
     #region FSM Conditions
-    public bool IsBrave()
+    public bool IsNormal()
     {
-        if (GetComponent<EmotionsSystem>().Brave())
+        if (_emotionSystem.Normal())
             return true;
         return false;
     }
 
-    public bool IsNormal()
+    public bool IsBrave()
     {
-        if (GetComponent<EmotionsSystem>().Normal())
+        if (_emotionSystem.Brave())
             return true;
         return false;
     }
+
 
     public bool IsShy()
     {
-        if (GetComponent<EmotionsSystem>().Shy())
+        if (_emotionSystem.Shy())
             return true;
         return false;
     }
 
     public bool IsInRage()
     {
-        if (GetComponent<EmotionsSystem>().InRage())
+        if (_emotionSystem.InRage())
             return true;
         return false;
     }
 
     public bool IsScared()
     {
-        if (GetComponent<EmotionsSystem>().Scared())
+        if (_emotionSystem.Scared())
             return true;
         return false;
     }
@@ -489,12 +485,8 @@ public class DecisionMaker : MonoBehaviour
     }
 
     // BT
-    public IEnumerator PatrolBTSearch()
-    {
-        while (bt_Search.Step()) {
-            yield return new WaitForSeconds(reactionTime);
-        }
-    }
+
+
 
     public IEnumerator PatrolBTHeal()
     {
@@ -513,13 +505,6 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolBTAttack()
     {
         while (bt_Attack.Step()) {
-            yield return new WaitForSeconds(reactionTime);
-        }
-    }
-
-    public IEnumerator PatrolBTChase()
-    {
-        while (bt_Chase.Step()) {
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -544,7 +529,7 @@ public class DecisionMaker : MonoBehaviour
         GetComponent<NavMeshAgent>().acceleration = acceleration;
         isDashing = false;
     }
-
+    
     #endregion
 
     #region DT Actions
@@ -558,7 +543,7 @@ public class DecisionMaker : MonoBehaviour
     public object Search(object o)
     {
         // Start patroling
-        StartCoroutine(PatrolBTSearch());
+        Search();
         return null;
     }
 
