@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using System.Collections.Generic;
 
 // Defer function to trigger activation condition
 // Returns true when transition can fire
@@ -65,27 +62,21 @@ public class MarkovSMState
 
 public class MarkovSM
 {
-	// Current state
-	public MarkovSMState current;
+	public MarkovSMState current; // Current state
 
 	public MarkovSM(MarkovSMState state)
 	{
 		current = state;
 	}
 
-	// Examine transitions leading out from the current state
-	// If a condition is activated, then:
-	// (1) Multiply the matrix of that transition with the state vector
-	// (2) Execute the actions associated with the transition
-
 	public void Update()
 	{ // NOTE: this is NOT a MonoBehaviour
 		MarkovSMTransition transition = current.VerifyTransitions();
 		if (transition != null) {
-			// 1
+			// (1) Multiply the matrix of that transition with the state vector
 			current.myStateVector = Multiply(transition.myMatrix, current.myStateVector);
 
-			// 2
+			// (2) Execute the actions associated with the transition
 			transition.Fire(); 
 		}
 	}
@@ -93,13 +84,11 @@ public class MarkovSM
 	public float[] Multiply(float[][] matrix, float[] _stateVector)
 	{
 		float[] vector = new float[5];
-
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				vector[i] += matrix[i][j] * _stateVector[j];
 			}
 		}
-
 		return vector;
 	}
 }
