@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(DecisionMaker))]
 public class EmotionsSystem : MonoBehaviour
 {
     #region Variables
@@ -27,7 +29,6 @@ public class EmotionsSystem : MonoBehaviour
     #endregion
 
     #region Unity Methods
-
     void Start()
     {
         stateVector = new float[]{
@@ -38,13 +39,13 @@ public class EmotionsSystem : MonoBehaviour
             0.0f
         };
 
+        MarkovSMState markovSMState = new MarkovSMState(stateVector);
+
         TransitionMatrixRageInit();
         TransitionMatrixBraveInit();
         TransitionMatrixDefaultInit();
         TransitionMatrixShyInit();
         TransitionMatrixScaredInit();
-
-        MarkovSMState markovSMState = new MarkovSMState(stateVector);
 
         // Actions
         MarkovSMAction m_a_Default = new MarkovSMAction(ResetTimer);
@@ -68,19 +69,19 @@ public class EmotionsSystem : MonoBehaviour
         m_t_Fscared.myActions.Add(m_a_ResetScared);
         markovSMState.AddTransition(m_t_Fscared);
 
-        MarkovSMTransition m_t1 = new MarkovSMTransition(AlliesAround, braveMatrix);
+        MarkovSMTransition m_t1 = new MarkovSMTransition(AllyAround, braveMatrix);
         m_t1.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t1);
 
-        MarkovSMTransition m_t2 = new MarkovSMTransition(EnemiesAround, shyMatrix);
+        MarkovSMTransition m_t2 = new MarkovSMTransition(EnemyAround, shyMatrix);
         m_t2.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t2);
 
-        MarkovSMTransition m_t3 = new MarkovSMTransition(GetComponent<Health>().IsHealthLow, shyMatrix);
+        MarkovSMTransition m_t3 = new MarkovSMTransition(GetComponent<Health>().IsHealthLow, scaredMatrix);
         m_t3.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t3);
 
-        MarkovSMTransition m_t4 = new MarkovSMTransition(GetComponent<Health>().IsHealthHigh, braveMatrix);
+        MarkovSMTransition m_t4 = new MarkovSMTransition(GetComponent<Health>().IsHealthHigh, inRageMatrix);
         m_t4.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t4);
 
@@ -170,7 +171,7 @@ public class EmotionsSystem : MonoBehaviour
         return false;
 	}
 
-    public bool EnemiesAround()
+    public bool EnemyAround()
 	{
         int n = 0;
         string enemyTag = GetComponent<DecisionMaker>().enemyTag;
@@ -191,10 +192,10 @@ public class EmotionsSystem : MonoBehaviour
         return false;
 	}
 
-    public bool AlliesAround()
+    public bool AllyAround()
     {
         int n = 0;
-        string enemyTag = GetComponent<DecisionMaker>().enemyTag;
+        
         float sightRange = GetComponent<DecisionMaker>().sightRange;
 
         // Otherwise i can calculate Angle with every target /in range
