@@ -92,7 +92,7 @@ public class EmotionsSystem : MonoBehaviour
 
 	void Update()
     {
-        //Debug.Log(startTime);
+        
     }
 
     public IEnumerator Patrol()
@@ -297,7 +297,6 @@ public class EmotionsSystem : MonoBehaviour
         
         for(int i = 0; i < 5; i++)
         {
-            //float a = (float)Math.Round(vec[i], 2);
             float a = vec[i];
             total += a;
         }

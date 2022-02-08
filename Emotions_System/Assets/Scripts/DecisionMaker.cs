@@ -7,6 +7,8 @@ using CRBT;
 using System;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(EmotionsSystem))]
 
 public class DecisionMaker : MonoBehaviour
 {
