@@ -141,8 +141,8 @@ public class DecisionMaker : MonoBehaviour
 
         // DT Brave
         DTDecision dbrave_1 = new DTDecision(IsHealthLow);
-        DTDecision dbrave_2 = new DTDecision(IsTargetAquired);
-        DTDecision dbrave_3 = new DTDecision(IsTargetAquired);
+        DTDecision dbrave_2 = new DTDecision(IsTargetAcquired);
+        DTDecision dbrave_3 = new DTDecision(IsTargetAcquired);
         DTDecision dbrave_4 = new DTDecision(IsTargetNear);
         DTDecision dbrave_5 = new DTDecision(IsTargetNear);
         DTDecision dbrave_6 = new DTDecision(IsTargetInLineOfSight);
@@ -170,8 +170,8 @@ public class DecisionMaker : MonoBehaviour
 
         #region DT Shy
         DTDecision dshy_1 = new DTDecision(IsHealthHigh);
-        DTDecision dshy_2 = new DTDecision(IsTargetAquired);
-        DTDecision dshy_3 = new DTDecision(IsTargetAquired);
+        DTDecision dshy_2 = new DTDecision(IsTargetAcquired);
+        DTDecision dshy_3 = new DTDecision(IsTargetAcquired);
         DTDecision dshy_4 = new DTDecision(IsTargetNear);
         DTDecision dshy_5 = new DTDecision(IsTargetNear);
 
@@ -194,7 +194,7 @@ public class DecisionMaker : MonoBehaviour
         #endregion
 
         #region DT Rage
-        DTDecision drage_1 = new DTDecision(IsTargetAquired);
+        DTDecision drage_1 = new DTDecision(IsTargetAcquired);
         DTDecision drage_2 = new DTDecision(IsTargetNear);
         DTDecision drage_3 = new DTDecision(IsTargetInLineOfSight);
 
@@ -220,7 +220,7 @@ public class DecisionMaker : MonoBehaviour
 
         #region DT Normal
 
-        DTDecision dnormal_1 = new DTDecision(IsTargetAquired);
+        DTDecision dnormal_1 = new DTDecision(IsTargetAcquired);
         DTDecision dnormal_2 = new DTDecision(IsHealthHigh);
         DTDecision dnormal_3 = new DTDecision(IsHealthLow);
         DTDecision dnormal_4 = new DTDecision(IsTargetNear);
@@ -299,7 +299,7 @@ public class DecisionMaker : MonoBehaviour
             bt_attack_a4
         });
 
-        BTSelector bt_attack_s3 = new BTSelector(new IBTTask[]
+        BTRandomSelector bt_attack_s3 = new BTRandomSelector(new IBTTask[]
         {
             bt_attack_s1,
             bt_attack_s2
@@ -341,13 +341,6 @@ public class DecisionMaker : MonoBehaviour
 		// Start monitoring FSM
 		StartCoroutine(Patrol());
     }
-
-
-	void Update()
-    {
-        
-    }
-
 
     #region FSM Activity
     public void WalkDTNormal()
@@ -582,6 +575,7 @@ public class DecisionMaker : MonoBehaviour
 
     public object GoToEnemyBase(object o)
     {
+        GetComponent<NavMeshAgent>().destination = enemyBase.position;
         return null;
     }
 
@@ -602,11 +596,11 @@ public class DecisionMaker : MonoBehaviour
         return false;
     }
 
-    public object IsTargetAquired(object o)
+    public object IsTargetAcquired(object o)
     {
-        if (target != enemyBase && target != null && Vector3.Distance(transform.position, target.position) <= sightRange * 2) {
+        if (target != enemyBase && target != null && Vector3.Distance(transform.position, target.position) <= sightRange) {
             return true;
-        } else if (AquireTarget()) {
+        } else if (AcquireTarget()) {
             return true;
         }
         target = enemyBase;
@@ -652,21 +646,16 @@ public class DecisionMaker : MonoBehaviour
         return null;
     }
 
-    public bool AquireTarget()
+    public bool AcquireTarget()
     {
         // I can calculate Angle with every target /in range
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject enemy in enemies) {
-
-            //Debug.Log("Dist: " + Vector3.Distance(transform.position, enemy.transform.position));
             //Check distance
             if (Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
-
-                //Debug.Log("Ang: " + Vector3.Angle(transform.position, enemy.transform.position));
                 //Check the angle
                 if (Vector3.SignedAngle(transform.position, enemy.transform.position, Vector3.up) < sightAngle) {
-                    
                     //Check if in line of sight
                     Vector3 ray = target.position - transform.position;
                     RaycastHit hit;
