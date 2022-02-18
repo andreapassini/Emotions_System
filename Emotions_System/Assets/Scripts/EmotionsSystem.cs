@@ -26,6 +26,8 @@ public class EmotionsSystem : MonoBehaviour
     public bool inRage = false;
 
     public float reactionTime = 5f;
+
+    private bool test = false;
     #endregion
 
     #region Unity Methods
@@ -51,6 +53,7 @@ public class EmotionsSystem : MonoBehaviour
         MarkovSMAction m_a_Default = new MarkovSMAction(ResetTimer);
         MarkovSMAction m_a_ResetInRage = new MarkovSMAction(ResetInRage);
         MarkovSMAction m_a_ResetScared = new MarkovSMAction(ResetScared);
+        MarkovSMAction m_a_doMulti = new MarkovSMAction(doMulti);
 
         // Default transition
         MarkovSMTransition m_t_default = new MarkovSMTransition(TimerOff, defaultMatrix);
@@ -85,6 +88,19 @@ public class EmotionsSystem : MonoBehaviour
         m_t4.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t4);
 
+        MarkovSMTransition m_t5 = new MarkovSMTransition(NoAllyAround, shyMatrix);
+        m_t5.myActions.Add(m_a_Default);
+        markovSMState.AddTransition(m_t5);
+
+        MarkovSMTransition m_t6 = new MarkovSMTransition(NoEnemyAround, defaultMatrix);
+        m_t6.myActions.Add(m_a_Default);
+        markovSMState.AddTransition(m_t6);
+
+        MarkovSMTransition m_t7 = new MarkovSMTransition(Test, inRageMatrix);
+        m_t7.myActions.Add(m_a_Default);
+        m_t7.myActions.Add(doMulti);
+        markovSMState.AddTransition(m_t7);
+
         markovSM = new MarkovSM(markovSMState);
 
         StartCoroutine(Patrol());
@@ -92,12 +108,20 @@ public class EmotionsSystem : MonoBehaviour
 
 	void Update()
     {
-        
+		if (Input.GetMouseButtonDown(0)) {
+            Debug.Log("Pressed");
+            test = true;
+		}
+
+        if (Input.GetMouseButtonDown(1)) {
+            test = false;
+        }
     }
 
     public IEnumerator Patrol()
     {
         while (true) {
+            Debug.Log("" + stateVector[0] + " " + stateVector[1] + " " + stateVector[2] + " " + stateVector[3] + " " + stateVector[4]);
             markovSM.Update();
             yield return new WaitForSeconds(reactionTime);
         }
@@ -213,6 +237,20 @@ public class EmotionsSystem : MonoBehaviour
         return false;
     }
 
+    public bool NoAllyAround()
+	{
+        if (AllyAround())
+            return true;
+        return false;
+	}
+
+    public bool NoEnemyAround()
+	{
+        if (EnemyAround())
+            return true;
+        return false;
+	}
+
     public bool FeelingInRage()
 	{
         if (inRage)
@@ -224,6 +262,14 @@ public class EmotionsSystem : MonoBehaviour
 	{
         if (scared)
             return true;
+        return false;
+	}
+
+    public bool Test()
+	{
+        if (test) {
+            return true;
+        }
         return false;
 	}
 
@@ -245,9 +291,15 @@ public class EmotionsSystem : MonoBehaviour
 	{
         scared = false;
 	}
-	#endregion
 
-	#region Emotions Evaluation
+    public void doMulti()
+	{
+        float[] array_test = Multiply(inRageMatrix, stateVector);
+        Debug.Log("" + array_test[0] + " " + array_test[1] + " " + array_test[2] + " " + array_test[3] + " " + array_test[4]);
+	}
+    #endregion
+
+    #region Emotions Evaluation
     public bool InRage()
 	{
         if (ToPercentage(Total(stateVector), stateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
@@ -302,6 +354,17 @@ public class EmotionsSystem : MonoBehaviour
         }
 
         return total;
+    }
+
+    public float[] Multiply(float[][] matrix, float[] _stateVector)
+    {
+        float[] vector = new float[5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                vector[i] += matrix[i][j] * _stateVector[j];
+            }
+        }
+        return vector;
     }
     #endregion
 }

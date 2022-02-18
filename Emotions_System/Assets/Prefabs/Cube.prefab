@@ -130,7 +130,7 @@ MonoBehaviour:
   timer: 5
   scared: 0
   inRage: 0
-  reactionTime: 5
+  reactionTime: 1
 --- !u!114 &1402759171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _emotionSystem: {fileID: 5422250924608658297}
-  reactionTime: 1
+  reactionTime: 0.5
   bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
   attackMeleeRange: 1.5
   meleeDmg: 25

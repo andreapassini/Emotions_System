@@ -130,7 +130,7 @@ MonoBehaviour:
   timer: 5
   scared: 0
   inRage: 0
-  reactionTime: 5
+  reactionTime: 1
 --- !u!114 &250836025681976980
 MonoBehaviour:
   m_ObjectHideFlags: 0

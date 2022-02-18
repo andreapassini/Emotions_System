@@ -342,32 +342,53 @@ public class DecisionMaker : MonoBehaviour
 		StartCoroutine(Patrol());
     }
 
-    #region FSM Activity
-    public void WalkDTNormal()
+	private void OnDrawGizmosSelected()
+	{
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+	}
+
+	#region FSM Activity
+	public void WalkDTNormal()
     {
         // Start patroling
         StartCoroutine(PatrolDTNormal());
+
+        if(tag.Equals("A"))
+            Debug.Log("Normal State");
     }
 
     public void WalkDTBrave()
     {
         // Start patroling
         StartCoroutine(PatrolDTBrave());
+
+        if (tag.Equals("A"))
+            Debug.Log("Brave State");
     }
 
     public void WalkDTInRage()
     {
         StartCoroutine(PatrolDTInRage());
+
+        if (tag.Equals("A"))
+            Debug.Log("InRage State");
     }
 
     public void WalkDTShy()
     {
         StartCoroutine(PatrolDTShy());
+
+        if (tag.Equals("A"))
+            Debug.Log("Shy State");
     }
 
     public void WalkDTScared()
     {
         StartCoroutine(PatrolDTScared());
+
+        if (tag.Equals("A"))
+            Debug.Log("Scared State");
     }
 
     public void SpreadInRage()
@@ -569,6 +590,7 @@ public class DecisionMaker : MonoBehaviour
     public object Attack(object o)
     {
         // Start patroling
+        Debug.Log("Attack");
         StartCoroutine(PatrolBTAttack());
         return null;
     }
