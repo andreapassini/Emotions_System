@@ -13,12 +13,13 @@ using System;
 public class DecisionMaker : MonoBehaviour
 {
     #region Variables
-    [SerializeField]private EmotionsSystem _emotionSystem;
+    private EmotionsSystem _emotionSystem;
 
     // AI FRAME
     // i could use different reaction time for each 
     // structure involved
     public float reactionTime = 3f;
+
     public GameObject bulletPrfab;
     public float attackMeleeRange = 1f;
     public int meleeDmg = 25;
@@ -65,6 +66,16 @@ public class DecisionMaker : MonoBehaviour
     private Transform startingDashPoint;
     private Transform allyPosition;
 
+    [Space]
+    private MeshRenderer _meshRenderer;
+
+    public Material MaterialScare;
+    public Material MaterialShy;
+    public Material MaterialNormal;
+    public Material MaterialBrave;
+    public Material MaterialInRage;
+
+
     #endregion
 
     #region Unity Methods
@@ -73,6 +84,9 @@ public class DecisionMaker : MonoBehaviour
     {
         // Get the Child
         firePoint = transform.GetChild(0);
+
+        _emotionSystem = GetComponent<EmotionsSystem>();
+        _meshRenderer = GetComponent<MeshRenderer>();
 
         GetComponent<NavMeshAgent>().destination = enemyBase.position;
 
@@ -259,6 +273,7 @@ public class DecisionMaker : MonoBehaviour
         dt_Normal = new DecisionTree(dnormal_1);
         #endregion
 
+
         #endregion
 
 
@@ -354,8 +369,8 @@ public class DecisionMaker : MonoBehaviour
         // Start patroling
         StartCoroutine(PatrolDTNormal());
 
-        if(tag.Equals("A"))
-            Debug.Log("Normal State");
+        // Simply Change the color 
+        _meshRenderer.material = MaterialNormal;
     }
 
     public void WalkDTBrave()
@@ -363,32 +378,32 @@ public class DecisionMaker : MonoBehaviour
         // Start patroling
         StartCoroutine(PatrolDTBrave());
 
-        if (tag.Equals("A"))
-            Debug.Log("Brave State");
+        // Simply Change the color 
+        _meshRenderer.material = MaterialBrave;
     }
 
     public void WalkDTInRage()
     {
         StartCoroutine(PatrolDTInRage());
 
-        if (tag.Equals("A"))
-            Debug.Log("InRage State");
+        // Simply Change the color 
+        _meshRenderer.material = MaterialInRage;
     }
 
     public void WalkDTShy()
     {
         StartCoroutine(PatrolDTShy());
 
-        if (tag.Equals("A"))
-            Debug.Log("Shy State");
+        // Simply Change the color 
+        _meshRenderer.material = MaterialShy;
     }
 
     public void WalkDTScared()
     {
         StartCoroutine(PatrolDTScared());
 
-        if (tag.Equals("A"))
-            Debug.Log("Scared State");
+        // Simply Change the color 
+        _meshRenderer.material = MaterialScare;
     }
 
     public void SpreadInRage()
@@ -842,6 +857,7 @@ public class DecisionMaker : MonoBehaviour
 
     #endregion
 
+    // Use instead the method seen in classe (a point around a circle in front of you)
     public Vector3 RandomNavmeshLocation(float radius)
     {
         Transform a; 
