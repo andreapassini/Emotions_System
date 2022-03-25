@@ -19,20 +19,23 @@ public class EmotionsSystem : MonoBehaviour
     private float[][] braveMatrix;
     private float[][] shyMatrix;
 
-    private float startTime;
+    private float _nextTimer;
     public float timer = 5f;
 
     public bool scared = false;
     public bool inRage = false;
 
-    public float reactionTime = 5f;
+    public float reactionTime = 2f;
 
-    private bool test = false;
+    private bool _clicked = false;
+
     #endregion
 
     #region Unity Methods
     void Start()
     {
+        _nextTimer = Time.time + timer;
+
         stateVector = new float[]{
             0.0f,
             0.0f,
@@ -96,11 +99,6 @@ public class EmotionsSystem : MonoBehaviour
         m_t6.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t6);
 
-        MarkovSMTransition m_t7 = new MarkovSMTransition(Test, inRageMatrix);
-        m_t7.myActions.Add(m_a_Default);
-        m_t7.myActions.Add(doMulti);
-        markovSMState.AddTransition(m_t7);
-
         markovSM = new MarkovSM(markovSMState);
 
         StartCoroutine(Patrol());
@@ -108,14 +106,7 @@ public class EmotionsSystem : MonoBehaviour
 
 	void Update()
     {
-		if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Pressed");
-            test = true;
-		}
-
-        if (Input.GetMouseButtonDown(1)) {
-            test = false;
-        }
+		
     }
 
     public IEnumerator Patrol()
@@ -189,9 +180,10 @@ public class EmotionsSystem : MonoBehaviour
     #region Conditions
     public bool TimerOff()
 	{
-        if (Time.time >= startTime + timer) {
+        if (_nextTimer <= Time.time) {
             return true;
 		}
+
         return false;
 	}
 
@@ -239,14 +231,14 @@ public class EmotionsSystem : MonoBehaviour
 
     public bool NoAllyAround()
 	{
-        if (AllyAround())
+        if (!AllyAround())
             return true;
         return false;
 	}
 
     public bool NoEnemyAround()
 	{
-        if (EnemyAround())
+        if (!EnemyAround())
             return true;
         return false;
 	}
@@ -265,21 +257,13 @@ public class EmotionsSystem : MonoBehaviour
         return false;
 	}
 
-    public bool Test()
-	{
-        if (test) {
-            return true;
-        }
-        return false;
-	}
-
 	#endregion
 
 
 	#region Actions
 	public void ResetTimer()
 	{
-        startTime = Time.time;
+        _nextTimer = Time.time;
 	}
 
     public void ResetInRage()

@@ -76,6 +76,9 @@ public class DecisionMaker : MonoBehaviour
     public Material MaterialInRage;
 
 
+    //Just for test TO DELETE
+    private bool _colorChange = false;
+
     #endregion
 
     #region Unity Methods
@@ -880,6 +883,19 @@ public class DecisionMaker : MonoBehaviour
 
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(firePoint.position, attackMeleeRange);
+    }
+
+    //Just for a test TO DELETE
+    public void ChangeColor()
+	{
+		if (_colorChange) {
+            // Simply Change the color 
+            _meshRenderer.material = MaterialShy;
+        } else {
+            // Simply Change the color 
+            _meshRenderer.material = MaterialBrave;
+        }
+        
     }
 
     #endregion

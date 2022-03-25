@@ -31,6 +31,9 @@ public class GoToClick : MonoBehaviour
     int i;
 
     public Material OtherMaterial;
+    private float _nextTimer;
+    public float timer = 2f;
+    private bool _start = false;
 
     private void Start()
     {
@@ -56,18 +59,28 @@ public class GoToClick : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0)) 
 		{
-            //GetComponent<NavMeshAgent>().velocity = velocity;
-            //GetComponent<NavMeshAgent>().acceleration = acceleration;
+			//GetComponent<NavMeshAgent>().velocity = velocity;
+			//GetComponent<NavMeshAgent>().acceleration = acceleration;
 
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
-            //if (Physics.Raycast(ray, out hit)) {
-            //	GetComponent<NavMeshAgent>().destination = hit.point;
-            //}
+			//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			//RaycastHit hit;
+			//if (Physics.Raycast(ray, out hit)) {
+			//	GetComponent<NavMeshAgent>().destination = hit.point;
+			//}
 
-            // Simply Change the color 
-            GetComponent<MeshRenderer>().material = OtherMaterial;
+			if (!_start) {
+                _nextTimer = Time.time + timer;
+                _start = true;
+            }
+
         }
+
+        if(_nextTimer <= Time.time && _start) {
+            Debug.Log("Dring Dring");
+            _start = false;
+		} else {
+            Debug.Log(_nextTimer + " > " + Time.time);
+		}
 
 		#region A
 
@@ -236,6 +249,8 @@ public class GoToClick : MonoBehaviour
 	{
 		
 	}
+
+
 }
 
 public class Add{
