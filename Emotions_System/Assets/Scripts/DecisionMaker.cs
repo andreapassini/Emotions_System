@@ -114,7 +114,7 @@ public class DecisionMaker : MonoBehaviour
 
         // FSM Transitions
         FSMTransition t1 = new FSMTransition(IsBrave); // Normal to Brave
-        FSMTransition t2 = new FSMTransition(IsShy); // NOrmal to Shy
+        FSMTransition t2 = new FSMTransition(IsShy); // Normal to Shy
 
         FSMTransition t3 = new FSMTransition(IsNormal); // Brave to Normal
         FSMTransition t4 = new FSMTransition(IsNormal); // Shy to Normal
@@ -895,7 +895,6 @@ public class DecisionMaker : MonoBehaviour
             // Simply Change the color 
             _meshRenderer.material = MaterialBrave;
         }
-        
     }
 
     #endregion

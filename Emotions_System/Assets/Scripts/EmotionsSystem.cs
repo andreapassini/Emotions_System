@@ -112,7 +112,11 @@ public class EmotionsSystem : MonoBehaviour
     public IEnumerator Patrol()
     {
         while (true) {
-            Debug.Log("" + stateVector[0] + " " + stateVector[1] + " " + stateVector[2] + " " + stateVector[3] + " " + stateVector[4]);
+            Debug.Log("" + markovSM.current.myStateVector[0] + " " 
+                + markovSM.current.myStateVector[1] + " " + 
+                markovSM.current.myStateVector[2] + " " 
+                + markovSM.current.myStateVector[3] + " " 
+                + markovSM.current.myStateVector[4]);
             markovSM.Update();
             yield return new WaitForSeconds(reactionTime);
         }
@@ -181,6 +185,7 @@ public class EmotionsSystem : MonoBehaviour
     public bool TimerOff()
 	{
         if (_nextTimer <= Time.time) {
+            Debug.Log("Tic Toc");
             return true;
 		}
 
@@ -263,8 +268,8 @@ public class EmotionsSystem : MonoBehaviour
 	#region Actions
 	public void ResetTimer()
 	{
-        _nextTimer = Time.time;
-	}
+        _nextTimer = Time.time + timer;
+    }
 
     public void ResetInRage()
 	{
