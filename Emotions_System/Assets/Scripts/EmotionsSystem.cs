@@ -106,22 +106,10 @@ public class EmotionsSystem : MonoBehaviour
         StartCoroutine(Patrol());
     }
 
-	void Update()
-    {
-		if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Pressed");
-            test = true;
-		}
-
-        if (Input.GetMouseButtonDown(1)) {
-            test = false;
-        }
-    }
-
     public IEnumerator Patrol()
     {
         while (true) {
-            Debug.Log("" + stateVector[0] + " " + stateVector[1] + " " + stateVector[2] + " " + stateVector[3] + " " + stateVector[4]);
+            //Debug.Log("" + markovSM.current.myStateVector[0]  + " " + markovSM.current.myStateVector[1] + " " + markovSM.current.myStateVector[2] + " " + markovSM.current.myStateVector[3] + " " + markovSM.current.myStateVector[4]);
             markovSM.Update();
             yield return new WaitForSeconds(reactionTime);
         }
@@ -190,6 +178,7 @@ public class EmotionsSystem : MonoBehaviour
     public bool TimerOff()
 	{
         if (Time.time >= startTime + timer) {
+            Debug.Log("TimerOff");
             return true;
 		}
         return false;
@@ -212,7 +201,11 @@ public class EmotionsSystem : MonoBehaviour
         }
 
         if (n >= 3)
+        {
+            Debug.Log("EnemyAround");
             return true;
+        }
+        
         return false;
 	}
 
@@ -233,41 +226,60 @@ public class EmotionsSystem : MonoBehaviour
         }
 
         if (n >= 3)
+        {
+            Debug.Log("AllyAround");
             return true;
+        }
         return false;
     }
 
     public bool NoAllyAround()
 	{
         if (AllyAround())
-            return true;
-        return false;
-	}
+        {
+            return false;
+        }
+
+        Debug.Log("NoAllyAround");
+        return true;
+    }
 
     public bool NoEnemyAround()
 	{
         if (EnemyAround())
-            return true;
-        return false;
+        {
+            return false;
+        }
+
+        Debug.Log("NoEnemyAround");
+        return true;
 	}
 
     public bool FeelingInRage()
 	{
         if (inRage)
+        {
+            Debug.Log("FeelingInRage");
             return true;
+        }
         return false;
 	}
 
     public bool FeelingScared()
 	{
         if (scared)
+        {
+            Debug.Log("FeelingScared");
             return true;
+        }
         return false;
 	}
 
     public bool Test()
 	{
-        if (test) {
+        if (test)
+        {
+            Debug.Log("Test");
             return true;
         }
         return false;
