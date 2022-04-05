@@ -53,7 +53,6 @@ public class EmotionsSystem : MonoBehaviour
         MarkovSMAction m_a_Default = new MarkovSMAction(ResetTimer);
         MarkovSMAction m_a_ResetInRage = new MarkovSMAction(ResetInRage);
         MarkovSMAction m_a_ResetScared = new MarkovSMAction(ResetScared);
-        MarkovSMAction m_a_doMulti = new MarkovSMAction(doMulti);
 
         // Default transition
         MarkovSMTransition m_t_default = new MarkovSMTransition(TimerOff, defaultMatrix);
@@ -96,10 +95,6 @@ public class EmotionsSystem : MonoBehaviour
         m_t6.myActions.Add(m_a_Default);
         markovSMState.AddTransition(m_t6);
 
-        MarkovSMTransition m_t7 = new MarkovSMTransition(Test, inRageMatrix);
-        m_t7.myActions.Add(m_a_Default);
-        m_t7.myActions.Add(doMulti);
-        markovSMState.AddTransition(m_t7);
 
         markovSM = new MarkovSM(markovSMState);
 
@@ -109,8 +104,14 @@ public class EmotionsSystem : MonoBehaviour
     public IEnumerator Patrol()
     {
         while (true) {
-            //Debug.Log("" + markovSM.current.myStateVector[0]  + " " + markovSM.current.myStateVector[1] + " " + markovSM.current.myStateVector[2] + " " + markovSM.current.myStateVector[3] + " " + markovSM.current.myStateVector[4]);
+            Debug.Log(" " + markovSM.current.myStateVector[0]  + 
+                " " + markovSM.current.myStateVector[1] + 
+                " " + markovSM.current.myStateVector[2] + 
+                " " + markovSM.current.myStateVector[3] + 
+                " " + markovSM.current.myStateVector[4]);
+
             markovSM.Update();
+
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -303,12 +304,6 @@ public class EmotionsSystem : MonoBehaviour
 	{
         scared = false;
 	}
-
-    public void doMulti()
-	{
-        float[] array_test = Multiply(inRageMatrix, stateVector);
-        Debug.Log("" + array_test[0] + " " + array_test[1] + " " + array_test[2] + " " + array_test[3] + " " + array_test[4]);
-	}
     #endregion
 
 
@@ -340,19 +335,7 @@ public class EmotionsSystem : MonoBehaviour
 
     public bool Brave()
 	{
-        //if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
-        //    return true;
-
-        float total = 0f;
-
-        for (int i = 0; i < 5; i++)
-        {
-            total += markovSM.current.myStateVector[i];
-        }
-
-        float p = (100 * markovSM.current.myStateVector[1]) / total;
-
-        if (p >= UnityEngine.Random.Range(0f, 100f))
+		if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[1]) >= UnityEngine.Random.Range(0f, 100f)) 
         {
             return true;
         }
