@@ -30,7 +30,12 @@ public class GoToClick : MonoBehaviour
 
     int i;
 
-	private void Start()
+    public Material OtherMaterial;
+    private float _nextTimer;
+    public float timer = 2f;
+    private bool _start = false;
+
+    private void Start()
     {
 		velocity = GetComponent<NavMeshAgent>().velocity;
 		acceleration = GetComponent<NavMeshAgent>().acceleration;
@@ -54,69 +59,83 @@ public class GoToClick : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0)) 
 		{
-			GetComponent<NavMeshAgent>().velocity = velocity;
-			GetComponent<NavMeshAgent>().acceleration = acceleration;
-
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit)) {
-				GetComponent<NavMeshAgent>().destination = hit.point;
-			}
-
-		}
-
-		if (Input.GetMouseButtonUp(1)) 
-		{
-			#region Runaway
-			//GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-			//GetComponent<NavMeshAgent>().acceleration = 0f;
-
-			//verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
-			//Vector3 angleDir = verticalAdj - transform.position;
-			//angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
-
-			//transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
-
-			//Vector3 dir = new Vector3();
-			//dir = (transform.position + Vector3.forward.normalized * 50f);
-
-			//GetComponent<NavMeshAgent>().destination = dir;
 			//GetComponent<NavMeshAgent>().velocity = velocity;
 			//GetComponent<NavMeshAgent>().acceleration = acceleration;
 
-			//Debug.Log(Vector3.forward.normalized * 5f);
-			#endregion
+			//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			//RaycastHit hit;
+			//if (Physics.Raycast(ray, out hit)) {
+			//	GetComponent<NavMeshAgent>().destination = hit.point;
+			//}
 
-			#region Transition
-			////stateVector = Multiply(shyMatrix, stateVector);
-			//Debug.Log(stateVector[0] + " " +
-			//        stateVector[1] + " " +
-			//        stateVector[2] + " " +
-			//        stateVector[3] + " " +
-			//        stateVector[4]);
-			#endregion
-
-			if (GetComponent<EmotionsSystem>().Normal()) {
-                Debug.Log("InRage: " + GetComponent<EmotionsSystem>().InRage());
-                Debug.Log("Brave " + GetComponent<EmotionsSystem>().Brave());
-                Debug.Log("Normal " + GetComponent<EmotionsSystem>().Normal());
-                Debug.Log("Shy " + GetComponent<EmotionsSystem>().Shy());
-                Debug.Log("Scared " + GetComponent<EmotionsSystem>().Scared());
+			if (!_start) {
+                _nextTimer = Time.time + timer;
+                _start = true;
             }
 
-			
-
-            #region Output Vector
-            ////stateVector = Multiply(shyMatrix, stateVector);
-            //Debug.Log("SECOND");
-            //Debug.Log(stateVector[0] + " " +
-            //        stateVector[1] + " " +
-            //        stateVector[2] + " " +
-            //        stateVector[3] + " " +
-            //        stateVector[4]);
-            #endregion
         }
-    }
+
+        if(_nextTimer <= Time.time && _start) {
+            Debug.Log("Dring Dring");
+            _start = false;
+		} else {
+            Debug.Log(_nextTimer + " > " + Time.time);
+		}
+
+		#region A
+
+		//if (Input.GetMouseButtonUp(1)) 
+		//{
+		//	#region Runaway
+		//	//GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+		//	//GetComponent<NavMeshAgent>().acceleration = 0f;
+
+		//	//verticalAdj = new Vector3(target.position.x, transform.position.y, target.position.z);
+		//	//Vector3 angleDir = verticalAdj - transform.position;
+		//	//angleBetween = Vector3.SignedAngle(transform.forward, angleDir, Vector3.up);
+
+		//	//transform.Rotate(0f, 180f + angleBetween, 0f, Space.Self);
+
+		//	//Vector3 dir = new Vector3();
+		//	//dir = (transform.position + Vector3.forward.normalized * 50f);
+
+		//	//GetComponent<NavMeshAgent>().destination = dir;
+		//	//GetComponent<NavMeshAgent>().velocity = velocity;
+		//	//GetComponent<NavMeshAgent>().acceleration = acceleration;
+
+		//	//Debug.Log(Vector3.forward.normalized * 5f);
+		//	#endregion
+
+		//	#region Transition
+		//	////stateVector = Multiply(shyMatrix, stateVector);
+		//	//Debug.Log(stateVector[0] + " " +
+		//	//        stateVector[1] + " " +
+		//	//        stateVector[2] + " " +
+		//	//        stateVector[3] + " " +
+		//	//        stateVector[4]);
+		//	#endregion
+
+		//	if (GetComponent<EmotionsSystem>().Normal()) {
+  //              Debug.Log("InRage: " + GetComponent<EmotionsSystem>().InRage());
+  //              Debug.Log("Brave " + GetComponent<EmotionsSystem>().Brave());
+  //              Debug.Log("Normal " + GetComponent<EmotionsSystem>().Normal());
+  //              Debug.Log("Shy " + GetComponent<EmotionsSystem>().Shy());
+  //              Debug.Log("Scared " + GetComponent<EmotionsSystem>().Scared());
+  //          }
+
+  //          #region Output Vector
+  //          ////stateVector = Multiply(shyMatrix, stateVector);
+  //          //Debug.Log("SECOND");
+  //          //Debug.Log(stateVector[0] + " " +
+  //          //        stateVector[1] + " " +
+  //          //        stateVector[2] + " " +
+  //          //        stateVector[3] + " " +
+  //          //        stateVector[4]);
+  //          #endregion
+  //      }
+
+		#endregion
+	}
 
 	public Vector3 RandomNavmeshLocation(float radius)
 	{
@@ -230,6 +249,8 @@ public class GoToClick : MonoBehaviour
 	{
 		
 	}
+
+
 }
 
 public class Add{

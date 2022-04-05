@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4046f5b1ff510724ba5c9799c376f4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _emotionSystem: {fileID: 5422250924608658297}
   reactionTime: 0.5
   bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
   attackMeleeRange: 1.5
@@ -159,6 +158,11 @@ MonoBehaviour:
   searchRange: 50
   dashTime: 100
   dashSpeed: 1.1
+  MaterialScare: {fileID: 2100000, guid: 4a10e2ea972aba8468f0ac717072a218, type: 2}
+  MaterialShy: {fileID: 2100000, guid: b823f7c5922325342bd70292e8e0c4be, type: 2}
+  MaterialNormal: {fileID: 2100000, guid: 0d4e2116af2deb748a5e38ddc5590042, type: 2}
+  MaterialBrave: {fileID: 2100000, guid: a9caa76130f244640a7f197b86e3cde4, type: 2}
+  MaterialInRage: {fileID: 2100000, guid: 36b0d0861d6552a40828394978a064ab, type: 2}
 --- !u!195 &1402759170
 NavMeshAgent:
   m_ObjectHideFlags: 0
