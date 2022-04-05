@@ -311,39 +311,72 @@ public class EmotionsSystem : MonoBehaviour
 	}
     #endregion
 
+
     #region Emotions Evaluation
     public bool InRage()
 	{
-        if (ToPercentage(Total(stateVector), stateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
+        //if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
+        //{
+        //    return true;
+        //}
+
+        float total = 0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            total += markovSM.current.myStateVector[i];
+        }
+
+        float p = (100 * markovSM.current.myStateVector[0]) / total;
+
+        if(p >= UnityEngine.Random.Range(0f, 100f))
+        {
             return true;
+        }
+
         return false;
 	}
 
 
     public bool Brave()
 	{
-        if (ToPercentage(Total(stateVector), stateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
+        //if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[1]) >= UnityEngine.Random.Range(0f, 100f))
+        //    return true;
+
+        float total = 0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            total += markovSM.current.myStateVector[i];
+        }
+
+        float p = (100 * markovSM.current.myStateVector[1]) / total;
+
+        if (p >= UnityEngine.Random.Range(0f, 100f))
+        {
             return true;
+        }
+
         return false;
     }
 
     public bool Normal()
     {
-        if (ToPercentage(Total(stateVector), stateVector[2]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[2]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
 
     public bool Shy()
     {
-        if (ToPercentage(Total(stateVector), stateVector[3]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[3]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
 
     public bool Scared()
     {
-        if (ToPercentage(Total(stateVector), stateVector[4]) >= UnityEngine.Random.Range(0f, 100f))
+        if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[4]) >= UnityEngine.Random.Range(0f, 100f))
             return true;
         return false;
     }
@@ -351,8 +384,7 @@ public class EmotionsSystem : MonoBehaviour
 
     public float ToPercentage(float tot, float a)
 	{
-        float x = (100 * a)/tot;
-        return x;
+        return (100 * a)/tot;
 	}
 
     public float Total(float[] vec)
@@ -361,8 +393,7 @@ public class EmotionsSystem : MonoBehaviour
         
         for(int i = 0; i < 5; i++)
         {
-            float a = vec[i];
-            total += a;
+            total += vec[i];
         }
 
         return total;
