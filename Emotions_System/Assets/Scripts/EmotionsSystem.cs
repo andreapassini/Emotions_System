@@ -310,28 +310,12 @@ public class EmotionsSystem : MonoBehaviour
     #region Emotions Evaluation
     public bool InRage()
 	{
-        //if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[0]) >= UnityEngine.Random.Range(0f, 100f))
-        //{
-        //    return true;
-        //}
-
-        float total = 0f;
-
-        for (int i = 0; i < 5; i++)
-        {
-            total += markovSM.current.myStateVector[i];
-        }
-
-        float p = (100 * markovSM.current.myStateVector[0]) / total;
-
-        if(p >= UnityEngine.Random.Range(0f, 100f))
-        {
-            return true;
-        }
+		if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[0]) >= UnityEngine.Random.Range(0f, 100f)) {
+			return true;
+		}
 
         return false;
 	}
-
 
     public bool Brave()
 	{
