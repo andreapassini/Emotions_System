@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+using System;
+using System.Text;
+
 
 // Defer function to trigger activation condition
 // Returns true when transition can fire
@@ -73,6 +77,9 @@ public class MarkovSM
 	{ // NOTE: this is NOT a MonoBehaviour
 		MarkovSMTransition transition = current.VerifyTransitions();
 		if (transition != null) {
+
+			PrintMatrix(transition.myMatrix);
+
 			// (1) Multiply the matrix of that transition with the state vector
 			current.myStateVector = Multiply(transition.myMatrix, current.myStateVector);
 
@@ -90,6 +97,24 @@ public class MarkovSM
 			}
 		}
 		return vector;
+	}
+
+	public void PrintMatrix(float[][] m)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.Append("Transition's Matrix");
+		sb.AppendLine();
+
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				sb.Append(m[i][j]);
+				sb.Append(' ');
+			}
+			sb.AppendLine();
+
+		}
+
+		Debug.Log("\n" + sb.ToString());
 	}
 }
 

@@ -1130,7 +1130,7 @@ PrefabInstance:
       objectReference: {fileID: 1727123383}
     - target: {fileID: 5422250924608658297, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: reactionTime
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5873032337763360387, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_RootOrder
