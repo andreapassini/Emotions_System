@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Text;
 
 
@@ -111,7 +110,6 @@ public class MarkovSM
 				sb.Append(' ');
 			}
 			sb.AppendLine();
-
 		}
 
 		Debug.Log("\n" + sb.ToString());
