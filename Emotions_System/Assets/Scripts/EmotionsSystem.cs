@@ -104,13 +104,13 @@ public class EmotionsSystem : MonoBehaviour
     public IEnumerator Patrol()
     {
         while (true) {
-            Debug.Log(" " + markovSM.current.myStateVector[0]  + 
-                " " + markovSM.current.myStateVector[1] + 
-                " " + markovSM.current.myStateVector[2] + 
-                " " + markovSM.current.myStateVector[3] + 
-                " " + markovSM.current.myStateVector[4]);
+			//Debug.Log(" " + markovSM.current.myStateVector[0] +
+			//	" " + markovSM.current.myStateVector[1] +
+			//	" " + markovSM.current.myStateVector[2] +
+			//	" " + markovSM.current.myStateVector[3] +
+			//	" " + markovSM.current.myStateVector[4]);
 
-            markovSM.Update();
+			markovSM.Update();
 
             yield return new WaitForSeconds(reactionTime);
         }
@@ -276,16 +276,6 @@ public class EmotionsSystem : MonoBehaviour
         return false;
 	}
 
-    public bool Test()
-	{
-        if (test)
-        {
-            Debug.Log("Test");
-            return true;
-        }
-        return false;
-	}
-
 	#endregion
 
 
@@ -319,7 +309,11 @@ public class EmotionsSystem : MonoBehaviour
 
     public bool Brave()
 	{
-		if (ToPercentage(Total(markovSM.current.myStateVector), markovSM.current.myStateVector[1]) >= UnityEngine.Random.Range(0f, 100f)) 
+		if (
+            ToPercentage(
+                Total(markovSM.current.myStateVector), 
+                markovSM.current.myStateVector[1]) 
+            >= UnityEngine.Random.Range(0f, 100f)) 
         {
             return true;
         }

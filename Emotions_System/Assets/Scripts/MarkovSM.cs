@@ -101,8 +101,6 @@ public class MarkovSM
 	public void PrintMatrix(float[][] m)
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.Append("Transition's Matrix");
-		sb.AppendLine();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {

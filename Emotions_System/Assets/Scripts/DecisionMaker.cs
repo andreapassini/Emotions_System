@@ -93,6 +93,9 @@ public class DecisionMaker : MonoBehaviour
 
         GetComponent<NavMeshAgent>().destination = enemyBase.position;
 
+        // Simply Change the color 
+        _meshRenderer.material = MaterialNormal;
+
         #region FSM
         //Init FSM 
         FSMState normal = new FSMState();
