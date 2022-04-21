@@ -199,14 +199,13 @@ public class EmotionsSystem : MonoBehaviour
             if (Vector3.Distance(transform.position, enemy.transform.position) < sightRange) {
                 n++;
             }
+
+            if (n >= 3) {
+                Debug.Log("EnemyAround");
+                return true;
+            }
         }
 
-        if (n >= 3)
-        {
-            Debug.Log("EnemyAround");
-            return true;
-        }
-        
         return false;
 	}
 
@@ -224,13 +223,13 @@ public class EmotionsSystem : MonoBehaviour
             if (Vector3.Distance(transform.position, ally.transform.position) < sightRange) {
                 n++;
             }
-        }
 
-        if (n >= 3)
-        {
-            Debug.Log("AllyAround");
-            return true;
+            if (n >= 3) {
+                Debug.Log("AllyAround");
+                return true;
+            }
         }
+        
         return false;
     }
 
