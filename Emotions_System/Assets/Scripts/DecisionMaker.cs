@@ -75,6 +75,7 @@ public class DecisionMaker : MonoBehaviour
     public Material MaterialBrave;
     public Material MaterialInRage;
 
+    private bool AiIsStopped = false;
 
     //Just for test TO DELETE
     private bool _colorChange = false;
@@ -475,7 +476,9 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator Patrol()
     {
         while (true) {
-            fsm.Update();
+            if(!AiIsStopped)
+                fsm.Update();
+
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -484,7 +487,9 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolDTNormal()
     {
         while (true) {
-            dt_Normal.walk();
+            if(!AiIsStopped)
+                dt_Normal.walk();
+
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -492,7 +497,9 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolDTBrave()
     {
         while (true) {
-            dt_Brave.walk();
+            if(!AiIsStopped)
+                dt_Brave.walk();
+
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -500,7 +507,8 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolDTShy()
     {
         while (true) {
-            dt_Shy.walk();
+            if (!AiIsStopped)
+                dt_Shy.walk();
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -508,7 +516,8 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolDTInRage()
     {
         while (true) {
-            dt_InRage.walk();
+            if (!AiIsStopped)
+                dt_InRage.walk();
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -516,7 +525,8 @@ public class DecisionMaker : MonoBehaviour
     public IEnumerator PatrolDTScared()
     {
         while (true) {
-            dt_Scared.walk();
+            if (!AiIsStopped)
+                dt_Scared.walk();
             yield return new WaitForSeconds(reactionTime);
         }
     }
@@ -734,7 +744,7 @@ public class DecisionMaker : MonoBehaviour
         acceleration = GetComponent<NavMeshAgent>().acceleration;
 
         GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-        GetComponent<NavMeshAgent>().acceleration = 0;
+        GetComponent<NavMeshAgent>().isStopped = true;
         return true;
 	}
 
@@ -901,4 +911,6 @@ public class DecisionMaker : MonoBehaviour
     }
 
     #endregion
+
+
 }
