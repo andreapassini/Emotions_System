@@ -374,7 +374,10 @@ public class DecisionMaker : MonoBehaviour
 	public void WalkDTNormal()
     {
         // Start patroling
-        StartCoroutine(PatrolDTNormal());
+        //StartCoroutine(PatrolDTNormal());
+        // No need for a second level coroutine since same framerate
+        dt_Normal.walk();
+
 
         // Simply Change the color 
         _meshRenderer.material = MaterialNormal;
@@ -383,7 +386,10 @@ public class DecisionMaker : MonoBehaviour
     public void WalkDTBrave()
     {
         // Start patroling
-        StartCoroutine(PatrolDTBrave());
+        //StartCoroutine(PatrolDTBrave());
+        // No need for a second level coroutine since same framerate
+        dt_Brave.walk();
+
 
         // Simply Change the color 
         _meshRenderer.material = MaterialBrave;
@@ -391,7 +397,9 @@ public class DecisionMaker : MonoBehaviour
 
     public void WalkDTInRage()
     {
-        StartCoroutine(PatrolDTInRage());
+        //StartCoroutine(PatrolDTInRage());
+        // No need for a second level coroutine since same framerate
+        dt_InRage.walk();
 
         // Simply Change the color 
         _meshRenderer.material = MaterialInRage;
@@ -399,7 +407,9 @@ public class DecisionMaker : MonoBehaviour
 
     public void WalkDTShy()
     {
-        StartCoroutine(PatrolDTShy());
+        //StartCoroutine(PatrolDTShy());
+        // No need for a second level coroutine since same framerate
+        dt_Shy.walk();
 
         // Simply Change the color 
         _meshRenderer.material = MaterialShy;
@@ -407,7 +417,9 @@ public class DecisionMaker : MonoBehaviour
 
     public void WalkDTScared()
     {
-        StartCoroutine(PatrolDTScared());
+        //StartCoroutine(PatrolDTScared());
+        // No need for a second level coroutine since same framerate
+        dt_Scared.walk();
 
         // Simply Change the color 
         _meshRenderer.material = MaterialScare;
@@ -532,9 +544,6 @@ public class DecisionMaker : MonoBehaviour
     }
 
     // BT
-
-
-
     public IEnumerator PatrolBTHeal()
     {
         while (bt_Heal.Step()) {
@@ -605,7 +614,9 @@ public class DecisionMaker : MonoBehaviour
     public object Heal(object o)
     {
         // Start patroling
-        StartCoroutine(PatrolBTHeal());
+        //StartCoroutine(PatrolBTHeal());
+        bt_Heal.Step();
+
         return null;
     }
 
@@ -613,7 +624,10 @@ public class DecisionMaker : MonoBehaviour
     public object Regroup(object o)
     {
         // Start patroling
-        StartCoroutine(PatrolBTRegroup());
+        //StartCoroutine(PatrolBTRegroup());
+        bt_Regroup.Step();
+
+
         return null;
     }
 
@@ -740,6 +754,8 @@ public class DecisionMaker : MonoBehaviour
     #region BT Actions
     public bool StopMoving()
 	{
+        AiIsStopped = true;
+
         velocity = GetComponent<NavMeshAgent>().velocity;
         acceleration = GetComponent<NavMeshAgent>().acceleration;
 
@@ -747,6 +763,16 @@ public class DecisionMaker : MonoBehaviour
         GetComponent<NavMeshAgent>().isStopped = true;
         return true;
 	}
+
+    public bool RestartMoving()
+	{
+        AiIsStopped = false;
+
+        GetComponent<NavMeshAgent>().isStopped = false;
+        GetComponent<NavMeshAgent>().velocity = velocity;
+
+        return true;
+    }
 
     public bool TurnAraound()
     {
@@ -775,12 +801,16 @@ public class DecisionMaker : MonoBehaviour
 
     public bool Shoot()
 	{
+        StopMoving();
+
         GameObject bullet = Instantiate(bulletPrfab, firePoint.position, firePoint.rotation);
 
         bullet.transform.tag = transform.tag;
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(firePoint.forward * 100f, ForceMode.Impulse);
+
+        RestartMoving();
 
         return true;
 	}
