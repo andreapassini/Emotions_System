@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1162,11 +1162,11 @@ PrefabInstance:
       objectReference: {fileID: 1727123383}
     - target: {fileID: 1402759171, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5422250924608658297, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5422250924608658297, guid: 22413294e2bb8cf4d81b6471ca023517, type: 3}
       propertyPath: reactionTime
@@ -1264,6 +1264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrabMonster 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5792744366562842766, guid: 4e7afdf31c20ebf419ea38bf1d358719, type: 3}
+      propertyPath: m_TagString
+      value: A
+      objectReference: {fileID: 0}
     - target: {fileID: 5794526363542072584, guid: 4e7afdf31c20ebf419ea38bf1d358719, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1345,7 +1349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionTime: 3
-  bulletPrfab: {fileID: 0}
+  bulletPrfab: {fileID: 3820344200224763427, guid: 066d66356a113a74882b7c102f9424b9, type: 3}
   attackMeleeRange: 1
   meleeDmg: 25
   dashForce: 20
@@ -1354,8 +1358,8 @@ MonoBehaviour:
   targetNear_range: 50
   targetHealthLow: 0
   enemyTag: B
-  allyBase: {fileID: 0}
-  enemyBase: {fileID: 0}
+  allyBase: {fileID: 1550443293}
+  enemyBase: {fileID: 1727123383}
   searchRange: 100
   dashTime: 100
   dashSpeed: 1.1
